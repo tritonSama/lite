@@ -1,0 +1,131 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── Helper functions ────────────────────────────────────────────────────
+    function isSignedIn()  { return request.auth != null; }
+    function uid()         { return request.auth.uid; }
+    function role()        { return request.auth.token.get('role', ''); }
+    function isAdmin()     { return role() == 'admin'; }
+    function isCreator()   { return role() == 'creator'; }
+    function isProvider()  { return role() == 'provider'; }
+
+    function owns(resource) { return uid() == resource.data.creatorId; }
+
+    function onlyChanging(fields) {
+      return request.resource.data.diff(resource.data)
+             .affectedKeys().hasOnly(fields);
+    }
+
+    // ── Users ───────────────────────────────────────────────────────────────
+    match /users/{userId} {
+      allow read:   if isSignedIn();
+      allow create: if uid() == userId;
+      allow update: if uid() == userId && onlyChanging([
+        'displayName','photoUrl','bio','skills','fcmToken'
+      ]);
+
+      // Credentials subcollection (personal, admin-readable)
+      match /credentials/{credId} {
+        allow read:   if uid() == userId || isAdmin();
+        allow create: if uid() == userId &&
+                         request.resource.data.ownerId == uid();
+        allow update: if isAdmin(); // Only admins can verify/reject
+        allow delete: if isAdmin();
+      }
+    }
+
+    // ── Tasks ───────────────────────────────────────────────────────────────
+    match /tasks/{taskId} {
+      // Any signed-in user can read published tasks
+      allow read: if isSignedIn() && (
+        owns(resource) ||
+        resource.data.status != 'draft' ||
+        isAdmin()
+      );
+      allow create: if isSignedIn() &&
+                       request.resource.data.creatorId == uid();
+      allow update: if isAdmin() || (
+        owns(resource) &&
+        onlyChanging(['title','description','photoUrls','desiredCompletionDate',
+                      'budgetAmount','requiredSkills','requiredEquipment',
+                      'requiredCredentials','workerCount','specialRequirements',
+                      'status','selectedProviderId','updatedAt'])
+      );
+      allow delete: if isAdmin() || (
+        owns(resource) && resource.data.status == 'draft'
+      );
+
+      // Status history — append-only audit trail
+      match /statusHistory/{eventId} {
+        allow read:   if isSignedIn() && (owns(resource) || isAdmin());
+        allow create: if false; // Cloud Functions only (Admin SDK)
+        allow update: if false;
+        allow delete: if false;
+      }
+    }
+
+    // ── Bids (flat root collection) ─────────────────────────────────────────
+    match /bids/{bidId} {
+      allow read: if isSignedIn() && (
+        uid() == resource.data.bidderId ||
+        isAdmin()
+        // Task creator read access enforced via Cloud Functions callable
+      );
+      allow create: if isSignedIn() &&
+                       request.resource.data.bidderId == uid();
+      // Provider can only withdraw their own pending bid
+      allow update: if uid() == resource.data.bidderId &&
+                       resource.data.status == 'pending' &&
+                       request.resource.data.status == 'withdrawn' &&
+                       onlyChanging(['status']);
+      allow delete: if false; // Never hard-delete bids
+    }
+
+    // ── Teams ───────────────────────────────────────────────────────────────
+    match /teams/{teamId} {
+      allow read:   if isSignedIn();
+      allow create: if isSignedIn() &&
+                       request.resource.data.ownerId == uid();
+      allow update: if isAdmin() || uid() == resource.data.ownerId;
+      allow delete: if isAdmin();
+    }
+
+    // ── Memberships (flat root junction) ────────────────────────────────────
+    match /memberships/{membershipId} {
+      allow read:   if isSignedIn() &&
+                       (uid() == resource.data.userId || isAdmin());
+      allow create: if isSignedIn();
+      allow update: if isAdmin() || uid() == resource.data.userId;
+      allow delete: if isAdmin() || uid() == resource.data.userId;
+    }
+
+    // ── Credentials (top-level, for admin review queue) ─────────────────────
+    match /credentials/{credId} {
+      allow read:   if isAdmin() || uid() == resource.data.ownerId;
+      allow create: if uid() == request.resource.data.ownerId;
+      allow update: if isAdmin(); // verify / reject only
+      allow delete: if isAdmin();
+    }
+
+    // ── Projects ────────────────────────────────────────────────────────────
+    match /projects/{projectId} {
+      allow read:  if isSignedIn();
+      allow create: if isSignedIn() &&
+                       request.resource.data.creatorId == uid();
+      allow update: if isAdmin() || owns(resource);
+      allow delete: if isAdmin();
+
+      match /roles/{roleId} {
+        allow read:   if isSignedIn();
+        allow write:  if isAdmin() ||
+          uid() == get(/databases/$(database)/documents/projects/$(projectId)).data.creatorId;
+      }
+    }
+
+    // ── Cloud Function idempotency dedup ────────────────────────────────────
+    match /processedEvents/{eventId} {
+      allow read, write: if false; // Cloud Functions Admin SDK only
+    }
+  }
+}

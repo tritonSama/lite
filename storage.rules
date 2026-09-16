@@ -1,0 +1,39 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+
+    // ── Credential documents ────────────────────────────────────────────────
+    // Path: /credentials/{userId}/{docType}/{filename}
+    match /credentials/{userId}/{allPaths=**} {
+      // Only the owning user can upload
+      allow write: if request.auth != null &&
+                      request.auth.uid == userId &&
+                      request.resource.size < 20 * 1024 * 1024 && // 20 MB limit
+                      request.resource.contentType.matches('(image/.*|application/pdf)');
+      // Only the owner or an admin can read
+      // Admins are identified by custom claim role == 'admin'
+      allow read: if request.auth != null && (
+        request.auth.uid == userId ||
+        request.auth.token.get('role', '') == 'admin'
+      );
+    }
+
+    // ── Task attachments (photos/video) ─────────────────────────────────────
+    // Path: /tasks/{taskId}/attachments/{filename}
+    match /tasks/{taskId}/attachments/{filename} {
+      allow write: if request.auth != null &&
+                      request.resource.size < 50 * 1024 * 1024 && // 50 MB
+                      request.resource.contentType.matches('(image/.*|video/.*)');
+      allow read:  if request.auth != null;
+    }
+
+    // ── User avatars ────────────────────────────────────────────────────────
+    match /avatars/{userId}/{filename} {
+      allow write: if request.auth != null &&
+                      request.auth.uid == userId &&
+                      request.resource.size < 5 * 1024 * 1024 && // 5 MB
+                      request.resource.contentType.matches('image/.*');
+      allow read:  if true; // Public avatars
+    }
+  }
+}
