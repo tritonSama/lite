@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
+import '../../../shared/models/user_profile.dart';
 
 part 'auth_providers.g.dart';
 
@@ -34,7 +37,23 @@ class AuthNotifier extends _$AuthNotifier {
     state = await AsyncValue.guard(() async {
       final cred = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
-      await cred.user?.updateDisplayName(displayName);
+
+      final user = cred.user;
+      if (user != null) {
+        await user.updateDisplayName(displayName);
+
+        // Persist UserProfile to Firestore
+        final userProfile = UserProfile(
+          uid: user.uid,
+          displayName: displayName,
+          createdAt: DateTime.now(),
+        );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .set(userProfile.toJson());
+      }
     });
   }
 

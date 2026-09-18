@@ -25,21 +25,21 @@ class DefaultFirebaseOptions {
     }
   }
 
-  // ── REPLACE with your real values from `flutterfire configure` ────────────
+  // ── MOCK FIREBASE CONFIG (REPLACE LATER) ────────────
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'REPLACE_WITH_ANDROID_API_KEY',
-    appId: 'REPLACE_WITH_ANDROID_APP_ID',
-    messagingSenderId: 'REPLACE_WITH_SENDER_ID',
-    projectId: 'REPLACE_WITH_PROJECT_ID',
-    storageBucket: 'REPLACE_WITH_PROJECT_ID.appspot.com',
+    apiKey: 'mock-android-api-key',
+    appId: '1:1234567890:android:mockappid',
+    messagingSenderId: '1234567890',
+    projectId: 'mock-firebase-project',
+    storageBucket: 'mock-firebase-project.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'REPLACE_WITH_IOS_API_KEY',
-    appId: 'REPLACE_WITH_IOS_APP_ID',
-    messagingSenderId: 'REPLACE_WITH_SENDER_ID',
-    projectId: 'REPLACE_WITH_PROJECT_ID',
-    storageBucket: 'REPLACE_WITH_PROJECT_ID.appspot.com',
+    apiKey: 'mock-ios-api-key',
+    appId: '1:1234567890:ios:mockappid',
+    messagingSenderId: '1234567890',
+    projectId: 'mock-firebase-project',
+    storageBucket: 'mock-firebase-project.appspot.com',
     iosBundleId: 'com.heavenlybond.hblite',
   );
 }
