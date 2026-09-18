@@ -1,42 +1,39 @@
-# HeavenlyBond Lite - Agent Assignments
+# Fluorescent / Game Maps IRL - Agent Assignments
 
-This document assigns AI agents to specific sprints outlined in the `docs/BUILD_PLAN.md` to implement the remaining features of HeavenlyBond Lite.
+This document assigns AI agents to specific phases outlined in the `docs/BUILD_PLAN.md` to build out the Game Maps IRL platform.
 
 ## General Instructions for Agents
-*   Read `docs/DOCUMENTATION.md` to understand the project architecture, data models, and Firebase rules.
-*   Read `docs/BUILD_PLAN.md` to understand the overall roadmap and current sprint goals.
-*   Ensure that any new feature implemented follows the existing architecture (Flutter, Riverpod, GoRouter, Freezed, Firebase).
-*   For each new feature, write appropriate widget and unit tests.
-*   Update this `AGENTS.md` file when a sprint is completed.
+*   Read `docs/DOCUMENTATION.md` to understand the project architecture, the "Living World" concept, and the Flutter/Rust integration strategy.
+*   Read `docs/BUILD_PLAN.md` to understand the overall roadmap and current phase goals.
+*   Ensure that any new feature implemented aligns with the long-term vision of building a General-Purpose Engine.
+*   Update this `AGENTS.md` file when a phase is completed.
 
 ## Agent Assignments
 
-### Sprint 2 Agent: Task Creation Wizard
-**Goal:** Allow users to create comprehensive tasks.
-**Focus Area:** `lib/features/tasks/presentation/create_task_page.dart`
-**Tasks:** Implement the multi-step wizard (Basic Info, Logistics, Requirements, Funding, Review & Publish) and connect it to Firestore.
+### Phase 0 Agent: Foundation
+**Goal:** Establish the base architecture and resolve technical debt.
+**Tasks:** Fix compilation bugs, stabilize Flutter/Rust bridge, create core domain models, abstract the Map layer, and solidify Firebase/Auth setup.
 
-### Sprint 3 Agent: Bidding & Offers Mechanism
-**Goal:** Enable providers to place bids and task creators to manage them.
-**Focus Area:** `lib/features/bids/presentation/` and Firebase Cloud Functions.
-**Tasks:** Implement "Make an Offer" modal, build `BidsPage` (My Offers vs Offers Received), build `OfferDetailPage`, and write Cloud Functions for bid visibility and status transitions.
+### Phase 1 Agent: Living Map
+**Goal:** Establish the visual and realtime map foundation.
+**Tasks:** Implement Google Maps integration via the abstraction layer, add live location/GPS tracking, render nearby driver entities, and build the Vehicle Garage and User Profile UI.
 
-### Sprint 4 Agent: Task Execution & Verification
-**Goal:** Track task progress and verify completion for payment release.
-**Focus Area:** `lib/features/tasks/presentation/task_detail_page.dart` (UI updates) and Firebase Storage/Functions.
-**Tasks:** Add UI for Providers to upload completion photos, add UI for Creators to approve/dispute, and stub Stripe Connect integration for escrow.
+### Phase 2 Agent: Social Driving
+**Goal:** Build the social networks and event structures.
+**Tasks:** Implement Clubs, Feeds, Friends list, Chat (WebSockets), Car Meets, Convoys, and Geofenced check-ins.
 
-### Sprint 5 Agent: Credentials & Licensing System
-**Goal:** Allow providers to prove qualifications for regulated tasks.
-**Focus Area:** `lib/features/credentials/presentation/` and Firebase Storage.
-**Tasks:** Build `CredentialsPage`, implement document upload, and enforce credential checks before bidding.
+### Phase 3 Agent: Driving Game Systems
+**Goal:** Add gamification.
+**Tasks:** Implement Drive Sessions, XP, Achievements, Rally systems, Checkpoints, Time attack logic, Ghost replays, and Leaderboards.
 
-### Sprint 6 Agent: Teams Foundation
-**Goal:** Allow users to form teams to tackle larger tasks.
-**Focus Area:** `lib/features/teams/presentation/` and `lib/features/teams/domain/`.
-**Tasks:** Build `TeamsPage`, implement team creation, invite functionality, and allow offers to be made on behalf of a team.
+### Phase 4 Agent: Rust Realtime Core
+**Goal:** Move performance-critical functionality to Rust.
+**Tasks:** Re-write GPS processing, geospatial math, entity state interpolation, and realtime networking in the Rust core.
 
-### Sprint 7 Agent: Official Projects & Event Coordination
-**Goal:** Transform complex tasks into managed projects.
-**Focus Area:** `lib/features/projects/` (New feature module).
-**Tasks:** Implement Project state transitions, Project management UI, sub-task creation, and role assignments.
+### Phase 5 Agent: Fluorescent 3D World
+**Goal:** Replace Map API visualization with native Fluorescent rendering.
+**Tasks:** Implement 3D vehicles, terrain generation, custom world objects, and dynamic lighting using the Fluorescent renderer.
+
+### Phase 6 Agent: Engine Expansion
+**Goal:** Broaden the engine capabilities.
+**Tasks:** Add physics simulation, animation graphs, VFX, world streaming, procedural generation (PCG), and editor tools.
