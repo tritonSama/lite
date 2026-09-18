@@ -15,6 +15,7 @@ import '../features/teams/presentation/teams_page.dart';
 import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
+import '../features/garage/presentation/garage_page.dart';
 
 part 'router.g.dart';
 
@@ -142,6 +143,10 @@ GoRouter appRouter(Ref ref) {
                     path: 'credentials',
                     builder: (_, __) => const CredentialsPage(),
                   ),
+                  GoRoute(
+                    path: 'garage',
+                    builder: (_, __) => const GaragePage(),
+                  ),
                 ],
               ),
             ],
@@ -172,7 +177,7 @@ class AppShell extends StatelessWidget {
           NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
-            label: 'Board',
+            label: 'Map',
           ),
           NavigationDestination(
             icon: Icon(Icons.add_circle_outline),
@@ -182,12 +187,12 @@ class AppShell extends StatelessWidget {
           NavigationDestination(
             icon: Icon(Icons.gavel_outlined),
             selectedIcon: Icon(Icons.gavel),
-            label: 'Bids',
+            label: 'Social',
           ),
           NavigationDestination(
             icon: Icon(Icons.group_outlined),
             selectedIcon: Icon(Icons.group),
-            label: 'Teams',
+            label: 'Clubs',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),

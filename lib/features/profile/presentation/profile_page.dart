@@ -62,6 +62,11 @@ class ProfilePage extends ConsumerWidget {
 
             // Menu items
             _ProfileTile(
+              icon: Icons.directions_car_outlined,
+              label: 'My Garage',
+              onTap: () => context.go('/profile/garage'),
+            ),
+            _ProfileTile(
               icon: Icons.verified_user_outlined,
               label: 'Credentials',
               onTap: () => context.go('/profile/credentials'),

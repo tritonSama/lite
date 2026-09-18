@@ -7,6 +7,7 @@ environment:
   sdk: "^3.8.0"
 
 dependencies:
+  google_maps_flutter: ^2.9.0
   flutter:
     sdk: flutter
 
@@ -30,7 +31,6 @@ dependencies:
   json_annotation: ^4.9.0
 
   # ── Maps & Location ──────────────────────────────────
-  google_maps_flutter: ^2.9.0
   geolocator: ^13.0.1
   geoflutterfire_plus: ^0.0.31
 

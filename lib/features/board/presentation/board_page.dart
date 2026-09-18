@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../app/theme.dart';
 import '../../../core/constants/enums.dart';
 import '../../tasks/presentation/task_card.dart';
+import '../../map/presentation/google_map_renderer.dart';
 import 'board_providers.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
@@ -38,7 +39,7 @@ class _BoardPageState extends ConsumerState<BoardPage>
           children: [
             const Icon(Icons.handshake_rounded, color: HBColors.primary),
             const SizedBox(width: HBSpacing.sm),
-            const Text('HeavenlyBond'),
+            const Text('Game Maps IRL'),
           ],
         ),
         actions: [
@@ -57,19 +58,20 @@ class _BoardPageState extends ConsumerState<BoardPage>
           tabAlignment: TabAlignment.start,
           tabs: const [
             Tab(text: 'Tasks'),
-            Tab(text: 'Projects'),
             Tab(text: 'Nearby'),
+            Tab(text: 'Projects'),
             Tab(text: 'Categories'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabCtrl,
-        children: const [
-          _TasksTab(),
-          _PlaceholderTab(label: 'Projects coming soon', icon: Icons.folder_outlined),
-          _PlaceholderTab(label: 'Nearby map coming soon', icon: Icons.map_outlined),
-          _CategoriesTab(),
+        physics: const NeverScrollableScrollPhysics(), // Important for maps
+        children: [
+          const _TasksTab(),
+          GoogleMapRenderer().buildMap(),
+          const _PlaceholderTab(label: 'Projects coming soon', icon: Icons.folder_outlined),
+          const _CategoriesTab(),
         ],
       ),
     );
