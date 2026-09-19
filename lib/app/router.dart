@@ -11,11 +11,10 @@ import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/tasks/presentation/create_task_page.dart';
 import '../features/bids/presentation/bids_page.dart';
 import '../features/bids/presentation/offer_detail_page.dart';
-import '../features/clubs/presentation/clubs_page.dart';
-import '../features/clubs/presentation/club_detail_page.dart';
+import '../features/teams/presentation/teams_page.dart';
+import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
-import '../features/garage/presentation/garage_page.dart';
 
 part 'router.g.dart';
 
@@ -24,7 +23,7 @@ final _rootKey    = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _boardKey   = GlobalKey<NavigatorState>(debugLabel: 'board');
 final _createKey  = GlobalKey<NavigatorState>(debugLabel: 'create');
 final _bidsKey    = GlobalKey<NavigatorState>(debugLabel: 'bids');
-final _clubsKey   = GlobalKey<NavigatorState>(debugLabel: 'clubs');
+final _teamsKey   = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
 // ── Router provider ───────────────────────────────────────────────────────────
@@ -63,7 +62,7 @@ GoRouter appRouter(Ref ref) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(shell: shell),
         branches: [
-          // 🏠 Board / Map
+          // 🏠 Board
           StatefulShellBranch(
             navigatorKey: _boardKey,
             routes: [
@@ -93,7 +92,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 💰 Social / Bids
+          // 💰 Bids
           StatefulShellBranch(
             navigatorKey: _bidsKey,
             routes: [
@@ -112,18 +111,18 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 👥 Clubs
+          // 👥 Teams
           StatefulShellBranch(
-            navigatorKey: _clubsKey,
+            navigatorKey: _teamsKey,
             routes: [
               GoRoute(
-                path: '/clubs',
-                builder: (_, __) => const ClubsPage(),
+                path: '/teams',
+                builder: (_, __) => const TeamsPage(),
                 routes: [
                   GoRoute(
-                    path: ':clubId',
-                    builder: (_, state) => ClubDetailPage(
-                      clubId: state.pathParameters['clubId']!,
+                    path: ':teamId',
+                    builder: (_, state) => TeamDetailPage(
+                      teamId: state.pathParameters['teamId']!,
                     ),
                   ),
                 ],
@@ -142,10 +141,6 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'credentials',
                     builder: (_, __) => const CredentialsPage(),
-                  ),
-                  GoRoute(
-                    path: 'garage',
-                    builder: (_, __) => const GaragePage(),
                   ),
                 ],
               ),
@@ -177,7 +172,7 @@ class AppShell extends StatelessWidget {
           NavigationDestination(
             icon: Icon(Icons.dashboard_outlined),
             selectedIcon: Icon(Icons.dashboard),
-            label: 'Map',
+            label: 'Board',
           ),
           NavigationDestination(
             icon: Icon(Icons.add_circle_outline),
@@ -187,12 +182,12 @@ class AppShell extends StatelessWidget {
           NavigationDestination(
             icon: Icon(Icons.gavel_outlined),
             selectedIcon: Icon(Icons.gavel),
-            label: 'Social',
+            label: 'Bids',
           ),
           NavigationDestination(
             icon: Icon(Icons.group_outlined),
             selectedIcon: Icon(Icons.group),
-            label: 'Clubs',
+            label: 'Teams',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),

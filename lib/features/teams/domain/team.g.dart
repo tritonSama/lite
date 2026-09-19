@@ -1,12 +1,12 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'club.dart';
+part of 'team.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_Club _$ClubFromJson(Map<String, dynamic> json) => _Club(
+_Team _$TeamFromJson(Map<String, dynamic> json) => _Team(
   id: json['id'] as String,
   name: json['name'] as String,
   description: json['description'] as String?,
@@ -24,7 +24,7 @@ _Club _$ClubFromJson(Map<String, dynamic> json) => _Club(
   ),
 );
 
-Map<String, dynamic> _$ClubToJson(_Club instance) => <String, dynamic>{
+Map<String, dynamic> _$TeamToJson(_Team instance) => <String, dynamic>{
   'id': instance.id,
   'name': instance.name,
   'description': instance.description,
@@ -38,7 +38,7 @@ Map<String, dynamic> _$ClubToJson(_Club instance) => <String, dynamic>{
 
 _Membership _$MembershipFromJson(Map<String, dynamic> json) => _Membership(
   id: json['id'] as String,
-  clubId: json['clubId'] as String,
+  teamId: json['teamId'] as String,
   userId: json['userId'] as String,
   userDisplayName: json['userDisplayName'] as String?,
   userPhotoUrl: json['userPhotoUrl'] as String?,
@@ -54,7 +54,7 @@ _Membership _$MembershipFromJson(Map<String, dynamic> json) => _Membership(
 Map<String, dynamic> _$MembershipToJson(_Membership instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'clubId': instance.clubId,
+      'teamId': instance.teamId,
       'userId': instance.userId,
       'userDisplayName': instance.userDisplayName,
       'userPhotoUrl': instance.userPhotoUrl,
