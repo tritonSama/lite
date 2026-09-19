@@ -11,8 +11,8 @@ import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/tasks/presentation/create_task_page.dart';
 import '../features/bids/presentation/bids_page.dart';
 import '../features/bids/presentation/offer_detail_page.dart';
-import '../features/teams/presentation/teams_page.dart';
-import '../features/teams/presentation/team_detail_page.dart';
+import '../features/clubs/presentation/clubs_page.dart';
+import '../features/clubs/presentation/club_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
 import '../features/garage/presentation/garage_page.dart';
@@ -24,7 +24,7 @@ final _rootKey    = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _boardKey   = GlobalKey<NavigatorState>(debugLabel: 'board');
 final _createKey  = GlobalKey<NavigatorState>(debugLabel: 'create');
 final _bidsKey    = GlobalKey<NavigatorState>(debugLabel: 'bids');
-final _teamsKey   = GlobalKey<NavigatorState>(debugLabel: 'teams');
+final _clubsKey   = GlobalKey<NavigatorState>(debugLabel: 'clubs');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
 // ── Router provider ───────────────────────────────────────────────────────────
@@ -63,7 +63,7 @@ GoRouter appRouter(Ref ref) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(shell: shell),
         branches: [
-          // 🏠 Board
+          // 🏠 Board / Map
           StatefulShellBranch(
             navigatorKey: _boardKey,
             routes: [
@@ -93,7 +93,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 💰 Bids
+          // 💰 Social / Bids
           StatefulShellBranch(
             navigatorKey: _bidsKey,
             routes: [
@@ -112,18 +112,18 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 👥 Teams
+          // 👥 Clubs
           StatefulShellBranch(
-            navigatorKey: _teamsKey,
+            navigatorKey: _clubsKey,
             routes: [
               GoRoute(
-                path: '/teams',
-                builder: (_, __) => const TeamsPage(),
+                path: '/clubs',
+                builder: (_, __) => const ClubsPage(),
                 routes: [
                   GoRoute(
-                    path: ':teamId',
-                    builder: (_, state) => TeamDetailPage(
-                      teamId: state.pathParameters['teamId']!,
+                    path: ':clubId',
+                    builder: (_, state) => ClubDetailPage(
+                      clubId: state.pathParameters['clubId']!,
                     ),
                   ),
                 ],

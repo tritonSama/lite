@@ -4,13 +4,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import '../../../core/constants/enums.dart';
 import '../../../core/utils/firestore_converters.dart';
 
-part 'team.freezed.dart';
-part 'team.g.dart';
+part 'club.freezed.dart';
+part 'club.g.dart';
 
-// ── Team ──────────────────────────────────────────────────────────────────────
+// ── Club ──────────────────────────────────────────────────────────────────────
 @freezed
-abstract class Team with _$Team {
-  const factory Team({
+abstract class Club with _$Club {
+  const factory Club({
     required String id,
     required String name,
     String? description,
@@ -20,9 +20,9 @@ abstract class Team with _$Team {
     @Default(0.0) double rating,
     @Default(0) int completedJobCount,
     @TimestampConverter() required DateTime createdAt,
-  }) = _Team;
+  }) = _Club;
 
-  factory Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
+  factory Club.fromJson(Map<String, dynamic> json) => _$ClubFromJson(json);
 }
 
 // ── Membership — root /memberships/{id} junction collection ──────────────────
@@ -30,7 +30,7 @@ abstract class Team with _$Team {
 abstract class Membership with _$Membership {
   const factory Membership({
     required String id,
-    required String teamId,
+    required String clubId,
     required String userId,
     String? userDisplayName,
     String? userPhotoUrl,
