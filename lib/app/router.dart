@@ -7,6 +7,7 @@ import '../features/auth/presentation/auth_providers.dart';
 import '../features/auth/presentation/login_page.dart';
 import '../features/auth/presentation/signup_page.dart';
 import '../features/board/presentation/board_page.dart';
+import '../features/board/presentation/category_tasks_page.dart';
 import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/tasks/presentation/create_task_page.dart';
 import '../features/bids/presentation/bids_page.dart';
@@ -75,6 +76,12 @@ GoRouter appRouter(Ref ref) {
                     path: 'user/:userId',
                     builder: (_, state) => PublicProfilePage(
                       userId: state.pathParameters['userId']!,
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'category/:categoryId',
+                    builder: (_, state) => CategoryTasksPage(
+                      categoryId: state.pathParameters['categoryId']!,
                     ),
                   ),
                 ],

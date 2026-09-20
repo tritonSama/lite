@@ -185,6 +185,7 @@ class _CategoriesTab extends StatelessWidget {
         final cat = categories[i];
         return Card(
           child: InkWell(
+            onTap: () => ctx.go('/board/category/${cat.name}'),
             onTap: () {
               /* TODO: filter by category */
             },
