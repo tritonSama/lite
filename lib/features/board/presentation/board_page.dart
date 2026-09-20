@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../core/constants/enums.dart';
+import '../../notifications/presentation/notifications_button.dart';
 import '../../tasks/presentation/task_card.dart';
 import 'board_providers.dart';
 import 'board_search_delegate.dart';
@@ -52,6 +53,7 @@ class _BoardPageState extends ConsumerState<BoardPage>
               );
             },
           ),
+          const NotificationsButton(),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
             onPressed: () {

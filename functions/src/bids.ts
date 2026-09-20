@@ -1,6 +1,6 @@
 import { onDocumentCreated, onDocumentUpdated } from 'firebase-functions/v2/firestore';
 import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { getMessaging } from 'firebase-admin/messaging';
+import { sendPushAndSaveNotification } from './sendPush';
 
 const db = getFirestore();
 
@@ -17,25 +17,6 @@ async function alreadyProcessed(eventId: string, taskId: string): Promise<boolea
   return seen;
 }
 
-// ── Helper: send FCM push notification ───────────────────────────────────────
-async function sendPush(
-  userId: string,
-  title: string,
-  body: string,
-  data: Record<string, string>,
-): Promise<void> {
-  const userSnap = await db.collection('users').doc(userId).get();
-  const fcmToken = userSnap.data()?.fcmToken as string | undefined;
-  if (!fcmToken) return;
-  await getMessaging().send({
-    token: fcmToken,
-    notification: { title, body },
-    data,
-    android: { priority: 'high' },
-    apns: { payload: { aps: { contentAvailable: true } } },
-  });
-}
-
 // ── onNewBid: notify task creator when a new bid arrives ─────────────────────
 export const onNewBid = onDocumentCreated('bids/{bidId}', async (event) => {
   const bid = event.data?.data();
@@ -45,11 +26,12 @@ export const onNewBid = onDocumentCreated('bids/{bidId}', async (event) => {
   const task = taskSnap.data();
   if (!task) return;
 
-  await sendPush(
+  await sendPushAndSaveNotification(
     task.creatorId,
     'New Bid Received',
     `Someone placed a bid of $${bid.amount} on "${task.title}"`,
     { type: 'new_bid', taskId: bid.taskId, bidId: event.params.bidId },
+    `/board/task/${bid.taskId}`
   );
 });
 
@@ -70,10 +52,11 @@ export const onBidStatusChanged = onDocumentUpdated('bids/{bidId}', async (event
   };
 
   const body = messages[after.status] ?? 'Your bid status changed.';
-  await sendPush(
+  await sendPushAndSaveNotification(
     after.bidderId,
     'Bid Update',
     body,
     { type: 'bid_status', bidId: event.params.bidId, taskId: after.taskId, newStatus: after.status },
+    `/bids/${event.params.bidId}`
   );
 });
