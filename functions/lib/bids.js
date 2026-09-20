@@ -4,6 +4,7 @@ exports.onBidStatusChanged = exports.onNewBid = void 0;
 const firestore_1 = require("firebase-functions/v2/firestore");
 const firestore_2 = require("firebase-admin/firestore");
 const sendPush_1 = require("./sendPush");
+const messaging_1 = require("firebase-admin/messaging");
 const db = (0, firestore_2.getFirestore)();
 // ── Helper: idempotency dedup ─────────────────────────────────────────────────
 async function alreadyProcessed(eventId, taskId) {
@@ -20,6 +21,20 @@ async function alreadyProcessed(eventId, taskId) {
     });
     return seen;
 }
+// ── Helper: send FCM push notification ───────────────────────────────────────
+async function sendPush(userId, title, body, data) {
+    const userSnap = await db.collection('users').doc(userId).get();
+    const fcmToken = userSnap.data()?.fcmToken;
+    if (!fcmToken)
+        return;
+    await (0, messaging_1.getMessaging)().send({
+        token: fcmToken,
+        notification: { title, body },
+        data,
+        android: { priority: 'high' },
+        apns: { payload: { aps: { contentAvailable: true } } },
+    });
+}
 // ── onNewBid: notify task creator when a new bid arrives ─────────────────────
 exports.onNewBid = (0, firestore_1.onDocumentCreated)('bids/{bidId}', async (event) => {
     const bid = event.data?.data();
@@ -30,6 +45,7 @@ exports.onNewBid = (0, firestore_1.onDocumentCreated)('bids/{bidId}', async (eve
     if (!task)
         return;
     await (0, sendPush_1.sendPushAndSaveNotification)(task.creatorId, 'New Bid Received', `Someone placed a bid of $${bid.amount} on "${task.title}"`, { type: 'new_bid', taskId: bid.taskId, bidId: event.params.bidId }, `/board/task/${bid.taskId}`);
+    await sendPush(task.creatorId, 'New Bid Received', `Someone placed a bid of $${bid.amount} on "${task.title}"`, { type: 'new_bid', taskId: bid.taskId, bidId: event.params.bidId });
 });
 // ── onBidStatusChanged: notify bidder when their bid status changes ───────────
 exports.onBidStatusChanged = (0, firestore_1.onDocumentUpdated)('bids/{bidId}', async (event) => {
@@ -48,5 +64,6 @@ exports.onBidStatusChanged = (0, firestore_1.onDocumentUpdated)('bids/{bidId}', 
     };
     const body = messages[after.status] ?? 'Your bid status changed.';
     await (0, sendPush_1.sendPushAndSaveNotification)(after.bidderId, 'Bid Update', body, { type: 'bid_status', bidId: event.params.bidId, taskId: after.taskId, newStatus: after.status }, `/bids/${event.params.bidId}`);
+    await sendPush(after.bidderId, 'Bid Update', body, { type: 'bid_status', bidId: event.params.bidId, taskId: after.taskId, newStatus: after.status });
 });
 //# sourceMappingURL=bids.js.map

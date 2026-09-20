@@ -1,9 +1,16 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.releaseEscrow = exports.acceptOffer = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const firestore_1 = require("firebase-admin/firestore");
 const db = (0, firestore_1.getFirestore)();
+const params_1 = require("firebase-functions/params");
+const stripe_1 = __importDefault(require("stripe"));
+const db = (0, firestore_1.getFirestore)();
+const STRIPE_SECRET_KEY = (0, params_1.defineSecret)('STRIPE_SECRET_KEY');
 // ── acceptOffer: Callable — task creator selects a winning bid ────────────────
 //
 // Called by the task creator. Transitions task → providerSelected,
@@ -69,11 +76,17 @@ exports.acceptOffer = (0, https_1.onCall)({ region: 'us-central1' }, async (req)
 // Full Stripe integration wired here in Sprint 5.
 // For now, transitions task through approved → paymentReleased → completed.
 exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1' }, async (req) => {
+exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1', secrets: [STRIPE_SECRET_KEY] }, async (req) => {
     const { taskId } = req.data;
     const uid = req.auth?.uid;
     if (!uid)
         throw new https_1.HttpsError('unauthenticated', 'Must be signed in');
     await db.runTransaction(async (t) => {
+    const stripe = new stripe_1.default(STRIPE_SECRET_KEY.value(), {
+        apiVersion: '2023-10-16', // Use type assertion to avoid TypeScript error on older/newer SDK types
+    });
+    // Step 1: Read all necessary data in a transaction and verify preconditions
+    const transferDetails = await db.runTransaction(async (t) => {
         const taskRef = db.collection('tasks').doc(taskId);
         const taskSnap = await t.get(taskRef);
         if (!taskSnap.exists)
@@ -87,6 +100,71 @@ exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1' }, async (re
         }
         // TODO Sprint 5: call Stripe transfer API here
         // await stripe.transfers.create({ amount: task.budgetAmount * 100, destination: providerStripeId });
+        if (!task.selectedProviderId) {
+            throw new https_1.HttpsError('failed-precondition', 'Task does not have a selected provider');
+        }
+        // Fetch provider's Stripe Account ID
+        const providerRef = db.collection('users').doc(task.selectedProviderId);
+        const providerSnap = await t.get(providerRef);
+        if (!providerSnap.exists) {
+            throw new https_1.HttpsError('not-found', 'Provider not found');
+        }
+        const provider = providerSnap.data();
+        const providerStripeId = provider.stripeAccountId;
+        if (!providerStripeId) {
+            throw new https_1.HttpsError('failed-precondition', 'Provider does not have a linked Stripe account');
+        }
+        // Fetch platform settings to determine fee
+        const settingsRef = db.collection('settings').doc('platform');
+        const settingsSnap = await t.get(settingsRef);
+        let platformFeePercentage = 10; // Default to 10% if not set
+        if (settingsSnap.exists) {
+            const settings = settingsSnap.data();
+            if (typeof settings.platformFeePercentage === 'number') {
+                platformFeePercentage = settings.platformFeePercentage;
+            }
+        }
+        return {
+            amount: task.budgetAmount || 0,
+            currency: task.currency || 'usd',
+            platformFeePercentage,
+            providerStripeId,
+        };
+    });
+    // Step 2: Calculate transfer amount
+    const feeAmount = (transferDetails.amount * transferDetails.platformFeePercentage) / 100;
+    const transferAmount = transferDetails.amount - feeAmount;
+    const currency = transferDetails.currency.toLowerCase();
+    // Stripe expects amounts in cents/smallest currency unit for zero-decimal currencies
+    const isZeroDecimalCurrency = ['bif', 'clp', 'djf', 'gnf', 'jpy', 'kmf', 'krw', 'mga', 'pyg', 'rwf', 'ugx', 'vnd', 'vuv', 'xaf', 'xof', 'xpf'].includes(currency);
+    const transferAmountInSmallestUnit = isZeroDecimalCurrency ? Math.round(transferAmount) : Math.round(transferAmount * 100);
+    // Step 3: Perform the Stripe transfer OUTSIDE the transaction
+    if (transferAmountInSmallestUnit > 0) {
+        try {
+            await stripe.transfers.create({
+                amount: transferAmountInSmallestUnit,
+                currency: currency,
+                destination: transferDetails.providerStripeId,
+                transfer_group: `task_${taskId}`,
+            }, {
+                idempotencyKey: `transfer_${taskId}`, // Ensures the transfer only happens once
+            });
+        }
+        catch (error) {
+            console.error('Stripe transfer failed:', error);
+            throw new https_1.HttpsError('internal', `Stripe transfer failed: ${error.message || 'Unknown error'}`);
+        }
+    }
+    // Step 4: Update the task status to approved in a new transaction
+    await db.runTransaction(async (t) => {
+        const taskRef = db.collection('tasks').doc(taskId);
+        const taskSnap = await t.get(taskRef);
+        // Safety check again in case state changed while Stripe transfer was executing
+        if (!taskSnap.exists)
+            return;
+        const task = taskSnap.data();
+        if (task.status !== 'submittedForVerification')
+            return;
         t.update(taskRef, {
             status: 'approved',
             updatedAt: firestore_1.FieldValue.serverTimestamp(),

@@ -94,6 +94,9 @@ exports.onTaskStatusChanged = (0, firestore_1.onDocumentUpdated)('tasks/{taskId}
         await (0, sendPush_1.sendPushAndSaveNotification)(notifyUserId, title, body, { type: 'task_status', taskId, newStatus: toStatus }, `/board/task/${taskId}`);
     }
 });
+});
+// ── acceptOffer: Callable — task creator selects a provider ──────────────────
+// (Implemented in escrow.ts as a callable; status transition handled here)
 // ── expireStaleTasksCron: daily job to mark stale tasks as expired ─────────────
 exports.expireStaleTasksCron = (0, scheduler_1.onSchedule)('every 24 hours', async () => {
     const now = firestore_2.Timestamp.now();
