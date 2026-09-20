@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../core/constants/enums.dart';
+import '../../notifications/presentation/notifications_button.dart';
 import '../../tasks/presentation/task_card.dart';
 import 'board_providers.dart';
 
@@ -46,10 +47,7 @@ class _BoardPageState extends ConsumerState<BoardPage>
             icon: const Icon(Icons.search),
             onPressed: () {/* TODO: search */},
           ),
-          IconButton(
-            icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {/* TODO: notifications */},
-          ),
+          const NotificationsButton(),
         ],
         bottom: TabBar(
           controller: _tabCtrl,
