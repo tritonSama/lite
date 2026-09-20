@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.releaseEscrow = exports.acceptOffer = void 0;
 const https_1 = require("firebase-functions/v2/https");
 const firestore_1 = require("firebase-admin/firestore");
+const db = (0, firestore_1.getFirestore)();
 const params_1 = require("firebase-functions/params");
 const stripe_1 = __importDefault(require("stripe"));
 const db = (0, firestore_1.getFirestore)();
@@ -74,11 +75,13 @@ exports.acceptOffer = (0, https_1.onCall)({ region: 'us-central1' }, async (req)
 //
 // Full Stripe integration wired here in Sprint 5.
 // For now, transitions task through approved → paymentReleased → completed.
+exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1' }, async (req) => {
 exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1', secrets: [STRIPE_SECRET_KEY] }, async (req) => {
     const { taskId } = req.data;
     const uid = req.auth?.uid;
     if (!uid)
         throw new https_1.HttpsError('unauthenticated', 'Must be signed in');
+    await db.runTransaction(async (t) => {
     const stripe = new stripe_1.default(STRIPE_SECRET_KEY.value(), {
         apiVersion: '2023-10-16', // Use type assertion to avoid TypeScript error on older/newer SDK types
     });
@@ -95,6 +98,8 @@ exports.releaseEscrow = (0, https_1.onCall)({ region: 'us-central1', secrets: [S
         if (task.status !== 'submittedForVerification') {
             throw new https_1.HttpsError('failed-precondition', `Task must be in submittedForVerification state (current: ${task.status})`);
         }
+        // TODO Sprint 5: call Stripe transfer API here
+        // await stripe.transfers.create({ amount: task.budgetAmount * 100, destination: providerStripeId });
         if (!task.selectedProviderId) {
             throw new https_1.HttpsError('failed-precondition', 'Task does not have a selected provider');
         }

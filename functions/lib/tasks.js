@@ -4,6 +4,7 @@ exports.expireStaleTasksCron = exports.onTaskStatusChanged = void 0;
 const firestore_1 = require("firebase-functions/v2/firestore");
 const scheduler_1 = require("firebase-functions/v2/scheduler");
 const firestore_2 = require("firebase-admin/firestore");
+const sendPush_1 = require("./sendPush");
 const db = (0, firestore_2.getFirestore)();
 // ── Valid task state transitions ──────────────────────────────────────────────
 const VALID_TRANSITIONS = {
@@ -56,6 +57,43 @@ exports.onTaskStatusChanged = (0, firestore_1.onDocumentUpdated)('tasks/{taskId}
         // changedBy is set by the callable function that triggered the write
     });
     console.log(`Task ${taskId}: ${fromStatus} → ${toStatus}`);
+    // Notify creator/provider based on status change
+    let notifyUserId = after.creatorId;
+    let title = 'Task Update';
+    let body = `Your task "${after.title}" is now ${toStatus}.`;
+    let shouldNotify = false;
+    if (toStatus === 'expired') {
+        title = 'Task Expired';
+        body = `Your task "${after.title}" has expired.`;
+        shouldNotify = true;
+    }
+    else if (toStatus === 'inProgress' && after.selectedProviderId) {
+        notifyUserId = after.selectedProviderId;
+        title = 'Task In Progress';
+        body = `The task "${after.title}" is now in progress.`;
+        shouldNotify = true;
+    }
+    else if (toStatus === 'submittedForVerification') {
+        title = 'Task Pending Review';
+        body = `The provider has submitted "${after.title}" for verification.`;
+        shouldNotify = true;
+    }
+    else if (toStatus === 'approved' && after.selectedProviderId) {
+        notifyUserId = after.selectedProviderId;
+        title = 'Task Approved';
+        body = `Your work on "${after.title}" has been approved!`;
+        shouldNotify = true;
+    }
+    else if (toStatus === 'completed') {
+        // We could notify both, but let's notify creator for now
+        title = 'Task Completed';
+        body = `The task "${after.title}" has been successfully completed.`;
+        shouldNotify = true;
+    }
+    if (shouldNotify) {
+        await (0, sendPush_1.sendPushAndSaveNotification)(notifyUserId, title, body, { type: 'task_status', taskId, newStatus: toStatus }, `/board/task/${taskId}`);
+    }
+});
 });
 // ── acceptOffer: Callable — task creator selects a provider ──────────────────
 // (Implemented in escrow.ts as a callable; status transition handled here)
