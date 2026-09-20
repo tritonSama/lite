@@ -157,7 +157,7 @@ class _CategoriesTab extends StatelessWidget {
         final cat = categories[i];
         return Card(
           child: InkWell(
-            onTap: () {/* TODO: filter by category */},
+            onTap: () => ctx.go('/board/category/${cat.name}'),
             borderRadius: BorderRadius.circular(HBRadius.md),
             child: Padding(
               padding: const EdgeInsets.all(HBSpacing.md),
