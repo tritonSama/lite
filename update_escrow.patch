@@ -1,0 +1,12 @@
+--- functions/src/escrow.ts
++++ functions/src/escrow.ts
+@@ -1,5 +1,8 @@
+ import { onCall, HttpsError } from 'firebase-functions/v2/https';
+ import { getFirestore, FieldValue } from 'firebase-admin/firestore';
++import { defineSecret } from 'firebase-functions/params';
++import Stripe from 'stripe';
+
+ const db = getFirestore();
++const STRIPE_SECRET_KEY = defineSecret('STRIPE_SECRET_KEY');
+
+ // ── acceptOffer: Callable — task creator selects a winning bid ────────────────
