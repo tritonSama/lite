@@ -6,6 +6,7 @@ import '../../../app/theme.dart';
 import '../../../core/constants/enums.dart';
 import '../../tasks/presentation/task_card.dart';
 import 'board_providers.dart';
+import 'task_search_delegate.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -44,11 +45,21 @@ class _BoardPageState extends ConsumerState<BoardPage>
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () {/* TODO: search */},
+            onPressed: () async {
+              final selectedTask = await showSearch(
+                context: context,
+                delegate: TaskSearchDelegate(),
+              );
+              if (selectedTask != null && context.mounted) {
+                context.push('/board/task/${selectedTask.id}');
+              }
+            },
           ),
           IconButton(
             icon: const Icon(Icons.notifications_outlined),
-            onPressed: () {/* TODO: notifications */},
+            onPressed: () {
+              /* TODO: notifications */
+            },
           ),
         ],
         bottom: TabBar(
@@ -67,8 +78,14 @@ class _BoardPageState extends ConsumerState<BoardPage>
         controller: _tabCtrl,
         children: const [
           _TasksTab(),
-          _PlaceholderTab(label: 'Projects coming soon', icon: Icons.folder_outlined),
-          _PlaceholderTab(label: 'Nearby map coming soon', icon: Icons.map_outlined),
+          _PlaceholderTab(
+            label: 'Projects coming soon',
+            icon: Icons.folder_outlined,
+          ),
+          _PlaceholderTab(
+            label: 'Nearby map coming soon',
+            icon: Icons.map_outlined,
+          ),
           _CategoriesTab(),
         ],
       ),
@@ -94,7 +111,10 @@ class _TasksTab extends ConsumerWidget {
             children: [
               const Icon(Icons.error_outline, size: 48, color: HBColors.error),
               const SizedBox(height: HBSpacing.md),
-              Text('Failed to load tasks', style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'Failed to load tasks',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               const SizedBox(height: HBSpacing.sm),
               Text(e.toString(), style: Theme.of(context).textTheme.bodySmall),
             ],
@@ -107,14 +127,23 @@ class _TasksTab extends ConsumerWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                const Icon(Icons.inbox_outlined, size: 64, color: HBColors.onSurfaceVariant),
+                const Icon(
+                  Icons.inbox_outlined,
+                  size: 64,
+                  color: HBColors.onSurfaceVariant,
+                ),
                 const SizedBox(height: HBSpacing.md),
-                Text('No tasks yet', style: Theme.of(context).textTheme.titleMedium),
+                Text(
+                  'No tasks yet',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
                 const SizedBox(height: HBSpacing.sm),
-                Text('Be the first to post a task!',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: HBColors.onSurfaceVariant,
-                        )),
+                Text(
+                  'Be the first to post a task!',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: HBColors.onSurfaceVariant,
+                  ),
+                ),
               ],
             ),
           );
@@ -157,7 +186,9 @@ class _CategoriesTab extends StatelessWidget {
         final cat = categories[i];
         return Card(
           child: InkWell(
-            onTap: () {/* TODO: filter by category */},
+            onTap: () {
+              /* TODO: filter by category */
+            },
             borderRadius: BorderRadius.circular(HBRadius.md),
             child: Padding(
               padding: const EdgeInsets.all(HBSpacing.md),
@@ -166,9 +197,11 @@ class _CategoriesTab extends StatelessWidget {
                 children: [
                   Text(cat.emoji, style: const TextStyle(fontSize: 32)),
                   const SizedBox(height: HBSpacing.sm),
-                  Text(cat.label,
-                      style: Theme.of(ctx).textTheme.titleMedium,
-                      textAlign: TextAlign.center),
+                  Text(
+                    cat.label,
+                    style: Theme.of(ctx).textTheme.titleMedium,
+                    textAlign: TextAlign.center,
+                  ),
                 ],
               ),
             ),
@@ -193,11 +226,12 @@ class _PlaceholderTab extends StatelessWidget {
         children: [
           Icon(icon, size: 64, color: HBColors.onSurfaceVariant),
           const SizedBox(height: HBSpacing.md),
-          Text(label,
-              style: Theme.of(context)
-                  .textTheme
-                  .titleMedium
-                  ?.copyWith(color: HBColors.onSurfaceVariant)),
+          Text(
+            label,
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium?.copyWith(color: HBColors.onSurfaceVariant),
+          ),
         ],
       ),
     );
