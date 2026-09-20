@@ -6,7 +6,7 @@ import '../../../app/theme.dart';
 import '../../../core/constants/enums.dart';
 import '../../tasks/presentation/task_card.dart';
 import 'board_providers.dart';
-import 'task_search_delegate.dart';
+import 'board_search_delegate.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -45,14 +45,11 @@ class _BoardPageState extends ConsumerState<BoardPage>
         actions: [
           IconButton(
             icon: const Icon(Icons.search),
-            onPressed: () async {
-              final selectedTask = await showSearch(
+            onPressed: () {
+              showSearch(
                 context: context,
-                delegate: TaskSearchDelegate(),
+                delegate: BoardSearchDelegate(ref: ref),
               );
-              if (selectedTask != null && context.mounted) {
-                context.push('/board/task/${selectedTask.id}');
-              }
             },
           ),
           IconButton(
