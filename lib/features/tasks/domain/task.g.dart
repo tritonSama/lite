@@ -67,6 +67,7 @@ _Task _$TaskFromJson(Map<String, dynamic> json) => _Task(
       const [],
   workerCount: (json['workerCount'] as num?)?.toInt() ?? 1,
   specialRequirements: json['specialRequirements'] as String?,
+  platformFee: (json['platformFee'] as num?)?.toDouble(),
   status:
       $enumDecodeNullable(_$TaskStatusEnumMap, json['status']) ??
       TaskStatus.draft,
@@ -102,6 +103,7 @@ Map<String, dynamic> _$TaskToJson(_Task instance) => <String, dynamic>{
   'requiredCredentials': instance.requiredCredentials,
   'workerCount': instance.workerCount,
   'specialRequirements': instance.specialRequirements,
+  'platformFee': instance.platformFee,
   'status': _$TaskStatusEnumMap[instance.status]!,
   'selectedProviderId': instance.selectedProviderId,
   'bidCount': instance.bidCount,
