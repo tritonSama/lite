@@ -10,7 +10,6 @@ Please refer to the following documents for comprehensive information about the 
 
 *   [Documentation](docs/DOCUMENTATION.md): Details the application's concept, architecture, data models, the task lifecycle state machine, and the role-based security rules.
 *   [Build Plan](docs/BUILD_PLAN.md): A step-by-step roadmap to build out the remaining features, transitioning from the current MVP to the full HeavenlyBond Lite vision.
-*   [Agents Tracker](AGENTS.md): A tracker for AI agents working on this project, their roles, and current assignments.
 
 ## Getting Started
 
