@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.onBidStatusChanged = exports.onNewBid = void 0;
 const firestore_1 = require("firebase-functions/v2/firestore");
 const firestore_2 = require("firebase-admin/firestore");
+const sendPush_1 = require("./sendPush");
 const messaging_1 = require("firebase-admin/messaging");
 const db = (0, firestore_2.getFirestore)();
 // ── Helper: idempotency dedup ─────────────────────────────────────────────────
@@ -43,6 +44,7 @@ exports.onNewBid = (0, firestore_1.onDocumentCreated)('bids/{bidId}', async (eve
     const task = taskSnap.data();
     if (!task)
         return;
+    await (0, sendPush_1.sendPushAndSaveNotification)(task.creatorId, 'New Bid Received', `Someone placed a bid of $${bid.amount} on "${task.title}"`, { type: 'new_bid', taskId: bid.taskId, bidId: event.params.bidId }, `/board/task/${bid.taskId}`);
     await sendPush(task.creatorId, 'New Bid Received', `Someone placed a bid of $${bid.amount} on "${task.title}"`, { type: 'new_bid', taskId: bid.taskId, bidId: event.params.bidId });
 });
 // ── onBidStatusChanged: notify bidder when their bid status changes ───────────
@@ -61,6 +63,7 @@ exports.onBidStatusChanged = (0, firestore_1.onDocumentUpdated)('bids/{bidId}', 
         expired: 'Your bid has expired.',
     };
     const body = messages[after.status] ?? 'Your bid status changed.';
+    await (0, sendPush_1.sendPushAndSaveNotification)(after.bidderId, 'Bid Update', body, { type: 'bid_status', bidId: event.params.bidId, taskId: after.taskId, newStatus: after.status }, `/bids/${event.params.bidId}`);
     await sendPush(after.bidderId, 'Bid Update', body, { type: 'bid_status', bidId: event.params.bidId, taskId: after.taskId, newStatus: after.status });
 });
 //# sourceMappingURL=bids.js.map
