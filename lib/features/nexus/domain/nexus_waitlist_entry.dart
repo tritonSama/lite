@@ -16,7 +16,7 @@ class TimestampConverter implements JsonConverter<DateTime?, Timestamp?> {
 }
 
 @freezed
-class NexusWaitlistEntry with _$NexusWaitlistEntry {
+abstract class NexusWaitlistEntry with _$NexusWaitlistEntry {
   const factory NexusWaitlistEntry({
     required String userId,
     required String name,
