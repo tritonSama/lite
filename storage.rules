@@ -21,9 +21,12 @@ service firebase.storage {
     // ── Task attachments (photos/video) ─────────────────────────────────────
     // Path: /tasks/{taskId}/attachments/{filename}
     match /tasks/{taskId}/attachments/{filename} {
-      allow write: if request.auth != null &&
+      allow create, update: if request.auth != null &&
+                      firestore.get(/databases/(default)/documents/tasks/$(taskId)).data.creatorId == request.auth.uid &&
                       request.resource.size < 50 * 1024 * 1024 && // 50 MB
                       request.resource.contentType.matches('(image/.*|video/.*)');
+      allow delete: if request.auth != null &&
+                      firestore.get(/databases/(default)/documents/tasks/$(taskId)).data.creatorId == request.auth.uid;
       allow read:  if request.auth != null;
     }
 
