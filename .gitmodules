@@ -1,0 +1,3 @@
+[submodule "third_party/fluorescent"]
+	path = third_party/fluorescent
+	url = https://github.com/tritonSama/Fluorescent.git
