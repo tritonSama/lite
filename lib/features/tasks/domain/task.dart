@@ -39,6 +39,7 @@ abstract class Task with _$Task {
     @Default([]) List<RequiredCredential> requiredCredentials,
     @Default(1) int workerCount,
     String? specialRequirements,
+    double? platformFee,
     @Default(TaskStatus.draft) TaskStatus status,
     String? selectedProviderId,
     @Default(0) int bidCount,

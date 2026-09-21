@@ -91,12 +91,73 @@ export const releaseEscrow = onCall({ region: 'us-central1', secrets: [STRIPE_SE
     const taskRef = db.collection('tasks').doc(taskId);
     const taskSnap = await t.get(taskRef);
 
-    if (!taskSnap.exists) throw new HttpsError('not-found', 'Task not found');
-    const task = taskSnap.data()!;
+  if (!taskSnap.exists) throw new HttpsError('not-found', 'Task not found');
+  let task = taskSnap.data()!;
 
-    if (task.creatorId !== uid) {
-      throw new HttpsError('permission-denied', 'Only the task creator can release payment');
+  if (task.creatorId !== uid) {
+    throw new HttpsError('permission-denied', 'Only the task creator can release payment');
+  }
+  if (task.status !== 'submittedForVerification') {
+    throw new HttpsError(
+      'failed-precondition',
+      `Task must be in submittedForVerification state (current: ${task.status})`,
+    );
+  }
+
+  if (!task.selectedProviderId) {
+    throw new HttpsError('failed-precondition', 'Task has no selected provider');
+  }
+
+  // Get provider's stripe account id
+  const providerRef = db.collection('users').doc(task.selectedProviderId);
+  const providerSnap = await providerRef.get();
+  if (!providerSnap.exists) {
+    throw new HttpsError('not-found', 'Provider user not found');
+  }
+
+  const provider = providerSnap.data()!;
+  const providerStripeId = provider.stripeAccountId;
+  if (!providerStripeId) {
+    throw new HttpsError('failed-precondition', 'Provider does not have a Stripe account connected');
+  }
+
+  // Calculate transfer amount
+  const budgetAmount = task.budgetAmount || 0;
+  const platformFee = task.platformFee || 0;
+  const currency = task.currencyCode ? task.currencyCode.toLowerCase() : 'usd';
+
+  const transferAmount = budgetAmount * (1 - platformFee / 100);
+  const transferAmountCents = Math.round(transferAmount * 100);
+
+  if (transferAmountCents > 0) {
+    const stripe = new Stripe(stripeSecretKey.value(), {
+      apiVersion: '2023-10-16', // Typical recent api version
+    });
+
+    try {
+      await stripe.transfers.create(
+        {
+          amount: transferAmountCents,
+          currency: currency,
+          destination: providerStripeId,
+          transfer_group: taskId,
+        },
+        {
+          idempotencyKey: `transfer_${taskId}`,
+        }
+      );
+    } catch (error) {
+      console.error('Stripe transfer failed:', error);
+      throw new HttpsError('internal', 'Failed to release funds to the provider');
     }
+  }
+
+  // Update task status in a transaction to ensure atomic history append
+  await db.runTransaction(async (t) => {
+    taskSnap = await t.get(taskRef);
+    if (!taskSnap.exists) throw new HttpsError('not-found', 'Task not found');
+    task = taskSnap.data()!;
+
     if (task.status !== 'submittedForVerification') {
       throw new HttpsError(
         'failed-precondition',
