@@ -53,16 +53,16 @@ class _TaskDetailBody extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(HBSpacing.lg),
             decoration: BoxDecoration(
-              color: HBColors.accent.withOpacity(0.08),
+              color: HBColors.warning.withOpacity(0.08),
               borderRadius: BorderRadius.circular(HBRadius.lg),
-              border: Border.all(color: HBColors.accent.withOpacity(0.3)),
+              border: Border.all(color: HBColors.warning.withOpacity(0.3)),
             ),
             child: Column(
               children: [
                 Text('Bounty', style: tt.bodySmall),
                 Text(
                   '\$${task.budgetAmount.toStringAsFixed(0)}',
-                  style: tt.displayMedium?.copyWith(color: HBColors.accent),
+                  style: tt.displayMedium?.copyWith(color: HBColors.warning),
                 ),
               ],
             ),
@@ -108,7 +108,7 @@ class _MetaRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: HBSpacing.xs),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: HBColors.onSurfaceVariant),
+          Icon(icon, size: 18, color: Theme.of(context).colorScheme.onSurfaceVariant),
           const SizedBox(width: HBSpacing.sm),
           Expanded(
             child: Text(text, style: Theme.of(context).textTheme.bodyMedium),

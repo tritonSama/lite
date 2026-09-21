@@ -44,7 +44,7 @@ class TaskCard extends StatelessWidget {
 
               // Description preview
               Text(task.description,
-                  style: tt.bodyMedium?.copyWith(color: HBColors.onSurfaceVariant),
+                  style: tt.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis),
 
@@ -60,13 +60,13 @@ class TaskCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
                     decoration: BoxDecoration(
-                      color: HBColors.accent.withOpacity(0.12),
+                      color: HBColors.warning.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(HBRadius.sm),
                     ),
                     child: Text(
                       '\$${task.budgetAmount.toStringAsFixed(0)}',
                       style: tt.titleMedium?.copyWith(
-                        color: HBColors.accent,
+                        color: HBColors.warning,
                         fontWeight: FontWeight.w700,
                       ),
                     ),
@@ -78,7 +78,7 @@ class TaskCard extends StatelessWidget {
                     child: Row(
                       children: [
                         const Icon(Icons.location_on_outlined,
-                            size: 14, color: HBColors.onSurfaceVariant),
+                            size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         const SizedBox(width: 2),
                         Expanded(
                           child: Text(
@@ -94,7 +94,7 @@ class TaskCard extends StatelessWidget {
                   // Bid count
                   Row(
                     children: [
-                      const Icon(Icons.gavel, size: 14, color: HBColors.onSurfaceVariant),
+                      const Icon(Icons.gavel, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       const SizedBox(width: 2),
                       Text('${task.bidCount} bids', style: tt.bodySmall),
                     ],
@@ -144,9 +144,9 @@ class _StatusChip extends StatelessWidget {
           HBColors.secondary,
         TaskStatus.inProgress || TaskStatus.scheduled => HBColors.info,
         TaskStatus.completed => HBColors.success,
-        TaskStatus.cancelled || TaskStatus.expired => HBColors.onSurfaceVariant,
+        TaskStatus.cancelled || TaskStatus.expired => Theme.of(context).colorScheme.onSurfaceVariant,
         TaskStatus.disputed => HBColors.error,
-        _ => HBColors.accent,
+        _ => HBColors.warning,
       };
 
   @override

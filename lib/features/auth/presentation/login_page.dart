@@ -68,7 +68,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Text(
                   'Community tasks & services',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: HBColors.onSurfaceVariant,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
                       ),
                   textAlign: TextAlign.center,
                 ),

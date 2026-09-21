@@ -20,7 +20,7 @@ class CreateTaskPage extends StatelessWidget {
             const SizedBox(height: HBSpacing.sm),
             Text('Coming in Sprint 2',
                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                      color: HBColors.onSurfaceVariant,
+                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                     )),
           ],
         ),

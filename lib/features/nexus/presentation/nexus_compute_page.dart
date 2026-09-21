@@ -55,13 +55,13 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: HBColors.accentLight.withOpacity(0.1),
-                  border: Border.all(color: HBColors.accent, width: 2),
+                  color: HBColors.warningLight.withOpacity(0.1),
+                  border: Border.all(color: HBColors.warning, width: 2),
                 ),
                 child: const Icon(
                   Icons.hub_outlined,
                   size: 50,
-                  color: HBColors.accent,
+                  color: HBColors.warning,
                 ),
               ),
             ),
@@ -71,7 +71,7 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
             Text(
               'The Future of Edge Compute',
               style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                color: HBColors.accent,
+                color: HBColors.warning,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -115,15 +115,15 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
                   return Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: HBColors.accentLight.withOpacity(0.1),
+                      color: HBColors.warningLight.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(16),
-                      border: Border.all(color: HBColors.accent),
+                      border: Border.all(color: HBColors.warning),
                     ),
                     child: Row(
                       children: [
                         const Icon(
                           Icons.check_circle,
-                          color: HBColors.accent,
+                          color: HBColors.warning,
                           size: 32,
                         ),
                         const Gap(16),
@@ -134,7 +134,7 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
                               Text(
                                 'You are on the waitlist!',
                                 style: Theme.of(context).textTheme.titleLarge
-                                    ?.copyWith(color: HBColors.accent),
+                                    ?.copyWith(color: HBColors.warning),
                               ),
                               const Gap(8),
                               Text(
