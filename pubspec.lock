@@ -553,6 +553,34 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  fluorescent_core:
+    dependency: "direct main"
+    description:
+      path: "third_party/fluorescent/fluorescent/packages/fluorescent_core"
+      relative: true
+    source: path
+    version: "0.0.1"
+  fluorescent_ecs:
+    dependency: "direct main"
+    description:
+      path: "third_party/fluorescent/fluorescent/packages/fluorescent_ecs"
+      relative: true
+    source: path
+    version: "0.0.1"
+  fluorescent_fluorite:
+    dependency: "direct main"
+    description:
+      path: "third_party/fluorescent/fluorescent/packages/fluorescent_fluorite"
+      relative: true
+    source: path
+    version: "0.0.1"
+  fluorescent_vulkan:
+    dependency: "direct main"
+    description:
+      path: "third_party/fluorescent/fluorescent/packages/fluorescent_vulkan"
+      relative: true
+    source: path
+    version: "0.0.1"
   flutter:
     dependency: "direct main"
     description: flutter
