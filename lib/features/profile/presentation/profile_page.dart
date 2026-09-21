@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme.dart';
+import '../../../app/theme_provider.dart';
 import '../../auth/presentation/auth_providers.dart';
 
 class ProfilePage extends ConsumerWidget {
@@ -54,7 +55,7 @@ class ProfilePage extends ConsumerWidget {
             Text(
               user?.email ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: HBColors.onSurfaceVariant,
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
                   ),
             ),
             const SizedBox(height: HBSpacing.xl),
@@ -79,6 +80,37 @@ class ProfilePage extends ConsumerWidget {
               icon: Icons.attach_money,
               label: 'Earnings',
               onTap: () {},
+            ),
+
+            const SizedBox(height: HBSpacing.xl),
+            const Divider(),
+            const SizedBox(height: HBSpacing.sm),
+
+            Consumer(
+              builder: (context, ref, child) {
+                final themeMode = ref.watch(themeModeNotifierProvider);
+                final isDarkMode = themeMode == ThemeMode.dark;
+
+                return SwitchListTile(
+                  title: Text(
+                    'Dark Mode',
+                    style: Theme.of(context).textTheme.titleMedium,
+                  ),
+                  subtitle: Text(
+                    'Tactical terminal styling',
+                    style: Theme.of(context).textTheme.bodySmall,
+                  ),
+                  value: isDarkMode,
+                  activeColor: HBColors.primary,
+                  onChanged: (bool value) {
+                    ref.read(themeModeNotifierProvider.notifier).toggleTheme();
+                  },
+                  secondary: Icon(
+                    isDarkMode ? Icons.dark_mode : Icons.light_mode,
+                    color: HBColors.primary,
+                  ),
+                );
+              },
             ),
           ],
         ),

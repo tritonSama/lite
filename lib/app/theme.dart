@@ -1,81 +1,100 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ── Brand colours ──────────────────────────────────────────────────────────────
 class HBColors {
   HBColors._();
 
-  static const Color primary = Color(0xFF1B6CA8);       // deep sky blue
-  static const Color primaryLight = Color(0xFF4D9FD6);
-  static const Color primaryDark = Color(0xFF0D4A7A);
+  static const Color primary = Color(0xFF0096C7);       // Cyan
+  static const Color primaryLight = Color(0xFF4DBBDF);
+  static const Color primaryDark = Color(0xFF006A8C);
 
-  static const Color secondary = Color(0xFF27AE60);     // community green
-  static const Color secondaryLight = Color(0xFF52D68A);
-  static const Color secondaryDark = Color(0xFF1A7A42);
+  static const Color secondary = Color(0xFFD4AF37);     // Gold
+  static const Color secondaryLight = Color(0xFFE2C86F);
+  static const Color secondaryDark = Color(0xFF947A26);
 
-  static const Color accent = Color(0xFFF39C12);        // bounty amber
-  static const Color accentLight = Color(0xFFF8C471);
+  static const Color tertiary = Color(0xFF5300FF);      // Purple/Magenta
+  static const Color tertiaryLight = Color(0xFF834DFF);
+
+  static const Color neutral = Color(0xFF0C0F1D);       // Deep Dark Background
+  static const Color neutralLight = Color(0xFF1E2336);
+  static const Color neutralLighter = Color(0xFF2C324A);
 
   static const Color error = Color(0xFFE74C3C);
-  static const Color warning = Color(0xFFF39C12);
-  static const Color success = Color(0xFF27AE60);
-  static const Color info = Color(0xFF1B6CA8);
+  static const Color warning = Color(0xFFD4AF37);
+  static const Color success = Color(0xFF0096C7);
+  static const Color info = Color(0xFF5300FF);
 
-  static const Color surface = Color(0xFFF8F9FA);
-  static const Color surfaceVariant = Color(0xFFECF0F1);
-  static const Color onSurface = Color(0xFF2C3E50);
-  static const Color onSurfaceVariant = Color(0xFF7F8C8D);
+  // Light Mode Specific
+  static const Color surfaceLight = Color(0xFFF4F6F9);
+  static const Color surfaceVariantLight = Color(0xFFE9EDF2);
+  static const Color onSurfaceLight = Color(0xFF0C0F1D);
+  static const Color onSurfaceVariantLight = Color(0xFF646B81);
+  static const Color dividerLight = Color(0xFFDDE1E7);
 
-  static const Color divider = Color(0xFFDDE1E7);
+  // Dark Mode Specific
+  static const Color surfaceDark = Color(0xFF0C0F1D);
+  static const Color surfaceVariantDark = Color(0xFF16192B);
+  static const Color onSurfaceDark = Color(0xFFE9EDF2);
+  static const Color onSurfaceVariantDark = Color(0xFFA1A8C3);
+  static const Color dividerDark = Color(0xFF2C324A);
 }
 
 // ── Text styles ───────────────────────────────────────────────────────────────
 class HBTextStyles {
   HBTextStyles._();
 
-  static const TextStyle displayLarge = TextStyle(
+  // Helper to get Google Fonts based on role
+  static TextStyle getDisplayFont(TextStyle base) => GoogleFonts.spaceGrotesk(textStyle: base);
+  static TextStyle getBodyFont(TextStyle base) => GoogleFonts.inter(textStyle: base);
+  static TextStyle getMonoFont(TextStyle base) => GoogleFonts.jetBrainsMono(textStyle: base);
+
+  static TextStyle displayLarge(Color color) => getDisplayFont(TextStyle(
     fontSize: 32, fontWeight: FontWeight.w700, letterSpacing: -0.5,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle displayMedium = TextStyle(
+    color: color,
+  ));
+  static TextStyle displayMedium(Color color) => getDisplayFont(TextStyle(
     fontSize: 26, fontWeight: FontWeight.w600, letterSpacing: -0.25,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle headlineLarge = TextStyle(
+    color: color,
+  ));
+  static TextStyle headlineLarge(Color color) => getDisplayFont(TextStyle(
     fontSize: 22, fontWeight: FontWeight.w600,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle headlineMedium = TextStyle(
+    color: color,
+  ));
+  static TextStyle headlineMedium(Color color) => getDisplayFont(TextStyle(
     fontSize: 18, fontWeight: FontWeight.w600,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle titleLarge = TextStyle(
+    color: color,
+  ));
+  static TextStyle titleLarge(Color color) => getDisplayFont(TextStyle(
     fontSize: 16, fontWeight: FontWeight.w600,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle titleMedium = TextStyle(
+    color: color,
+  ));
+  static TextStyle titleMedium(Color color) => getDisplayFont(TextStyle(
     fontSize: 14, fontWeight: FontWeight.w500,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle bodyLarge = TextStyle(
+    color: color,
+  ));
+
+  static TextStyle bodyLarge(Color color) => getBodyFont(TextStyle(
     fontSize: 16, fontWeight: FontWeight.w400,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle bodyMedium = TextStyle(
+    color: color,
+  ));
+  static TextStyle bodyMedium(Color color) => getBodyFont(TextStyle(
     fontSize: 14, fontWeight: FontWeight.w400,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle bodySmall = TextStyle(
+    color: color,
+  ));
+  static TextStyle bodySmall(Color color) => getBodyFont(TextStyle(
     fontSize: 12, fontWeight: FontWeight.w400,
-    color: HBColors.onSurfaceVariant,
-  );
-  static const TextStyle labelLarge = TextStyle(
+    color: color,
+  ));
+
+  static TextStyle labelLarge(Color color) => getMonoFont(TextStyle(
     fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.1,
-    color: HBColors.onSurface,
-  );
-  static const TextStyle labelSmall = TextStyle(
+    color: color,
+  ));
+  static TextStyle labelSmall(Color color) => getMonoFont(TextStyle(
     fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.5,
-    color: HBColors.onSurfaceVariant,
-  );
+    color: color,
+  ));
 }
 
 // ── Spacing ───────────────────────────────────────────────────────────────────
@@ -92,74 +111,100 @@ class HBSpacing {
 // ── Radius ────────────────────────────────────────────────────────────────────
 class HBRadius {
   HBRadius._();
-  static const double sm  = 8.0;
-  static const double md  = 12.0;
-  static const double lg  = 16.0;
-  static const double xl  = 24.0;
+  static const double sm  = 4.0; // Sharper corners for tactical look
+  static const double md  = 8.0; // Sharper corners for tactical look
+  static const double lg  = 12.0;
+  static const double xl  = 16.0;
   static const double full = 999.0;
 }
 
-// ── MaterialTheme ─────────────────────────────────────────────────────────────
-ThemeData hbTheme() {
+// ── Glow Effects (Shadows) ────────────────────────────────────────────────────
+List<BoxShadow> getNeonGlow(Color color) {
+  return [
+    BoxShadow(
+      color: color.withOpacity(0.5),
+      blurRadius: 12,
+      spreadRadius: 2,
+    ),
+    BoxShadow(
+      color: color.withOpacity(0.2),
+      blurRadius: 24,
+      spreadRadius: 4,
+    )
+  ];
+}
+
+// ── MaterialTheme (Light) ─────────────────────────────────────────────────────
+ThemeData hbLightTheme() {
   final colorScheme = ColorScheme.fromSeed(
     seedColor: HBColors.primary,
     brightness: Brightness.light,
     primary: HBColors.primary,
     secondary: HBColors.secondary,
+    tertiary: HBColors.tertiary,
     error: HBColors.error,
-    surface: HBColors.surface,
+    surface: HBColors.surfaceLight,
   );
 
   return ThemeData(
     useMaterial3: true,
     colorScheme: colorScheme,
-    scaffoldBackgroundColor: HBColors.surface,
+    scaffoldBackgroundColor: HBColors.surfaceLight,
 
-    // App bar
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      foregroundColor: HBColors.onSurface,
+      foregroundColor: Theme.of(context).colorScheme.onSurfaceLight,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: false,
-      titleTextStyle: HBTextStyles.headlineMedium,
+      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
     ),
 
-    // Bottom nav
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
-      indicatorColor: HBColors.primaryLight.withOpacity(0.2),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall),
+      indicatorColor: HBColors.primary.withOpacity(0.2),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight)),
     ),
 
-    // Cards
     cardTheme: CardThemeData(
       color: Colors.white,
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        side: BorderSide(color: HBColors.divider),
+        side: const BorderSide(color: Theme.of(context).dividerColorLight),
       ),
       margin: EdgeInsets.zero,
     ),
 
-    // Elevated buttons
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         backgroundColor: HBColors.primary,
         foregroundColor: Colors.white,
-        elevation: 0,
+        elevation: 8,
+        shadowColor: HBColors.primary.withOpacity(0.5),
         padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.lg, vertical: HBSpacing.md,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(HBRadius.md),
+          borderRadius: BorderRadius.circular(HBRadius.sm),
         ),
-        textStyle: HBTextStyles.labelLarge,
+        textStyle: HBTextStyles.labelLarge(Colors.white),
+      ).copyWith(
+        shadowColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
+             return HBColors.primary;
+          }
+          return HBColors.primary.withOpacity(0.5);
+        }),
+        elevation: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
+             return 16.0;
+          }
+          return 8.0;
+        }),
       ),
     ),
 
-    // Outlined buttons
     outlinedButtonTheme: OutlinedButtonThemeData(
       style: OutlinedButton.styleFrom(
         foregroundColor: HBColors.primary,
@@ -168,23 +213,22 @@ ThemeData hbTheme() {
           horizontal: HBSpacing.lg, vertical: HBSpacing.md,
         ),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(HBRadius.md),
+          borderRadius: BorderRadius.circular(HBRadius.sm),
         ),
-        textStyle: HBTextStyles.labelLarge,
+        textStyle: HBTextStyles.labelLarge(HBColors.primary),
       ),
     ),
 
-    // Text fields
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: BorderSide(color: HBColors.divider),
+        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: BorderSide(color: HBColors.divider),
+        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
@@ -197,40 +241,181 @@ ThemeData hbTheme() {
       contentPadding: const EdgeInsets.symmetric(
         horizontal: HBSpacing.md, vertical: HBSpacing.md,
       ),
-      labelStyle: HBTextStyles.bodyMedium,
-      hintStyle: HBTextStyles.bodyMedium.copyWith(color: HBColors.onSurfaceVariant),
+      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantLight),
     ),
 
-    // Chips
     chipTheme: ChipThemeData(
-      backgroundColor: HBColors.surfaceVariant,
-      selectedColor: HBColors.primaryLight.withOpacity(0.2),
-      labelStyle: HBTextStyles.labelSmall,
+      backgroundColor: HBColors.surfaceVariantLight,
+      selectedColor: HBColors.primary.withOpacity(0.2),
+      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceLight),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(HBRadius.full),
+        borderRadius: BorderRadius.circular(HBRadius.sm),
+        side: const BorderSide(color: Theme.of(context).dividerColorLight),
       ),
     ),
 
-    // Divider
     dividerTheme: const DividerThemeData(
-      color: HBColors.divider,
+      color: Theme.of(context).dividerColorLight,
       thickness: 1,
       space: 1,
     ),
 
-    // Text
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge,
-      displayMedium: HBTextStyles.displayMedium,
-      headlineLarge: HBTextStyles.headlineLarge,
-      headlineMedium: HBTextStyles.headlineMedium,
-      titleLarge:    HBTextStyles.titleLarge,
-      titleMedium:   HBTextStyles.titleMedium,
-      bodyLarge:     HBTextStyles.bodyLarge,
-      bodyMedium:    HBTextStyles.bodyMedium,
-      bodySmall:     HBTextStyles.bodySmall,
-      labelLarge:    HBTextStyles.labelLarge,
-      labelSmall:    HBTextStyles.labelSmall,
+      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceLight),
+      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceLight),
+      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceLight),
+      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceLight),
+      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
+      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceLight),
+      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
+    ),
+  );
+}
+
+// ── MaterialTheme (Dark) ──────────────────────────────────────────────────────
+ThemeData hbDarkTheme() {
+  final colorScheme = ColorScheme.fromSeed(
+    seedColor: HBColors.primary,
+    brightness: Brightness.dark,
+    primary: HBColors.primary,
+    secondary: HBColors.secondary,
+    tertiary: HBColors.tertiary,
+    error: HBColors.error,
+    surface: HBColors.surfaceDark,
+  );
+
+  return ThemeData(
+    useMaterial3: true,
+    colorScheme: colorScheme,
+    scaffoldBackgroundColor: HBColors.neutral,
+
+    appBarTheme: AppBarTheme(
+      backgroundColor: HBColors.neutralLight,
+      foregroundColor: Theme.of(context).colorScheme.onSurfaceDark,
+      elevation: 0,
+      scrolledUnderElevation: 1,
+      centerTitle: false,
+      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
+    ),
+
+    navigationBarTheme: NavigationBarThemeData(
+      backgroundColor: HBColors.neutralLight,
+      indicatorColor: HBColors.primary.withOpacity(0.3),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark)),
+    ),
+
+    cardTheme: CardThemeData(
+      color: HBColors.surfaceVariantDark,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(HBRadius.md),
+        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+      ),
+      margin: EdgeInsets.zero,
+    ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: HBColors.primary,
+        foregroundColor: Colors.white,
+        elevation: 8,
+        shadowColor: HBColors.primary.withOpacity(0.5),
+        padding: const EdgeInsets.symmetric(
+          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(HBRadius.sm),
+        ),
+        textStyle: HBTextStyles.labelLarge(Colors.white),
+      ).copyWith(
+        shadowColor: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
+             return HBColors.primary;
+          }
+          return HBColors.primary.withOpacity(0.5);
+        }),
+        elevation: WidgetStateProperty.resolveWith((states) {
+          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
+             return 16.0; // Acts as a stronger glow
+          }
+          return 8.0; // Base glow
+        }),
+      ),
+    ),
+
+    outlinedButtonTheme: OutlinedButtonThemeData(
+      style: OutlinedButton.styleFrom(
+        foregroundColor: HBColors.primaryLight,
+        side: const BorderSide(color: HBColors.primaryLight),
+        padding: const EdgeInsets.symmetric(
+          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(HBRadius.sm),
+        ),
+        textStyle: HBTextStyles.labelLarge(HBColors.primaryLight),
+      ),
+    ),
+
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: HBColors.surfaceVariantDark,
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(HBRadius.md),
+        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(HBRadius.md),
+        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(HBRadius.md),
+        borderSide: const BorderSide(color: HBColors.primaryLight, width: 2),
+      ),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(HBRadius.md),
+        borderSide: const BorderSide(color: HBColors.error),
+      ),
+      contentPadding: const EdgeInsets.symmetric(
+        horizontal: HBSpacing.md, vertical: HBSpacing.md,
+      ),
+      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantDark),
+    ),
+
+    chipTheme: ChipThemeData(
+      backgroundColor: Theme.of(context).dividerColorDark,
+      selectedColor: HBColors.primary.withOpacity(0.3),
+      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceDark),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(HBRadius.sm),
+        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+      ),
+    ),
+
+    dividerTheme: const DividerThemeData(
+      color: Theme.of(context).dividerColorDark,
+      thickness: 1,
+      space: 1,
+    ),
+
+    textTheme: TextTheme(
+      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceDark),
+      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceDark),
+      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceDark),
+      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceDark),
+      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
+      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceDark),
+      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
     ),
   );
 }

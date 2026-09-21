@@ -61,6 +61,8 @@ dependencies:
     path: third_party/fluorescent/fluorescent/packages/fluorescent_fluorite
   fluorescent_vulkan:
     path: third_party/fluorescent/fluorescent/packages/fluorescent_vulkan
+  google_fonts: ^8.2.1
+  shared_preferences: ^2.5.5
 
 dev_dependencies:
   flutter_test:

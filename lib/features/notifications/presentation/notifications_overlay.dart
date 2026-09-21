@@ -44,7 +44,7 @@ class NotificationsOverlay extends ConsumerWidget {
                     offset: const Offset(0, 4),
                   ),
                 ],
-                border: Border.all(color: HBColors.divider),
+                border: Border.all(color: Theme.of(context).dividerColor),
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
@@ -97,7 +97,7 @@ class NotificationsOverlay extends ConsumerWidget {
                               child: Text(
                                 'No notifications',
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: HBColors.onSurfaceVariant,
+                                      color: Theme.of(context).colorScheme.onSurfaceVariant,
                                     ),
                               ),
                             ),
@@ -136,7 +136,7 @@ class NotificationsOverlay extends ConsumerWidget {
                                   Text(
                                     timeago.format(notif.createdAt),
                                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                          color: HBColors.onSurfaceVariant.withOpacity(0.7),
+                                          color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.7),
                                         ),
                                   ),
                                 ],
