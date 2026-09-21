@@ -10,33 +10,32 @@ part 'task_repository.g.dart';
 @riverpod
 TaskRepository taskRepository(Ref ref) => TaskRepository();
 
-// ── Firestore withConverter ───────────────────────────────────────────────────
-extension _TaskCollectionExt on CollectionReference {
-  CollectionReference<Task> withTaskConverter() => withConverter<Task>(
+// ── TaskRepository ────────────────────────────────────────────────────────────
+class TaskRepository {
+  final _db = FirebaseFirestore.instance;
+
+  CollectionReference<Task> get _tasks => _db
+      .collection('tasks')
+      .withConverter<Task>(
         fromFirestore: (snap, _) =>
-            Task.fromJson({...snap.data()! as Map<String, dynamic>, 'id': snap.id}),
+            Task.fromJson({...snap.data()!, 'id': snap.id}),
         toFirestore: (task, _) {
           final map = task.toJson()..remove('id');
           return map;
         },
       );
-}
-
-// ── TaskRepository ────────────────────────────────────────────────────────────
-class TaskRepository {
-  final _db = FirebaseFirestore.instance;
-
-  CollectionReference<Task> get _tasks =>
-      _db.collection('tasks').withTaskConverter();
 
   /// Stream all tasks visible on the public board.
   Stream<List<Task>> watchPublicTasks({TaskCategory? category}) {
     Query<Task> query = _tasks
-        .where('status', whereIn: [
-          TaskStatus.published.name,
-          TaskStatus.fundingOpen.name,
-          TaskStatus.bidding.name,
-        ])
+        .where(
+          'status',
+          whereIn: [
+            TaskStatus.published.name,
+            TaskStatus.fundingOpen.name,
+            TaskStatus.bidding.name,
+          ],
+        )
         .orderBy('createdAt', descending: true);
 
     if (category != null) {
@@ -44,8 +43,8 @@ class TaskRepository {
     }
 
     return query.snapshots().map(
-          (snap) => snap.docs.map((d) => d.data()).toList(),
-        );
+      (snap) => snap.docs.map((d) => d.data()).toList(),
+    );
   }
 
   /// Stream a single task by ID.
@@ -62,9 +61,8 @@ class TaskRepository {
 
   /// Update task fields.
   Future<void> updateTask(Task task) async {
-    await _tasks.doc(task.id).set(
-          task.copyWith(updatedAt: DateTime.now()),
-          SetOptions(merge: true),
-        );
+    await _tasks
+        .doc(task.id)
+        .set(task.copyWith(updatedAt: DateTime.now()), SetOptions(merge: true));
   }
 }
