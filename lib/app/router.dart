@@ -7,6 +7,7 @@ import '../features/auth/presentation/auth_providers.dart';
 import '../features/auth/presentation/login_page.dart';
 import '../features/auth/presentation/signup_page.dart';
 import '../features/board/presentation/board_page.dart';
+import '../features/board/presentation/category_tasks_page.dart';
 import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/tasks/presentation/create_task_page.dart';
 import '../features/bids/presentation/bids_page.dart';
@@ -14,16 +15,17 @@ import '../features/bids/presentation/offer_detail_page.dart';
 import '../features/teams/presentation/teams_page.dart';
 import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
+import '../features/profile/presentation/public_profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
 
 part 'router.g.dart';
 
 // ── Navigator keys (one per tab branch) ──────────────────────────────────────
-final _rootKey    = GlobalKey<NavigatorState>(debugLabel: 'root');
-final _boardKey   = GlobalKey<NavigatorState>(debugLabel: 'board');
-final _createKey  = GlobalKey<NavigatorState>(debugLabel: 'create');
-final _bidsKey    = GlobalKey<NavigatorState>(debugLabel: 'bids');
-final _teamsKey   = GlobalKey<NavigatorState>(debugLabel: 'teams');
+final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
+final _boardKey = GlobalKey<NavigatorState>(debugLabel: 'board');
+final _createKey = GlobalKey<NavigatorState>(debugLabel: 'create');
+final _bidsKey = GlobalKey<NavigatorState>(debugLabel: 'bids');
+final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 
 // ── Router provider ───────────────────────────────────────────────────────────
@@ -39,7 +41,8 @@ GoRouter appRouter(Ref ref) {
     // ── Auth redirect guard ─────────────────────────────────────────────────
     redirect: (context, state) {
       final isLoggedIn = authState.value != null;
-      final isAuthRoute = state.matchedLocation.startsWith('/login') ||
+      final isAuthRoute =
+          state.matchedLocation.startsWith('/login') ||
           state.matchedLocation.startsWith('/signup');
 
       if (!isLoggedIn && !isAuthRoute) return '/login';
@@ -49,14 +52,8 @@ GoRouter appRouter(Ref ref) {
 
     routes: [
       // ── Auth routes (outside shell — no bottom nav) ─────────────────────
-      GoRoute(
-        path: '/login',
-        builder: (_, __) => const LoginPage(),
-      ),
-      GoRoute(
-        path: '/signup',
-        builder: (_, __) => const SignupPage(),
-      ),
+      GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
+      GoRoute(path: '/signup', builder: (_, __) => const SignupPage()),
 
       // ── Main shell with bottom navigation ───────────────────────────────
       StatefulShellRoute.indexedStack(
@@ -72,8 +69,19 @@ GoRouter appRouter(Ref ref) {
                 routes: [
                   GoRoute(
                     path: 'task/:taskId',
-                    builder: (_, state) => TaskDetailPage(
-                      taskId: state.pathParameters['taskId']!,
+                    builder: (_, state) =>
+                        TaskDetailPage(taskId: state.pathParameters['taskId']!),
+                  ),
+                  GoRoute(
+                    path: 'user/:userId',
+                    builder: (_, state) => PublicProfilePage(
+                      userId: state.pathParameters['userId']!,
+                    ),
+                  ),
+                  GoRoute(
+                    path: 'category/:categoryId',
+                    builder: (_, state) => CategoryTasksPage(
+                      categoryId: state.pathParameters['categoryId']!,
                     ),
                   ),
                 ],
@@ -121,9 +129,8 @@ GoRouter appRouter(Ref ref) {
                 routes: [
                   GoRoute(
                     path: ':teamId',
-                    builder: (_, state) => TeamDetailPage(
-                      teamId: state.pathParameters['teamId']!,
-                    ),
+                    builder: (_, state) =>
+                        TeamDetailPage(teamId: state.pathParameters['teamId']!),
                   ),
                 ],
               ),

@@ -7,7 +7,7 @@
 // This placeholder will cause a compile error until you run the above command.
 // See: https://firebase.flutter.dev/docs/cli
 
-import 'package:firebase_core/package:firebase_core.dart' show FirebaseOptions;
+import 'package:firebase_core/firebase_core.dart' show FirebaseOptions;
 import 'package:flutter/foundation.dart'
     show defaultTargetPlatform, kIsWeb, TargetPlatform;
 
