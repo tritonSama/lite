@@ -130,6 +130,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 ),
                 const SizedBox(height: HBSpacing.md),
 
+                // Google Sign In button
+                OutlinedButton.icon(
+                  onPressed: isLoading ? null : () async {
+                    await ref.read(authProvider.notifier).signInWithGoogle();
+                    if (!mounted) return;
+                    final state = ref.read(authProvider);
+                    if (state.hasError) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(state.error.toString()), backgroundColor: HBColors.error),
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.g_mobiledata, size: 28),
+                  label: const Text('Sign in with Google'),
+                ),
+                const SizedBox(height: HBSpacing.md),
+
                 // Sign up link
                 TextButton(
                   onPressed: () => context.go('/signup'),
