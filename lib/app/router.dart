@@ -9,10 +9,9 @@ import '../features/auth/presentation/signup_page.dart';
 import '../features/board/presentation/board_page.dart';
 import '../features/board/presentation/category_tasks_page.dart';
 import '../features/tasks/presentation/task_detail_page.dart';
-import '../features/tasks/presentation/create_task_page.dart';
-import '../features/bids/presentation/bids_page.dart';
-import '../features/bids/presentation/offer_detail_page.dart';
 import '../features/teams/presentation/teams_page.dart';
+import '../features/game/presentation/game_page.dart';
+import '../features/tools/presentation/tools_page.dart';
 import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/profile/presentation/public_profile_page.dart';
@@ -24,8 +23,8 @@ part 'router.g.dart';
 // ── Navigator keys (one per tab branch) ──────────────────────────────────────
 final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _boardKey = GlobalKey<NavigatorState>(debugLabel: 'board');
-final _createKey = GlobalKey<NavigatorState>(debugLabel: 'create');
-final _bidsKey = GlobalKey<NavigatorState>(debugLabel: 'bids');
+final _gameKey = GlobalKey<NavigatorState>(debugLabel: 'game');
+final _toolsKey = GlobalKey<NavigatorState>(debugLabel: 'tools');
 final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
@@ -91,32 +90,24 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // ➕ Create
+          // 🎮 Game
           StatefulShellBranch(
-            navigatorKey: _createKey,
+            navigatorKey: _gameKey,
             routes: [
               GoRoute(
-                path: '/create',
-                builder: (_, __) => const CreateTaskPage(),
+                path: '/game',
+                builder: (_, __) => const GamePage(),
               ),
             ],
           ),
 
-          // 💰 Bids
+          // 🛠 Tools
           StatefulShellBranch(
-            navigatorKey: _bidsKey,
+            navigatorKey: _toolsKey,
             routes: [
               GoRoute(
-                path: '/bids',
-                builder: (_, __) => const BidsPage(),
-                routes: [
-                  GoRoute(
-                    path: ':offerId',
-                    builder: (_, state) => OfferDetailPage(
-                      offerId: state.pathParameters['offerId']!,
-                    ),
-                  ),
-                ],
+                path: '/tools',
+                builder: (_, __) => const ToolsPage(),
               ),
             ],
           ),
@@ -195,14 +186,14 @@ class AppShell extends StatelessWidget {
             label: 'Board',
           ),
           NavigationDestination(
-            icon: Icon(Icons.add_circle_outline),
-            selectedIcon: Icon(Icons.add_circle),
-            label: 'Create',
+            icon: Icon(Icons.sports_esports_outlined),
+            selectedIcon: Icon(Icons.sports_esports),
+            label: 'Game',
           ),
           NavigationDestination(
-            icon: Icon(Icons.gavel_outlined),
-            selectedIcon: Icon(Icons.gavel),
-            label: 'Bids',
+            icon: Icon(Icons.build_circle_outlined),
+            selectedIcon: Icon(Icons.build_circle),
+            label: 'Tools',
           ),
           NavigationDestination(
             icon: Icon(Icons.group_outlined),

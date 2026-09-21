@@ -64,27 +64,96 @@ class _BoardPageState extends ConsumerState<BoardPage>
           isScrollable: true,
           tabAlignment: TabAlignment.start,
           tabs: const [
-            Tab(text: 'Tasks'),
-            Tab(text: 'Projects'),
-            Tab(text: 'Nexus 3D'),
-            Tab(text: 'Categories'),
+            Tab(text: 'Main'),
+            Tab(text: 'My Club'),
+            Tab(text: 'Local'),
+            Tab(text: 'Interacting'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabCtrl,
-        physics:
-            const NeverScrollableScrollPhysics(), // Prevent swipe to make 3D interactable
         children: const [
-          _TasksTab(),
+          _TasksTab(), // Main view with all tasks
           _PlaceholderTab(
-            label: 'Projects coming soon',
-            icon: Icons.folder_outlined,
+            label: 'Club/Team specific items coming soon',
+            icon: Icons.group_work_outlined,
           ),
-          _NexusNetworkView(), // The Fluorescent Engine Integration point
-          _CategoriesTab(),
+          _LocalTab(), // Local radius selector mockup
+          _InteractingTab(), // Negotiations & Bids view
         ],
       ),
+    );
+  }
+}
+
+// ── Interacting Tab (Bids & Negotiations) ────────────────────────────────────
+class _InteractingTab extends StatelessWidget {
+  const _InteractingTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.gavel, size: 72, color: HBColors.primary),
+          const SizedBox(height: HBSpacing.md),
+          Text('Offers & Contracts',
+              style: Theme.of(context).textTheme.headlineMedium),
+          const SizedBox(height: HBSpacing.sm),
+          Text('Negotiate and manage bids here.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  )),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Local Tab (Radius Selection Mockup) ───────────────────────────────────────
+class _LocalTab extends StatefulWidget {
+  const _LocalTab();
+
+  @override
+  State<_LocalTab> createState() => _LocalTabState();
+}
+
+class _LocalTabState extends State<_LocalTab> {
+  double _radius = 10.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Search Radius: ${_radius.toInt()} miles',
+                   style: Theme.of(context).textTheme.titleMedium),
+              Slider(
+                value: _radius,
+                min: 1.0,
+                max: 100.0,
+                divisions: 99,
+                label: '${_radius.toInt()} mi',
+                onChanged: (val) {
+                  setState(() => _radius = val);
+                },
+              ),
+            ],
+          ),
+        ),
+        const Expanded(
+          child: _PlaceholderTab(
+            label: 'Local offerings will appear here',
+            icon: Icons.location_on_outlined,
+          ),
+        ),
+      ],
     );
   }
 }
