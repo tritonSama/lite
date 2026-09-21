@@ -17,6 +17,7 @@ import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/profile/presentation/public_profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
+import '../features/nexus/presentation/nexus_compute_page.dart';
 
 part 'router.g.dart';
 
@@ -27,6 +28,7 @@ final _createKey = GlobalKey<NavigatorState>(debugLabel: 'create');
 final _bidsKey = GlobalKey<NavigatorState>(debugLabel: 'bids');
 final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
+final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
 
 // ── Router provider ───────────────────────────────────────────────────────────
 @riverpod
@@ -153,6 +155,17 @@ GoRouter appRouter(Ref ref) {
               ),
             ],
           ),
+
+          // 🧠 Nexus Compute
+          StatefulShellBranch(
+            navigatorKey: _nexusKey,
+            routes: [
+              GoRoute(
+                path: '/nexus',
+                builder: (_, __) => const NexusComputePage(),
+              ),
+            ],
+          ),
         ],
       ),
     ],
@@ -200,6 +213,11 @@ class AppShell extends StatelessWidget {
             icon: Icon(Icons.person_outline),
             selectedIcon: Icon(Icons.person),
             label: 'Profile',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.memory_outlined),
+            selectedIcon: Icon(Icons.memory),
+            label: 'Nexus',
           ),
         ],
       ),
