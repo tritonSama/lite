@@ -14,6 +14,10 @@ rootProject.layout.buildDirectory.value(newBuildDir)
 subprojects {
     val newSubprojectBuildDir: Directory = newBuildDir.dir(project.name)
     project.layout.buildDirectory.value(newSubprojectBuildDir)
+
+    project.configurations.configureEach {
+        exclude(group = "androidx.test.espresso", module = "espresso-idling-resource")
+    }
 }
 subprojects {
     project.evaluationDependsOn(":app")

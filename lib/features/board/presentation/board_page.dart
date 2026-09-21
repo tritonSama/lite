@@ -330,7 +330,7 @@ class _CategoriesTab extends StatelessWidget {
         return Card(
           child: InkWell(
             onTap: () => ctx.go('/board/category/${cat.name}'),
-            borderRadius: BorderRadius.circular(12.0),
+            borderRadius: BorderRadius.circular(HBRadius.md),
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
