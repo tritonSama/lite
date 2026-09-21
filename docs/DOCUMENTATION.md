@@ -88,3 +88,9 @@ As the app ecosystem evolves into "Game Maps IRL", the native application will l
 *   **Proof of Health Telemetry:** A future telemetry daemon will coordinate with the cluster to validate hardware state for consensus.
 
 *Note: Initial foundation code includes waitlist capabilities and placeholder state for compute node telemetry, preparing the architecture for Phase 1 of the Nexus Protocol implementation.*
+
+### Implementation Notes
+The deep native and lower-level networking components for the Nexus Ecosystem phases (e.g., PoH Telemetry Daemon, WebSocket Execution Rail, TEE Container Runtime, and LoRa Subnetworks) are currently slated for the Fluorescent core engine team to handle and integrate. This repository will primarily serve as the mobile user interface and high-level coordinator.
+
+### Implementation Notes
+The deep native and lower-level networking components for the Nexus Ecosystem phases (e.g., PoH Telemetry Daemon, WebSocket Execution Rail, TEE Container Runtime, and LoRa Subnetworks) are currently slated for the Fluorescent core engine team to handle and integrate. This repository will primarily serve as the mobile user interface and high-level coordinator.
