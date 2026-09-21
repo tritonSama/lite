@@ -77,3 +77,14 @@ The application features 5 major sections, managed by persistent bottom navigati
 3.  **Bids (`/bids`):** Manage offers received, own offers made, and active contracts.
 4.  **Teams (`/teams`):** Create/join teams, manage team credentials and jobs.
 5.  **Profile (`/profile`):** User skills, ratings, credentials, history, and earnings.
+
+## Future: Nexus Protocol Ecosystem
+
+HeavenlyBond Lite will eventually integrate with the **Nexus Protocol** and the **Nexus Coin**. The Nexus Protocol is an edge-native compute substrate and decentralized marketplace for idle hardware, powered by a Proof of Health (PoH) consensus engine.
+
+As the app ecosystem evolves into "Game Maps IRL", the native application will leverage the Nexus Protocol for:
+*   **Mobile Sovereign Vaults & Identity Rails:** Utilizing hardware Secure Enclaves for managing local user context, credentials, and Decentralized Identifiers (DIDs).
+*   **Distributed AI Compute:** Providing telemetry and participating in the decentralized marketplace for AI workload execution.
+*   **Proof of Health Telemetry:** A future telemetry daemon will coordinate with the cluster to validate hardware state for consensus.
+
+*Note: Initial foundation code includes waitlist capabilities and placeholder state for compute node telemetry, preparing the architecture for Phase 1 of the Nexus Protocol implementation.*
