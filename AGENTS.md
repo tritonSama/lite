@@ -8,6 +8,7 @@ This document is used to track the AI agents working on this repository, their r
 | :--- | :--- | :--- | :--- | :--- |
 | Agent Alpha | UI / Frontend | Updating the Create Task wizard | In Progress | Focusing on Step 1 |
 | Agent Beta | Backend / Firebase | Implementing Security Rules | Completed | Awaiting review |
+| Agent Gamma | UI / Auth | Fixing warnings and errors in LoginPage | In Progress | |
 
 ## Instructions for Agents
 * When picking up a new task, update this file to reflect your assignment.

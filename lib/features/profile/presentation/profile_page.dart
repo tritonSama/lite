@@ -26,7 +26,6 @@ class ProfilePage extends ConsumerWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(HBSpacing.md),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: HBSpacing.lg),
             CircleAvatar(
@@ -101,7 +100,7 @@ class ProfilePage extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   value: isDarkMode,
-                  activeColor: HBColors.primary,
+                  activeThumbColor: HBColors.primary,
                   onChanged: (bool value) {
                     ref.read(themeModeProvider.notifier).toggleTheme();
                   },

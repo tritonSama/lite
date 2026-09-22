@@ -33,7 +33,7 @@ void main() {
     });
 
     test('handles extreme early dates correctly', () {
-      final earlyDate = DateTime.utc(1900, 1, 1);
+      final earlyDate = DateTime.utc(1900);
       final timestamp = converter.toJson(earlyDate);
       final convertedBack = converter.fromJson(timestamp);
 

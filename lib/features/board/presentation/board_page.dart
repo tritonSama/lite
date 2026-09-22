@@ -40,11 +40,11 @@ class _BoardPageState extends ConsumerState<BoardPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.handshake_rounded, color: HBColors.primary),
-            const SizedBox(width: 8.0),
-            const Text('Game Maps IRL'),
+            Icon(Icons.handshake_rounded, color: HBColors.primary),
+            SizedBox(width: 8.0),
+            Text('Game Maps IRL'),
           ],
         ),
         actions: [
@@ -212,7 +212,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
               decoration: BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: HBColors.primary, width: 1),
+                border: Border.all(color: HBColors.primaryLight),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +220,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
                   Text(
                     'Fluorescent Engine',
                     style: TextStyle(
-                      color: HBColors.primary,
+                      color: HBColors.primaryLight,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -265,7 +265,7 @@ class _NeuralNetworkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = HBColors.primary.withOpacity(0.5)
+      ..color = HBColors.primaryLight.withValues(alpha: 0.5)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
@@ -287,8 +287,8 @@ class _NeuralNetworkPainter extends CustomPainter {
     for (int i = 0; i < nodes.length; i++) {
       for (int j = i + 1; j < nodes.length; j++) {
         // Simple pulsing opacity based on animation
-        paint.color = HBColors.primary.withOpacity(
-          (0.2 + (animationValue * 0.3)) % 0.8,
+        paint.color = HBColors.primaryLight.withValues(
+          alpha: (0.2 + (animationValue * 0.3)) % 0.8,
         );
         canvas.drawLine(nodes[i], nodes[j], paint);
       }
@@ -300,7 +300,7 @@ class _NeuralNetworkPainter extends CustomPainter {
       canvas.drawCircle(
         node,
         12.0,
-        paint..color = HBColors.primary.withOpacity(0.3),
+        paint..color = HBColors.primaryLight.withValues(alpha: 0.3),
       );
     }
   }
@@ -384,7 +384,7 @@ class _CategoriesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = TaskCategory.values;
+    const categories = TaskCategory.values;
     return GridView.builder(
       padding: const EdgeInsets.all(16.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

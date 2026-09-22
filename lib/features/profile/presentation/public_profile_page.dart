@@ -46,7 +46,6 @@ class PublicProfilePage extends ConsumerWidget {
           return SingleChildScrollView(
             padding: const EdgeInsets.all(HBSpacing.md),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: HBSpacing.lg),
                 CircleAvatar(

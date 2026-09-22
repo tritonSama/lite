@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../app/theme.dart';
 
 class TeamDetailPage extends StatelessWidget {
   final String teamId;

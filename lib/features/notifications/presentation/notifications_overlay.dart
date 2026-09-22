@@ -39,7 +39,7 @@ class NotificationsOverlay extends ConsumerWidget {
                 borderRadius: BorderRadius.circular(HBRadius.md),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
+                    color: Colors.black.withValues(alpha: 0.1),
                     blurRadius: 10,
                     offset: const Offset(0, 4),
                   ),
@@ -113,7 +113,7 @@ class NotificationsOverlay extends ConsumerWidget {
                             return ListTile(
                               tileColor: notif.isRead
                                   ? null
-                                  : HBColors.primary.withOpacity(0.05),
+                                  : HBColors.primary.withValues(alpha: 0.05),
                               contentPadding: const EdgeInsets.symmetric(
                                 horizontal: HBSpacing.md,
                                 vertical: HBSpacing.sm,
@@ -136,7 +136,7 @@ class NotificationsOverlay extends ConsumerWidget {
                                   Text(
                                     timeago.format(notif.createdAt),
                                     style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                          color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.7),
+                                          color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
                                         ),
                                   ),
                                 ],

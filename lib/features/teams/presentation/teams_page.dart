@@ -73,6 +73,7 @@ class _TeamsPageState extends State<TeamsPage> with SingleTickerProviderStateMix
               'data': '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty}',
               'createdAt': now,
             });
+            if (!mounted) return;
             Navigator.pop(context);
             _loadOfferings();
             ScaffoldMessenger.of(context).showSnackBar(
@@ -203,7 +204,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
             ),
             const SizedBox(height: 16),
             DropdownButtonFormField<String>(
-              value: _category,
+              initialValue: _category,
               decoration: const InputDecoration(labelText: 'Category'),
               items: const [
                 DropdownMenuItem(value: 'Service', child: Text('Service')),
@@ -221,7 +222,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
             ),
             const SizedBox(height: 16),
              DropdownButtonFormField<String>(
-              value: _selectedTeamId,
+              initialValue: _selectedTeamId,
               decoration: const InputDecoration(labelText: 'Team'),
               items: const [
                 DropdownMenuItem(value: '1', child: Text('Cyber Mercs')),
