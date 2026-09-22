@@ -142,8 +142,10 @@ class _StatusChip extends StatelessWidget {
   Color _colorFor(BuildContext context) => switch (status) {
         TaskStatus.published || TaskStatus.fundingOpen || TaskStatus.bidding =>
           HBColors.secondary,
-        TaskStatus.inProgress || TaskStatus.scheduled => HBColors.info,
-        TaskStatus.completed => HBColors.success,
+        TaskStatus.inProgress || TaskStatus.scheduled || TaskStatus.providerSelected || TaskStatus.teamForming =>
+          HBColors.info,
+        TaskStatus.completed || TaskStatus.approved || TaskStatus.paymentReleased || TaskStatus.submittedForVerification =>
+          HBColors.success,
         TaskStatus.cancelled || TaskStatus.expired =>
           Theme.of(context).colorScheme.onSurfaceVariant,
         TaskStatus.disputed => HBColors.error,
