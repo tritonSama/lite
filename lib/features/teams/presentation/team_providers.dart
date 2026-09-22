@@ -1,16 +1,17 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-final selectedTeamProvider = StateNotifierProvider<SelectedTeamNotifier, String?>((ref) {
-  return SelectedTeamNotifier();
-});
+part 'team_providers.g.dart';
 
-class SelectedTeamNotifier extends StateNotifier<String?> {
-  SelectedTeamNotifier() : super(null) {
-    _loadSelectedTeam();
-  }
-
+@riverpod
+class SelectedTeam extends _$SelectedTeam {
   static const _key = 'selected_elemental_team';
+
+  @override
+  String? build() {
+    _loadSelectedTeam();
+    return null;
+  }
 
   Future<void> _loadSelectedTeam() async {
     final prefs = await SharedPreferences.getInstance();
