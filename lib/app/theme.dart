@@ -418,3 +418,11 @@ ThemeData hbDarkTheme() {
     ),
   );
 }
+
+class AppTheme {
+  AppTheme._();
+  static const Color background = HBColors.neutral;
+  static const Color primary = HBColors.primary;
+  static const Color accentCyan = HBColors.primary;
+  static const Color accentMagenta = HBColors.tertiary;
+}
