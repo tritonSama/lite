@@ -153,17 +153,17 @@ ThemeData hbLightTheme() {
 
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      foregroundColor: Theme.of(context).colorScheme.onSurfaceLight,
+      foregroundColor: HBColors.onSurfaceLight,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: false,
-      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      titleTextStyle: HBTextStyles.headlineMedium(HBColors.onSurfaceLight),
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
       indicatorColor: HBColors.primary.withOpacity(0.2),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight)),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(HBColors.onSurfaceVariantLight)),
     ),
 
     cardTheme: CardThemeData(
@@ -171,7 +171,7 @@ ThemeData hbLightTheme() {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        side: const BorderSide(color: Theme.of(context).dividerColorLight),
+        side: const BorderSide(color: HBColors.dividerLight),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -224,11 +224,11 @@ ThemeData hbLightTheme() {
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
+        borderSide: const BorderSide(color: HBColors.dividerLight),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
+        borderSide: const BorderSide(color: HBColors.dividerLight),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
@@ -241,38 +241,38 @@ ThemeData hbLightTheme() {
       contentPadding: const EdgeInsets.symmetric(
         horizontal: HBSpacing.md, vertical: HBSpacing.md,
       ),
-      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantLight),
+      labelStyle: HBTextStyles.bodyMedium(HBColors.onSurfaceLight),
+      hintStyle: HBTextStyles.bodyMedium(HBColors.onSurfaceVariantLight),
     ),
 
     chipTheme: ChipThemeData(
       backgroundColor: HBColors.surfaceVariantLight,
       selectedColor: HBColors.primary.withOpacity(0.2),
-      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceLight),
+      labelStyle: HBTextStyles.labelSmall(HBColors.onSurfaceLight),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.sm),
-        side: const BorderSide(color: Theme.of(context).dividerColorLight),
+        side: const BorderSide(color: HBColors.dividerLight),
       ),
     ),
 
     dividerTheme: const DividerThemeData(
-      color: Theme.of(context).dividerColorLight,
+      color: HBColors.dividerLight,
       thickness: 1,
       space: 1,
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
-      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
+      displayLarge:  HBTextStyles.displayLarge(HBColors.onSurfaceLight),
+      displayMedium: HBTextStyles.displayMedium(HBColors.onSurfaceLight),
+      headlineLarge: HBTextStyles.headlineLarge(HBColors.onSurfaceLight),
+      headlineMedium: HBTextStyles.headlineMedium(HBColors.onSurfaceLight),
+      titleLarge:    HBTextStyles.titleLarge(HBColors.onSurfaceLight),
+      titleMedium:   HBTextStyles.titleMedium(HBColors.onSurfaceLight),
+      bodyLarge:     HBTextStyles.bodyLarge(HBColors.onSurfaceLight),
+      bodyMedium:    HBTextStyles.bodyMedium(HBColors.onSurfaceLight),
+      bodySmall:     HBTextStyles.bodySmall(HBColors.onSurfaceVariantLight),
+      labelLarge:    HBTextStyles.labelLarge(HBColors.onSurfaceLight),
+      labelSmall:    HBTextStyles.labelSmall(HBColors.onSurfaceVariantLight),
     ),
   );
 }
@@ -296,17 +296,17 @@ ThemeData hbDarkTheme() {
 
     appBarTheme: AppBarTheme(
       backgroundColor: HBColors.neutralLight,
-      foregroundColor: Theme.of(context).colorScheme.onSurfaceDark,
+      foregroundColor: HBColors.onSurfaceDark,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: false,
-      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      titleTextStyle: HBTextStyles.headlineMedium(HBColors.onSurfaceDark),
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: HBColors.neutralLight,
       indicatorColor: HBColors.primary.withOpacity(0.3),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark)),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(HBColors.onSurfaceVariantDark)),
     ),
 
     cardTheme: CardThemeData(
@@ -314,7 +314,7 @@ ThemeData hbDarkTheme() {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+        side: const BorderSide(color: HBColors.dividerDark),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -367,11 +367,11 @@ ThemeData hbDarkTheme() {
       fillColor: HBColors.surfaceVariantDark,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+        borderSide: const BorderSide(color: HBColors.dividerDark),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+        borderSide: const BorderSide(color: HBColors.dividerDark),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
@@ -384,38 +384,38 @@ ThemeData hbDarkTheme() {
       contentPadding: const EdgeInsets.symmetric(
         horizontal: HBSpacing.md, vertical: HBSpacing.md,
       ),
-      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantDark),
+      labelStyle: HBTextStyles.bodyMedium(HBColors.onSurfaceDark),
+      hintStyle: HBTextStyles.bodyMedium(HBColors.onSurfaceVariantDark),
     ),
 
     chipTheme: ChipThemeData(
-      backgroundColor: Theme.of(context).dividerColorDark,
+      backgroundColor: HBColors.dividerDark,
       selectedColor: HBColors.primary.withOpacity(0.3),
-      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceDark),
+      labelStyle: HBTextStyles.labelSmall(HBColors.onSurfaceDark),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.sm),
-        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+        side: const BorderSide(color: HBColors.dividerDark),
       ),
     ),
 
     dividerTheme: const DividerThemeData(
-      color: Theme.of(context).dividerColorDark,
+      color: HBColors.dividerDark,
       thickness: 1,
       space: 1,
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
-      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
+      displayLarge:  HBTextStyles.displayLarge(HBColors.onSurfaceDark),
+      displayMedium: HBTextStyles.displayMedium(HBColors.onSurfaceDark),
+      headlineLarge: HBTextStyles.headlineLarge(HBColors.onSurfaceDark),
+      headlineMedium: HBTextStyles.headlineMedium(HBColors.onSurfaceDark),
+      titleLarge:    HBTextStyles.titleLarge(HBColors.onSurfaceDark),
+      titleMedium:   HBTextStyles.titleMedium(HBColors.onSurfaceDark),
+      bodyLarge:     HBTextStyles.bodyLarge(HBColors.onSurfaceDark),
+      bodyMedium:    HBTextStyles.bodyMedium(HBColors.onSurfaceDark),
+      bodySmall:     HBTextStyles.bodySmall(HBColors.onSurfaceVariantDark),
+      labelLarge:    HBTextStyles.labelLarge(HBColors.onSurfaceDark),
+      labelSmall:    HBTextStyles.labelSmall(HBColors.onSurfaceVariantDark),
     ),
   );
 }
