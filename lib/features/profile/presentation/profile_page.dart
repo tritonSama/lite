@@ -88,7 +88,7 @@ class ProfilePage extends ConsumerWidget {
 
             Consumer(
               builder: (context, ref, child) {
-                final themeMode = ref.watch(themeModeNotifierProvider);
+                final themeMode = ref.watch(themeModeProvider);
                 final isDarkMode = themeMode == ThemeMode.dark;
 
                 return SwitchListTile(
@@ -103,7 +103,7 @@ class ProfilePage extends ConsumerWidget {
                   value: isDarkMode,
                   activeColor: HBColors.primary,
                   onChanged: (bool value) {
-                    ref.read(themeModeNotifierProvider.notifier).toggleTheme();
+                    ref.read(themeModeProvider.notifier).toggleTheme();
                   },
                   secondary: Icon(
                     isDarkMode ? Icons.dark_mode : Icons.light_mode,

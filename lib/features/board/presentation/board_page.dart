@@ -42,7 +42,7 @@ class _BoardPageState extends ConsumerState<BoardPage>
       appBar: AppBar(
         title: Row(
           children: [
-            const Icon(Icons.handshake_rounded, color: AppTheme.primary),
+            const Icon(Icons.handshake_rounded, color: HBColors.primary),
             const SizedBox(width: 8.0),
             const Text('Game Maps IRL'),
           ],
@@ -189,7 +189,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.background,
+      color: HBColors.neutral,
       child: Stack(
         children: [
           // Simulated 3D Neural Network Rendering
@@ -212,7 +212,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
               decoration: BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppTheme.accentCyan, width: 1),
+                border: Border.all(color: HBColors.primary, width: 1),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -220,7 +220,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
                   Text(
                     'Fluorescent Engine',
                     style: TextStyle(
-                      color: AppTheme.accentCyan,
+                      color: HBColors.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -246,7 +246,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
             right: 24,
             child: FloatingActionButton.extended(
               onPressed: () {},
-              backgroundColor: AppTheme.accentMagenta,
+              backgroundColor: HBColors.tertiary,
               icon: const Icon(Icons.hub),
               label: const Text('Scan Local Nodes'),
             ),
@@ -265,12 +265,12 @@ class _NeuralNetworkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppTheme.accentCyan.withOpacity(0.5)
+      ..color = HBColors.primary.withOpacity(0.5)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
     final nodePaint = Paint()
-      ..color = AppTheme.accentMagenta
+      ..color = HBColors.tertiary
       ..style = PaintingStyle.fill;
 
     // A static set of nodes for placeholder visual
@@ -287,7 +287,7 @@ class _NeuralNetworkPainter extends CustomPainter {
     for (int i = 0; i < nodes.length; i++) {
       for (int j = i + 1; j < nodes.length; j++) {
         // Simple pulsing opacity based on animation
-        paint.color = AppTheme.accentCyan.withOpacity(
+        paint.color = HBColors.primary.withOpacity(
           (0.2 + (animationValue * 0.3)) % 0.8,
         );
         canvas.drawLine(nodes[i], nodes[j], paint);
@@ -300,7 +300,7 @@ class _NeuralNetworkPainter extends CustomPainter {
       canvas.drawCircle(
         node,
         12.0,
-        paint..color = AppTheme.accentCyan.withOpacity(0.3),
+        paint..color = HBColors.primary.withOpacity(0.3),
       );
     }
   }

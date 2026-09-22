@@ -69,7 +69,7 @@ class CategoryTasksPage extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        const Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                  Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         const SizedBox(height: HBSpacing.md),
                         Text('No tasks found', style: Theme.of(context).textTheme.titleMedium),
                         const SizedBox(height: HBSpacing.sm),

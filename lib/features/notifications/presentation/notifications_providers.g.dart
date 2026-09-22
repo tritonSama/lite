@@ -10,7 +10,7 @@ part of 'notifications_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(userNotifications)
-const userNotificationsProvider = UserNotificationsProvider._();
+final userNotificationsProvider = UserNotificationsProvider._();
 
 final class UserNotificationsProvider
     extends
@@ -22,7 +22,7 @@ final class UserNotificationsProvider
     with
         $FutureModifier<List<NotificationModel>>,
         $StreamProvider<List<NotificationModel>> {
-  const UserNotificationsProvider._()
+  UserNotificationsProvider._()
     : super(
         from: null,
         argument: null,

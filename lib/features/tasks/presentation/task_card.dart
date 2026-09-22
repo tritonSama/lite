@@ -77,7 +77,7 @@ class TaskCard extends StatelessWidget {
                   Expanded(
                     child: Row(
                       children: [
-                        const Icon(Icons.location_on_outlined,
+                        Icon(Icons.location_on_outlined,
                             size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
                         const SizedBox(width: 2),
                         Expanded(
@@ -94,7 +94,7 @@ class TaskCard extends StatelessWidget {
                   // Bid count
                   Row(
                     children: [
-                      const Icon(Icons.gavel, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      Icon(Icons.gavel, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
                       const SizedBox(width: 2),
                       Text('${task.bidCount} bids', style: tt.bodySmall),
                     ],
@@ -139,7 +139,7 @@ class _StatusChip extends StatelessWidget {
   final TaskStatus status;
   const _StatusChip({required this.status});
 
-  Color get _color => switch (status) {
+  Color _colorFor(BuildContext context) => switch (status) {
         TaskStatus.published || TaskStatus.fundingOpen || TaskStatus.bidding =>
           HBColors.secondary,
         TaskStatus.inProgress || TaskStatus.scheduled => HBColors.info,
@@ -151,11 +151,12 @@ class _StatusChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final c = _colorFor(context);
     return Container(
       padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
       decoration: BoxDecoration(
-        color: _color.withOpacity(0.12),
+        color: c.withOpacity(0.12),
         borderRadius: BorderRadius.circular(HBRadius.full),
       ),
       child: Text(
@@ -163,7 +164,7 @@ class _StatusChip extends StatelessWidget {
         style: Theme.of(context)
             .textTheme
             .labelSmall
-            ?.copyWith(color: _color, fontWeight: FontWeight.w600),
+            ?.copyWith(color: c, fontWeight: FontWeight.w600),
       ),
     );
   }
