@@ -76,7 +76,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
               'data': '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty}',
               'createdAt': now,
             });
-            if (!mounted) return;
+            if (!context.mounted) return;
             Navigator.pop(context);
             _loadOfferings();
             ScaffoldMessenger.of(context).showSnackBar(

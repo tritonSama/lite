@@ -4,7 +4,7 @@ part 'compute_node_status.freezed.dart';
 part 'compute_node_status.g.dart';
 
 @freezed
-class ComputeNodeStatus with _$ComputeNodeStatus {
+abstract class ComputeNodeStatus with _$ComputeNodeStatus {
   const factory ComputeNodeStatus({
     required String nodeId,
     @Default(0.0) double healthScore,
