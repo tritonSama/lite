@@ -40,11 +40,11 @@ class _BoardPageState extends ConsumerState<BoardPage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Row(
+        title: const Row(
           children: [
-            const Icon(Icons.handshake_rounded, color: AppTheme.primary),
-            const SizedBox(width: 8.0),
-            const Text('Game Maps IRL'),
+            Icon(Icons.handshake_rounded, color: HBColors.primary),
+            SizedBox(width: 8.0),
+            Text('Game Maps IRL'),
           ],
         ),
         actions: [
@@ -64,27 +64,96 @@ class _BoardPageState extends ConsumerState<BoardPage>
           isScrollable: true,
           tabAlignment: TabAlignment.start,
           tabs: const [
-            Tab(text: 'Tasks'),
-            Tab(text: 'Projects'),
-            Tab(text: 'Nexus 3D'),
-            Tab(text: 'Categories'),
+            Tab(text: 'Main'),
+            Tab(text: 'My Club'),
+            Tab(text: 'Local'),
+            Tab(text: 'Interacting'),
           ],
         ),
       ),
       body: TabBarView(
         controller: _tabCtrl,
-        physics:
-            const NeverScrollableScrollPhysics(), // Prevent swipe to make 3D interactable
         children: const [
-          _TasksTab(),
+          _TasksTab(), // Main view with all tasks
           _PlaceholderTab(
-            label: 'Projects coming soon',
-            icon: Icons.folder_outlined,
+            label: 'Club/Team specific items coming soon',
+            icon: Icons.group_work_outlined,
           ),
-          _NexusNetworkView(), // The Fluorescent Engine Integration point
-          _CategoriesTab(),
+          _LocalTab(), // Local radius selector mockup
+          _InteractingTab(), // Negotiations & Bids view
         ],
       ),
+    );
+  }
+}
+
+// ── Interacting Tab (Bids & Negotiations) ────────────────────────────────────
+class _InteractingTab extends StatelessWidget {
+  const _InteractingTab();
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const Icon(Icons.gavel, size: 72, color: HBColors.primary),
+          const SizedBox(height: HBSpacing.md),
+          Text('Offers & Contracts',
+              style: Theme.of(context).textTheme.headlineMedium),
+          const SizedBox(height: HBSpacing.sm),
+          Text('Negotiate and manage bids here.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  )),
+        ],
+      ),
+    );
+  }
+}
+
+// ── Local Tab (Radius Selection Mockup) ───────────────────────────────────────
+class _LocalTab extends StatefulWidget {
+  const _LocalTab();
+
+  @override
+  State<_LocalTab> createState() => _LocalTabState();
+}
+
+class _LocalTabState extends State<_LocalTab> {
+  double _radius = 10.0;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Search Radius: ${_radius.toInt()} miles',
+                   style: Theme.of(context).textTheme.titleMedium),
+              Slider(
+                value: _radius,
+                min: 1.0,
+                max: 100.0,
+                divisions: 99,
+                label: '${_radius.toInt()} mi',
+                onChanged: (val) {
+                  setState(() => _radius = val);
+                },
+              ),
+            ],
+          ),
+        ),
+        const Expanded(
+          child: _PlaceholderTab(
+            label: 'Local offerings will appear here',
+            icon: Icons.location_on_outlined,
+          ),
+        ),
+      ],
     );
   }
 }
@@ -120,7 +189,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: AppTheme.background,
+      color: HBColors.neutral,
       child: Stack(
         children: [
           // Simulated 3D Neural Network Rendering
@@ -143,7 +212,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
               decoration: BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: AppTheme.accentCyan, width: 1),
+                border: Border.all(color: HBColors.primaryLight),
               ),
               child: const Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -151,7 +220,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
                   Text(
                     'Fluorescent Engine',
                     style: TextStyle(
-                      color: AppTheme.accentCyan,
+                      color: HBColors.primaryLight,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -177,7 +246,7 @@ class _NexusNetworkViewState extends State<_NexusNetworkView>
             right: 24,
             child: FloatingActionButton.extended(
               onPressed: () {},
-              backgroundColor: AppTheme.accentMagenta,
+              backgroundColor: HBColors.tertiary,
               icon: const Icon(Icons.hub),
               label: const Text('Scan Local Nodes'),
             ),
@@ -196,12 +265,12 @@ class _NeuralNetworkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = AppTheme.accentCyan.withOpacity(0.5)
+      ..color = HBColors.primaryLight.withValues(alpha: 0.5)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
     final nodePaint = Paint()
-      ..color = AppTheme.accentMagenta
+      ..color = HBColors.tertiary
       ..style = PaintingStyle.fill;
 
     // A static set of nodes for placeholder visual
@@ -218,8 +287,8 @@ class _NeuralNetworkPainter extends CustomPainter {
     for (int i = 0; i < nodes.length; i++) {
       for (int j = i + 1; j < nodes.length; j++) {
         // Simple pulsing opacity based on animation
-        paint.color = AppTheme.accentCyan.withOpacity(
-          (0.2 + (animationValue * 0.3)) % 0.8,
+        paint.color = HBColors.primaryLight.withValues(
+          alpha: (0.2 + (animationValue * 0.3)) % 0.8,
         );
         canvas.drawLine(nodes[i], nodes[j], paint);
       }
@@ -231,7 +300,7 @@ class _NeuralNetworkPainter extends CustomPainter {
       canvas.drawCircle(
         node,
         12.0,
-        paint..color = AppTheme.accentCyan.withOpacity(0.3),
+        paint..color = HBColors.primaryLight.withValues(alpha: 0.3),
       );
     }
   }
@@ -315,7 +384,7 @@ class _CategoriesTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final categories = TaskCategory.values;
+    const categories = TaskCategory.values;
     return GridView.builder(
       padding: const EdgeInsets.all(16.0),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

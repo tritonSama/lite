@@ -26,7 +26,6 @@ class ProfilePage extends ConsumerWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(HBSpacing.md),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             const SizedBox(height: HBSpacing.lg),
             CircleAvatar(
@@ -88,7 +87,7 @@ class ProfilePage extends ConsumerWidget {
 
             Consumer(
               builder: (context, ref, child) {
-                final themeMode = ref.watch(themeModeNotifierProvider);
+                final themeMode = ref.watch(themeModeProvider);
                 final isDarkMode = themeMode == ThemeMode.dark;
 
                 return SwitchListTile(
@@ -101,9 +100,9 @@ class ProfilePage extends ConsumerWidget {
                     style: Theme.of(context).textTheme.bodySmall,
                   ),
                   value: isDarkMode,
-                  activeColor: HBColors.primary,
+                  activeThumbColor: HBColors.primary,
                   onChanged: (bool value) {
-                    ref.read(themeModeNotifierProvider.notifier).toggleTheme();
+                    ref.read(themeModeProvider.notifier).toggleTheme();
                   },
                   secondary: Icon(
                     isDarkMode ? Icons.dark_mode : Icons.light_mode,

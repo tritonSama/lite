@@ -122,12 +122,12 @@ class HBRadius {
 List<BoxShadow> getNeonGlow(Color color) {
   return [
     BoxShadow(
-      color: color.withOpacity(0.5),
+      color: color.withValues(alpha: 0.5),
       blurRadius: 12,
       spreadRadius: 2,
     ),
     BoxShadow(
-      color: color.withOpacity(0.2),
+      color: color.withValues(alpha: 0.2),
       blurRadius: 24,
       spreadRadius: 4,
     )
@@ -138,7 +138,6 @@ List<BoxShadow> getNeonGlow(Color color) {
 ThemeData hbLightTheme() {
   final colorScheme = ColorScheme.fromSeed(
     seedColor: HBColors.primary,
-    brightness: Brightness.light,
     primary: HBColors.primary,
     secondary: HBColors.secondary,
     tertiary: HBColors.tertiary,
@@ -153,17 +152,17 @@ ThemeData hbLightTheme() {
 
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.white,
-      foregroundColor: Theme.of(context).colorScheme.onSurfaceLight,
+      foregroundColor: colorScheme.onSurface,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: false,
-      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
+      titleTextStyle: HBTextStyles.headlineMedium(colorScheme.onSurface),
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
-      indicatorColor: HBColors.primary.withOpacity(0.2),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight)),
+      indicatorColor: HBColors.primary.withValues(alpha: 0.2),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(colorScheme.onSurfaceVariant)),
     ),
 
     cardTheme: CardThemeData(
@@ -171,7 +170,7 @@ ThemeData hbLightTheme() {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        side: const BorderSide(color: Theme.of(context).dividerColorLight),
+        side: const BorderSide(color: HBColors.dividerLight),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -181,7 +180,7 @@ ThemeData hbLightTheme() {
         backgroundColor: HBColors.primary,
         foregroundColor: Colors.white,
         elevation: 8,
-        shadowColor: HBColors.primary.withOpacity(0.5),
+        shadowColor: HBColors.primary.withValues(alpha: 0.5),
         padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.lg, vertical: HBSpacing.md,
         ),
@@ -194,7 +193,7 @@ ThemeData hbLightTheme() {
           if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
              return HBColors.primary;
           }
-          return HBColors.primary.withOpacity(0.5);
+          return HBColors.primary.withValues(alpha: 0.5);
         }),
         elevation: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
@@ -224,11 +223,11 @@ ThemeData hbLightTheme() {
       fillColor: Colors.white,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
+        borderSide: const BorderSide(color: HBColors.dividerLight),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorLight),
+        borderSide: const BorderSide(color: HBColors.dividerLight),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
@@ -241,38 +240,38 @@ ThemeData hbLightTheme() {
       contentPadding: const EdgeInsets.symmetric(
         horizontal: HBSpacing.md, vertical: HBSpacing.md,
       ),
-      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantLight),
+      labelStyle: HBTextStyles.bodyMedium(colorScheme.onSurface),
+      hintStyle: HBTextStyles.bodyMedium(colorScheme.onSurfaceVariant),
     ),
 
     chipTheme: ChipThemeData(
       backgroundColor: HBColors.surfaceVariantLight,
-      selectedColor: HBColors.primary.withOpacity(0.2),
-      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceLight),
+      selectedColor: HBColors.primary.withValues(alpha: 0.2),
+      labelStyle: HBTextStyles.labelSmall(colorScheme.onSurface),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.sm),
-        side: const BorderSide(color: Theme.of(context).dividerColorLight),
+        side: const BorderSide(color: HBColors.dividerLight),
       ),
     ),
 
     dividerTheme: const DividerThemeData(
-      color: Theme.of(context).dividerColorLight,
+      color: HBColors.dividerLight,
       thickness: 1,
       space: 1,
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceLight),
-      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
-      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceLight),
-      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantLight),
+      displayLarge:  HBTextStyles.displayLarge(colorScheme.onSurface),
+      displayMedium: HBTextStyles.displayMedium(colorScheme.onSurface),
+      headlineLarge: HBTextStyles.headlineLarge(colorScheme.onSurface),
+      headlineMedium: HBTextStyles.headlineMedium(colorScheme.onSurface),
+      titleLarge:    HBTextStyles.titleLarge(colorScheme.onSurface),
+      titleMedium:   HBTextStyles.titleMedium(colorScheme.onSurface),
+      bodyLarge:     HBTextStyles.bodyLarge(colorScheme.onSurface),
+      bodyMedium:    HBTextStyles.bodyMedium(colorScheme.onSurface),
+      bodySmall:     HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
+      labelLarge:    HBTextStyles.labelLarge(colorScheme.onSurface),
+      labelSmall:    HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
     ),
   );
 }
@@ -296,17 +295,17 @@ ThemeData hbDarkTheme() {
 
     appBarTheme: AppBarTheme(
       backgroundColor: HBColors.neutralLight,
-      foregroundColor: Theme.of(context).colorScheme.onSurfaceDark,
+      foregroundColor: colorScheme.onSurface,
       elevation: 0,
       scrolledUnderElevation: 1,
       centerTitle: false,
-      titleTextStyle: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
+      titleTextStyle: HBTextStyles.headlineMedium(colorScheme.onSurface),
     ),
 
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: HBColors.neutralLight,
-      indicatorColor: HBColors.primary.withOpacity(0.3),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark)),
+      indicatorColor: HBColors.primary.withValues(alpha: 0.3),
+      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(colorScheme.onSurfaceVariant)),
     ),
 
     cardTheme: CardThemeData(
@@ -314,7 +313,7 @@ ThemeData hbDarkTheme() {
       elevation: 0,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+        side: const BorderSide(color: HBColors.dividerDark),
       ),
       margin: EdgeInsets.zero,
     ),
@@ -324,7 +323,7 @@ ThemeData hbDarkTheme() {
         backgroundColor: HBColors.primary,
         foregroundColor: Colors.white,
         elevation: 8,
-        shadowColor: HBColors.primary.withOpacity(0.5),
+        shadowColor: HBColors.primary.withValues(alpha: 0.5),
         padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.lg, vertical: HBSpacing.md,
         ),
@@ -337,7 +336,7 @@ ThemeData hbDarkTheme() {
           if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
              return HBColors.primary;
           }
-          return HBColors.primary.withOpacity(0.5);
+          return HBColors.primary.withValues(alpha: 0.5);
         }),
         elevation: WidgetStateProperty.resolveWith((states) {
           if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
@@ -367,11 +366,11 @@ ThemeData hbDarkTheme() {
       fillColor: HBColors.surfaceVariantDark,
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+        borderSide: const BorderSide(color: HBColors.dividerDark),
       ),
       enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
-        borderSide: const BorderSide(color: Theme.of(context).dividerColorDark),
+        borderSide: const BorderSide(color: HBColors.dividerDark),
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(HBRadius.md),
@@ -384,38 +383,38 @@ ThemeData hbDarkTheme() {
       contentPadding: const EdgeInsets.symmetric(
         horizontal: HBSpacing.md, vertical: HBSpacing.md,
       ),
-      labelStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      hintStyle: HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceVariantDark),
+      labelStyle: HBTextStyles.bodyMedium(colorScheme.onSurface),
+      hintStyle: HBTextStyles.bodyMedium(colorScheme.onSurfaceVariant),
     ),
 
     chipTheme: ChipThemeData(
-      backgroundColor: Theme.of(context).dividerColorDark,
-      selectedColor: HBColors.primary.withOpacity(0.3),
-      labelStyle: HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceDark),
+      backgroundColor: HBColors.dividerDark,
+      selectedColor: HBColors.primary.withValues(alpha: 0.3),
+      labelStyle: HBTextStyles.labelSmall(colorScheme.onSurface),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(HBRadius.sm),
-        side: const BorderSide(color: Theme.of(context).dividerColorDark),
+        side: const BorderSide(color: HBColors.dividerDark),
       ),
     ),
 
     dividerTheme: const DividerThemeData(
-      color: Theme.of(context).dividerColorDark,
+      color: HBColors.dividerDark,
       thickness: 1,
       space: 1,
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      displayMedium: HBTextStyles.displayMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      headlineLarge: HBTextStyles.headlineLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      headlineMedium: HBTextStyles.headlineMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      titleLarge:    HBTextStyles.titleLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      titleMedium:   HBTextStyles.titleMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      bodyLarge:     HBTextStyles.bodyLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      bodyMedium:    HBTextStyles.bodyMedium(Theme.of(context).colorScheme.onSurfaceDark),
-      bodySmall:     HBTextStyles.bodySmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
-      labelLarge:    HBTextStyles.labelLarge(Theme.of(context).colorScheme.onSurfaceDark),
-      labelSmall:    HBTextStyles.labelSmall(Theme.of(context).colorScheme.onSurfaceVariantDark),
+      displayLarge:  HBTextStyles.displayLarge(colorScheme.onSurface),
+      displayMedium: HBTextStyles.displayMedium(colorScheme.onSurface),
+      headlineLarge: HBTextStyles.headlineLarge(colorScheme.onSurface),
+      headlineMedium: HBTextStyles.headlineMedium(colorScheme.onSurface),
+      titleLarge:    HBTextStyles.titleLarge(colorScheme.onSurface),
+      titleMedium:   HBTextStyles.titleMedium(colorScheme.onSurface),
+      bodyLarge:     HBTextStyles.bodyLarge(colorScheme.onSurface),
+      bodyMedium:    HBTextStyles.bodyMedium(colorScheme.onSurface),
+      bodySmall:     HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
+      labelLarge:    HBTextStyles.labelLarge(colorScheme.onSurface),
+      labelSmall:    HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
     ),
   );
 }

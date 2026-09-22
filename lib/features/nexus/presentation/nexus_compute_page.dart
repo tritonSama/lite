@@ -55,7 +55,7 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
                 height: 100,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: HBColors.warningLight.withOpacity(0.1),
+                  color: HBColors.warning.withOpacity(0.1),
                   border: Border.all(color: HBColors.warning, width: 2),
                 ),
                 child: const Icon(
@@ -115,7 +115,7 @@ class _NexusComputePageState extends ConsumerState<NexusComputePage> {
                   return Container(
                     padding: const EdgeInsets.all(24),
                     decoration: BoxDecoration(
-                      color: HBColors.warningLight.withOpacity(0.1),
+                      color: HBColors.warning.withOpacity(0.1),
                       borderRadius: BorderRadius.circular(16),
                       border: Border.all(color: HBColors.warning),
                     ),

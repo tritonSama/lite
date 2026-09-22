@@ -53,9 +53,9 @@ class _TaskDetailBody extends StatelessWidget {
             width: double.infinity,
             padding: const EdgeInsets.all(HBSpacing.lg),
             decoration: BoxDecoration(
-              color: HBColors.warning.withOpacity(0.08),
+              color: HBColors.warning.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(HBRadius.lg),
-              border: Border.all(color: HBColors.warning.withOpacity(0.3)),
+              border: Border.all(color: HBColors.warning.withValues(alpha: 0.3)),
             ),
             child: Column(
               children: [
