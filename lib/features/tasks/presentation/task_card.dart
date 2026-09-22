@@ -144,9 +144,10 @@ class _StatusChip extends StatelessWidget {
           HBColors.secondary,
         TaskStatus.inProgress || TaskStatus.scheduled => HBColors.info,
         TaskStatus.completed => HBColors.success,
-        TaskStatus.cancelled || TaskStatus.expired => Theme.of(context).colorScheme.onSurfaceVariant,
+        TaskStatus.cancelled || TaskStatus.expired =>
+          Theme.of(context).colorScheme.onSurfaceVariant,
         TaskStatus.disputed => HBColors.error,
-        _ => HBColors.warning,
+        TaskStatus.draft => HBColors.neutralLighter,
       };
 
   @override
