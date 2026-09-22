@@ -12,6 +12,11 @@ import '../../notifications/presentation/notifications_button.dart';
 import '../../tasks/presentation/task_card.dart';
 import 'board_providers.dart';
 import 'board_search_delegate.dart';
+import 'local_offerings_provider.dart';
+import '../../teams/presentation/team_providers.dart';
+import 'dart:convert';
+import '../../../core/services/local_database_service.dart';
+import 'edit_offering_dialog.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -74,13 +79,162 @@ class _BoardPageState extends ConsumerState<BoardPage>
       body: TabBarView(
         controller: _tabCtrl,
         children: const [
-          _TasksTab(), // Main view with all tasks
-          _PlaceholderTab(
-            label: 'Club/Team specific items coming soon',
-            icon: Icons.group_work_outlined,
-          ),
+          _MainOfferingsTab(),
+          _MyClubOfferingsTab(),
           _LocalTab(), // Local radius selector mockup
           _InteractingTab(), // Negotiations & Bids view
+        ],
+      ),
+    );
+  }
+}
+
+class _MainOfferingsTab extends ConsumerWidget {
+  const _MainOfferingsTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final offeringsAsync = ref.watch(localOfferingsProvider);
+
+    return offeringsAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text('Error: $e')),
+      data: (offerings) {
+        if (offerings.isEmpty) {
+          return const Center(child: Text('No offerings found.'));
+        }
+        return RefreshIndicator(
+          onRefresh: () async => ref.refresh(localOfferingsProvider.future),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: offerings.length,
+            itemBuilder: (context, index) {
+              return OfferingCard(offering: offerings[index]);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _MyClubOfferingsTab extends ConsumerWidget {
+  const _MyClubOfferingsTab();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final offeringsAsync = ref.watch(localOfferingsProvider);
+    final selectedTeamId = ref.watch(selectedTeamProvider);
+
+    return offeringsAsync.when(
+      loading: () => const Center(child: CircularProgressIndicator()),
+      error: (e, _) => Center(child: Text('Error: $e')),
+      data: (offerings) {
+        final clubOfferings = offerings.where((o) => o['creatorId'] == selectedTeamId).toList();
+
+        if (clubOfferings.isEmpty) {
+          return Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const Icon(Icons.group_off, size: 64, color: Colors.grey),
+                const SizedBox(height: 16),
+                Text(
+                  selectedTeamId == null
+                    ? 'Join a team in Teams page'
+                    : 'No offerings for your club yet.',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ],
+            ),
+          );
+        }
+        return RefreshIndicator(
+          onRefresh: () async => ref.refresh(localOfferingsProvider.future),
+          child: ListView.builder(
+            padding: const EdgeInsets.all(16.0),
+            itemCount: clubOfferings.length,
+            itemBuilder: (context, index) {
+              return OfferingCard(offering: clubOfferings[index]);
+            },
+          ),
+        );
+      },
+    );
+  }
+}
+
+class OfferingCard extends ConsumerStatefulWidget {
+  final Map<String, dynamic> offering;
+  const OfferingCard({super.key, required this.offering});
+
+  @override
+  ConsumerState<OfferingCard> createState() => _OfferingCardState();
+}
+
+class _OfferingCardState extends ConsumerState<OfferingCard> {
+  bool _expanded = false;
+
+  void _editOffering() {
+    showDialog(
+      context: context,
+      builder: (context) => EditOfferingDialog(offering: widget.offering),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedTeamId = ref.watch(selectedTeamProvider);
+    final dataStr = widget.offering['data'] as String;
+    String title = "Unknown";
+    String description = "No description";
+    String category = "Unknown";
+    String bounty = "0";
+
+    try {
+      final decoded = jsonDecode(dataStr) as Map<String, dynamic>;
+      title = decoded['title']?.toString() ?? "Unknown";
+      description = decoded['description']?.toString() ?? "No description";
+      category = decoded['category']?.toString() ?? "Unknown";
+      bounty = decoded['bounty']?.toString() ?? "0";
+    } catch (e) {
+      debugPrint('Parse error: $e');
+    }
+
+    final isCreator = widget.offering['creatorId'] == selectedTeamId;
+
+    return Card(
+      margin: const EdgeInsets.only(bottom: 16.0),
+      child: Column(
+        children: [
+          ListTile(
+            title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text('Category: $category • Bounty: $bounty'),
+            trailing: IconButton(
+              icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
+              onPressed: () => setState(() => _expanded = !_expanded),
+            ),
+          ),
+          if (_expanded)
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(description),
+                  const SizedBox(height: 16),
+                  if (isCreator)
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: OutlinedButton.icon(
+                        icon: const Icon(Icons.edit, size: 16),
+                        label: const Text('Edit'),
+                        onPressed: _editOffering,
+                      ),
+                    ),
+                ],
+              ),
+            ),
         ],
       ),
     );

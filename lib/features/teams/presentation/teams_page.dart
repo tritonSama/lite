@@ -1,25 +1,28 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uuid/uuid.dart';
 import '../../../app/theme.dart';
 import '../../../core/services/local_database_service.dart';
+import 'team_providers.dart';
 
-class TeamsPage extends StatefulWidget {
+class TeamsPage extends ConsumerStatefulWidget {
   const TeamsPage({super.key});
 
   @override
-  State<TeamsPage> createState() => _TeamsPageState();
+  ConsumerState<TeamsPage> createState() => _TeamsPageState();
 }
 
-class _TeamsPageState extends State<TeamsPage> with SingleTickerProviderStateMixin {
+class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final dbService = LocalDatabaseService.instance;
 
-  // Dummy teams data
-  final List<Map<String, dynamic>> dummyTeams = [
-    {'id': '1', 'name': 'Cyber Mercs', 'membersOnline': 12},
-    {'id': '2', 'name': 'Neon Runners', 'membersOnline': 8},
-    {'id': '3', 'name': 'Scrap Tinkers', 'membersOnline': 3},
+  // Elemental teams data
+  final List<Map<String, dynamic>> elementalTeams = [
+    {'id': 'water', 'name': 'Water Clan', 'membersOnline': 124, 'icon': Icons.water_drop},
+    {'id': 'fire', 'name': 'Fire Tribe', 'membersOnline': 89, 'icon': Icons.local_fire_department},
+    {'id': 'earth', 'name': 'Earth Guild', 'membersOnline': 210, 'icon': Icons.eco},
+    {'id': 'wind', 'name': 'Wind Order', 'membersOnline': 156, 'icon': Icons.air},
   ];
 
   List<Map<String, dynamic>> _teamOfferings = [];
@@ -106,20 +109,37 @@ class _TeamsPageState extends State<TeamsPage> with SingleTickerProviderStateMix
         controller: _tabController,
         children: [
           // Tab 1: My Teams
-          ListView.builder(
-            itemCount: dummyTeams.length,
-            itemBuilder: (context, index) {
-              final team = dummyTeams[index];
-              return ListTile(
-                leading: const CircleAvatar(
-                  backgroundColor: HBColors.secondary,
-                  child: Icon(Icons.group, color: Colors.black),
-                ),
-                title: Text(team['name']),
-                subtitle: Text('${team['membersOnline']} members online'),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () {
-                  // Navigate to specific team page or show details
+          Consumer(
+            builder: (context, ref, child) {
+              final selectedTeamId = ref.watch(selectedTeamProvider);
+
+              return ListView.builder(
+                itemCount: elementalTeams.length,
+                itemBuilder: (context, index) {
+                  final team = elementalTeams[index];
+                  final isSelected = team['id'] == selectedTeamId;
+
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundColor: isSelected ? HBColors.primary : HBColors.secondary.withValues(alpha: 0.5),
+                      child: Icon(team['icon'], color: isSelected ? Colors.white : Colors.black),
+                    ),
+                    title: Text(team['name'], style: TextStyle(fontWeight: isSelected ? FontWeight.bold : FontWeight.normal)),
+                    subtitle: Text('${team['membersOnline']} members online'),
+                    trailing: isSelected
+                        ? const Icon(Icons.check_circle, color: Colors.green)
+                        : ElevatedButton(
+                            onPressed: () {
+                              ref.read(selectedTeamProvider.notifier).selectTeam(team['id']);
+                            },
+                            child: const Text('Join'),
+                          ),
+                    onTap: () {
+                      if (!isSelected) {
+                        ref.read(selectedTeamProvider.notifier).selectTeam(team['id']);
+                      }
+                    },
+                  );
                 },
               );
             },
@@ -179,7 +199,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
   String _description = '';
   String _category = 'Service';
   int _bounty = 100;
-  String _selectedTeamId = '1';
+  String _selectedTeamId = 'water';
 
   @override
   Widget build(BuildContext context) {
@@ -225,9 +245,10 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
               initialValue: _selectedTeamId,
               decoration: const InputDecoration(labelText: 'Team'),
               items: const [
-                DropdownMenuItem(value: '1', child: Text('Cyber Mercs')),
-                DropdownMenuItem(value: '2', child: Text('Neon Runners')),
-                DropdownMenuItem(value: '3', child: Text('Scrap Tinkers')),
+                DropdownMenuItem(value: 'water', child: Text('Water Clan')),
+                DropdownMenuItem(value: 'fire', child: Text('Fire Tribe')),
+                DropdownMenuItem(value: 'earth', child: Text('Earth Guild')),
+                DropdownMenuItem(value: 'wind', child: Text('Wind Order')),
               ],
               onChanged: (v) => setState(() => _selectedTeamId = v!),
             ),
