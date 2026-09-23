@@ -153,3 +153,47 @@ enum TaskCategory {
         other       => '📋',
       };
 }
+
+// ── War status ────────────────────────────────────────────────────────────────
+enum WarStatus {
+  pending,
+  active,
+  ceasefire,
+  victory,
+  defeat;
+
+  String get label => switch (this) {
+        pending   => 'Pending',
+        active    => 'Active',
+        ceasefire => 'Ceasefire',
+        victory   => 'Victory',
+        defeat    => 'Defeat',
+      };
+
+  String get emoji => switch (this) {
+        pending   => '⏳',
+        active    => '⚔️',
+        ceasefire => '🕊️',
+        victory   => '🏆',
+        defeat    => '💀',
+      };
+}
+
+// ── Listing type ──────────────────────────────────────────────────────────────
+enum ListingType {
+  forSale,
+  wantedToBuy,
+  forRent;
+
+  String get label => switch (this) {
+        forSale     => 'For Sale',
+        wantedToBuy => 'Wanted',
+        forRent     => 'For Rent',
+      };
+
+  String get emoji => switch (this) {
+        forSale     => '💰',
+        wantedToBuy => '🛒',
+        forRent     => '🔑',
+      };
+}

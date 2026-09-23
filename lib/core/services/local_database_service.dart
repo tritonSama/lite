@@ -19,14 +19,16 @@ class LocalDatabaseService {
     final dbPath = await getApplicationDocumentsDirectory();
     final path = join(dbPath.path, filePath);
 
-    return await openDatabase(path, version: 1, onCreate: _createDB);
+    return await openDatabase(
+      path,
+      version: 2,
+      onCreate: _createDB,
+      onUpgrade: _upgradeDB,
+    );
   }
 
   Future _createDB(Database db, int version) async {
-    // We store Freezed objects as JSON strings in a 'data' column
-    // to make schema migrations trivial for this placeholder.
-
-    // ── Bids (Offers) Table ─────────────────────────────
+    // ── Bids (Offers) Table
     await db.execute('''
       CREATE TABLE bids (
         id TEXT PRIMARY KEY,
@@ -37,7 +39,7 @@ class LocalDatabaseService {
       )
     ''');
 
-    // ── Teams (Clubs) Table ──────────────────────────────
+    // ── Teams (Clubs) Table
     await db.execute('''
       CREATE TABLE teams (
         id TEXT PRIMARY KEY,
@@ -47,15 +49,57 @@ class LocalDatabaseService {
       )
     ''');
 
-    // ── Tasks Table (Offline override placeholder) ──────
+    // ── Tasks / Marketplace Items Table
     await db.execute('''
       CREATE TABLE tasks (
         id TEXT PRIMARY KEY,
         creatorId TEXT NOT NULL,
         data TEXT NOT NULL,
+        listingType TEXT NOT NULL DEFAULT 'forSale',
+        rentalDuration TEXT,
         createdAt INTEGER NOT NULL
       )
     ''');
+
+    // ── Wars Table
+    await db.execute('''
+      CREATE TABLE wars (
+        id TEXT PRIMARY KEY,
+        challengerTeamId TEXT NOT NULL,
+        defenderTeamId TEXT NOT NULL,
+        status TEXT NOT NULL DEFAULT 'pending',
+        challengerScore INTEGER NOT NULL DEFAULT 0,
+        defenderScore INTEGER NOT NULL DEFAULT 0,
+        message TEXT,
+        declaredAt INTEGER NOT NULL
+      )
+    ''');
+  }
+
+  Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Add new columns to tasks table
+      await db.execute(
+        "ALTER TABLE tasks ADD COLUMN listingType TEXT NOT NULL DEFAULT 'forSale'",
+      );
+      await db.execute(
+        'ALTER TABLE tasks ADD COLUMN rentalDuration TEXT',
+      );
+
+      // Create wars table
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS wars (
+          id TEXT PRIMARY KEY,
+          challengerTeamId TEXT NOT NULL,
+          defenderTeamId TEXT NOT NULL,
+          status TEXT NOT NULL DEFAULT 'pending',
+          challengerScore INTEGER NOT NULL DEFAULT 0,
+          defenderScore INTEGER NOT NULL DEFAULT 0,
+          message TEXT,
+          declaredAt INTEGER NOT NULL
+        )
+      ''');
+    }
   }
 
   Future<void> close() async {

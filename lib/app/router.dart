@@ -10,7 +10,7 @@ import '../features/board/presentation/category_tasks_page.dart';
 import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/teams/presentation/teams_page.dart';
 import '../features/game/presentation/game_page.dart';
-import '../features/tools/presentation/tools_page.dart';
+import '../features/mission_control/presentation/mission_control_page.dart';
 import '../features/teams/presentation/team_detail_page.dart';
 import '../features/profile/presentation/profile_page.dart';
 import '../features/profile/presentation/public_profile_page.dart';
@@ -23,7 +23,7 @@ part 'router.g.dart';
 final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _boardKey = GlobalKey<NavigatorState>(debugLabel: 'board');
 final _gameKey = GlobalKey<NavigatorState>(debugLabel: 'game');
-final _toolsKey = GlobalKey<NavigatorState>(debugLabel: 'tools');
+final _missionControlKey = GlobalKey<NavigatorState>(debugLabel: 'missionControl');
 final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
@@ -100,13 +100,13 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 🛠 Tools
+          // 🎯 Mission Control
           StatefulShellBranch(
-            navigatorKey: _toolsKey,
+            navigatorKey: _missionControlKey,
             routes: [
               GoRoute(
-                path: '/tools',
-                builder: (_, __) => const ToolsPage(),
+                path: '/mission-control',
+                builder: (_, __) => const MissionControlPage(),
               ),
             ],
           ),
@@ -190,9 +190,9 @@ class AppShell extends StatelessWidget {
             label: 'Game',
           ),
           NavigationDestination(
-            icon: Icon(Icons.build_circle_outlined),
-            selectedIcon: Icon(Icons.build_circle),
-            label: 'Tools',
+            icon: Icon(Icons.rocket_launch_outlined),
+            selectedIcon: Icon(Icons.rocket_launch),
+            label: 'Mission',
           ),
           NavigationDestination(
             icon: Icon(Icons.group_outlined),

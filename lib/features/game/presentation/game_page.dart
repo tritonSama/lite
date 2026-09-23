@@ -288,7 +288,7 @@ class _GamePageState extends ConsumerState<GamePage> {
               decoration: BoxDecoration(
                 color: Colors.black54,
                 borderRadius: BorderRadius.circular(8),
-                border: Border.all(color: HBColors.primary.withValues(alpha: 0.5)),
+                border: Border.all(color: HBColors.primary.withOpacity(0.5)),
               ),
               child: const Row(
                 mainAxisSize: MainAxisSize.min,
@@ -326,7 +326,7 @@ class _QuestCard extends StatelessWidget {
     } catch (_) {}
 
     return Card(
-      color: const Color(0xFF0C0F1D).withValues(alpha: 0.95),
+      color: const Color(0xFF0C0F1D).withOpacity(0.95),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
         side: const BorderSide(color: HBColors.primary, width: 1.5),
