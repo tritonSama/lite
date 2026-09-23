@@ -50,35 +50,42 @@ Future<bool> hasTeamPermission(Ref ref, {required String userId, required String
   // For now, assume we can check if ownerId == userId.
   if (targetTeam.ownerId == userId) return true;
 
-  // We need to recursively check two directions:
-  // 1. Is the user in ANY child of this team? (Child inherits parent access)
-  // 2. Is the user a leader of ANY parent of this team? (Parent leaders inherit child access)
+  // We need to recursively check two independent directions.
+  // We must not mix them in a single recursive function, otherwise
+  // sibling clubs could bleed permissions (e.g. going up to mother, then down to sister).
 
-  bool isUserInRelatedTeam(String currentTeamId, Set<String> visited) {
+  // 1. Check if user is in ANY child of this team (Child inherits parent access)
+  bool isUserInChild(String currentTeamId, Set<String> visited) {
     if (visited.contains(currentTeamId)) return false;
     visited.add(currentTeamId);
 
-    // Direction 1: Check children
     final children = allTeams.where((t) => t.parentIds.contains(currentTeamId));
     for (final child in children) {
       if (child.ownerId == userId) return true;
-      if (isUserInRelatedTeam(child.id, visited)) return true;
+      if (isUserInChild(child.id, visited)) return true;
     }
+    return false;
+  }
 
-    // Direction 2: Check parents
+  if (isUserInChild(targetTeamId, {})) return true;
+
+  // 2. Check if user is a leader of ANY parent of this team (Parent leaders inherit child access)
+  bool isUserInParent(String currentTeamId, Set<String> visited) {
+    if (visited.contains(currentTeamId)) return false;
+    visited.add(currentTeamId);
+
     final currentTeamNode = teamMap[currentTeamId];
     if (currentTeamNode != null) {
       for (final parentId in currentTeamNode.parentIds) {
         final parent = teamMap[parentId];
         if (parent != null) {
           if (parent.ownerId == userId) return true;
-          if (isUserInRelatedTeam(parentId, visited)) return true;
+          if (isUserInParent(parentId, visited)) return true;
         }
       }
     }
-
     return false;
   }
 
-  return isUserInRelatedTeam(targetTeamId, {});
+  return isUserInParent(targetTeamId, {});
 }
