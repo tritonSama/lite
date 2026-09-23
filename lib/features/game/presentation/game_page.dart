@@ -262,7 +262,7 @@ class _GamePageState extends ConsumerState<GamePage> {
                   zoom: 13,
                 ),
                 markers: markers,
-                myLocationEnabled: true,
+                myLocationEnabled: false,
                 myLocationButtonEnabled: false,
                 onTap: (_) {
                   setState(() => _selectedQuest = null);
