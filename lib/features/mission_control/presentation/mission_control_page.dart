@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flame/game.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../data/weather_service.dart';
 import '../domain/weather_data.dart';
 import 'globe_game.dart';
 import 'mission_control_providers.dart';
+import '../../comms/presentation/comms_overlay.dart';
 
 class MissionControlPage extends ConsumerStatefulWidget {
   const MissionControlPage({super.key});
@@ -167,7 +169,22 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                 _QuickActionTile(
                   icon: Icons.satellite_alt,
                   label: 'Comms',
-                  onTap: () {},
+                  onTap: () {
+                    showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      isScrollControlled: true,
+                      builder: (context) => Padding(
+                        padding: EdgeInsets.only(
+                          top: MediaQuery.of(context).size.height * 0.3,
+                        ),
+                        child: const CommsOverlay(),
+                      ),
+                    );
+                  },
+                  onLongPress: () {
+                    context.push('/mission-control/comms-config');
+                  },
                 ),
                 _QuickActionTile(
                   icon: Icons.groups,
@@ -192,17 +209,20 @@ class _QuickActionTile extends StatelessWidget {
   final IconData icon;
   final String label;
   final VoidCallback onTap;
+  final VoidCallback? onLongPress;
 
   const _QuickActionTile({
     required this.icon,
     required this.label,
     required this.onTap,
+    this.onLongPress,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
+      onLongPress: onLongPress,
       child: Container(
         decoration: BoxDecoration(
           color: HBColors.neutral,
