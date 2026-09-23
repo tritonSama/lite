@@ -176,7 +176,16 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Teams / Marketplace'),
+        title: const Text('Guilds / Marketplace'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.hub_outlined),
+            tooltip: 'Constellation Map',
+            onPressed: () {
+              context.push('/teams/constellation');
+            },
+          ),
+        ],
         bottom: TabBar(
           controller: _tabController,
           tabs: const [

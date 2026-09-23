@@ -56,4 +56,15 @@ class TeamRepository {
     }
     return null;
   }
+
+  Future<List<Team>> getAllTeams() async {
+    final db = await _dbService.database;
+
+    final maps = await db.query('teams', orderBy: 'createdAt DESC');
+
+    return maps.map((m) {
+      final dataMap = jsonDecode(m['data'] as String) as Map<String, dynamic>;
+      return Team.fromJson(dataMap);
+    }).toList();
+  }
 }
