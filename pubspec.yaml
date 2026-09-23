@@ -61,6 +61,9 @@ dependencies:
     path: third_party/fluorescent/fluorescent/packages/fluorescent_fluorite
   fluorescent_vulkan:
     path: third_party/fluorescent/fluorescent/packages/fluorescent_vulkan
+  fluorescent_flame:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_flame
+  flame: ^1.38.2
   google_fonts: ^8.2.1
   shared_preferences: ^2.5.5
   package_info_plus: ^10.2.1
