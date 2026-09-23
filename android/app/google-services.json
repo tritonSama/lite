@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "615673989451",
+    "project_id": "heavenlysent-680ac",
+    "storage_bucket": "heavenlysent-680ac.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:615673989451:android:3990859e07765c9cf2c0ce",
+        "android_client_info": {
+          "package_name": "heavenlybond.lite"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "615673989451-aq68kqjc9cl0k96vkqhjpdr7hag8otkn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBJoLx3brTuHywaAJY5Tc1gnnW0TESaKhM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "615673989451-aq68kqjc9cl0k96vkqhjpdr7hag8otkn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
