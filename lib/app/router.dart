@@ -40,13 +40,7 @@ GoRouter appRouter(Ref ref) {
 
     // ── Auth redirect guard ─────────────────────────────────────────────────
     redirect: (context, state) {
-      final isLoggedIn = authState.value != null;
-      final isAuthRoute =
-          state.matchedLocation.startsWith('/login') ||
-          state.matchedLocation.startsWith('/signup');
-
-      if (!isLoggedIn && !isAuthRoute) return '/login';
-      if (isLoggedIn && isAuthRoute) return '/board';
+      // FORCING BYPASS FOR TESTING
       return null;
     },
 

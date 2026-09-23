@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../../../app/theme_provider.dart';
@@ -63,7 +64,7 @@ class ProfilePage extends ConsumerWidget {
             _ProfileTile(
               icon: Icons.verified_user_outlined,
               label: 'Credentials',
-              onTap: () => Navigator.of(context).pushNamed('/profile/credentials'),
+              onTap: () => context.push('/profile/credentials'),
             ),
             _ProfileTile(
               icon: Icons.star_outline,

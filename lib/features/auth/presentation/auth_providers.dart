@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -35,6 +36,20 @@ class AuthNotifier extends _$AuthNotifier {
       final cred = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await cred.user?.updateDisplayName(displayName);
+      
+      // Create Firestore user document
+      if (cred.user != null) {
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(cred.user!.uid)
+            .set({
+          'id': cred.user!.uid,
+          'email': email,
+          'displayName': displayName,
+          'createdAt': FieldValue.serverTimestamp(),
+          'reputation': 0,
+        });
+      }
     });
   }
 
