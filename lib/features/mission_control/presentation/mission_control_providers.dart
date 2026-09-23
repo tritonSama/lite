@@ -17,7 +17,7 @@ class FriendLocation {
 }
 
 @riverpod
-Future<List<FriendLocation>> friendLocations(FriendLocationsRef ref) async {
+Future<List<FriendLocation>> friendLocations(Ref ref) async {
   // Simulate network delay
   await Future.delayed(const Duration(milliseconds: 500));
 

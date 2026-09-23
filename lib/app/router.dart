@@ -16,6 +16,7 @@ import '../features/profile/presentation/profile_page.dart';
 import '../features/profile/presentation/public_profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
 import '../features/nexus/presentation/nexus_compute_page.dart';
+import '../features/comms/presentation/comms_config_page.dart';
 
 part 'router.g.dart';
 
@@ -107,6 +108,12 @@ GoRouter appRouter(Ref ref) {
               GoRoute(
                 path: '/mission-control',
                 builder: (_, __) => const MissionControlPage(),
+                routes: [
+                  GoRoute(
+                    path: 'comms-config',
+                    builder: (_, __) => const CommsConfigPage(),
+                  ),
+                ],
               ),
             ],
           ),

@@ -48,4 +48,4 @@ final class FriendLocationsProvider
   }
 }
 
-String _$friendLocationsHash() => r'ea75fcfd6e3a57ec026bfc4419d60ef978fb88e9';
+String _$friendLocationsHash() => r'6728b7f299044fa57ec9d05c5215618781dfd56d';
