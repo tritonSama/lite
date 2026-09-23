@@ -58,7 +58,7 @@ class TaskCard extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(
                         horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
                     decoration: BoxDecoration(
-                      color: HBColors.warning.withValues(alpha: 0.12),
+                      color: HBColors.warning.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(HBRadius.sm),
                     ),
                     child: Text(
@@ -118,7 +118,7 @@ class _CategoryBadge extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
       decoration: BoxDecoration(
-        color: HBColors.primary.withValues(alpha: 0.10),
+        color: HBColors.primary.withOpacity(0.10),
         borderRadius: BorderRadius.circular(HBRadius.full),
       ),
       child: Text(
@@ -157,7 +157,7 @@ class _StatusChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
           horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
       decoration: BoxDecoration(
-        color: c.withValues(alpha: 0.12),
+        color: c.withOpacity(0.12),
         borderRadius: BorderRadius.circular(HBRadius.full),
       ),
       child: Text(

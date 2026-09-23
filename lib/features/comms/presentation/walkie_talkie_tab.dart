@@ -66,7 +66,7 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab> with SingleTickerProv
           Listener(
             onPointerDown: _onPointerDown,
             onPointerUp: _onPointerUp,
-            onPointerCancel: _onPointerUp,
+            onPointerCancel: (e) => _onPointerUp(null as dynamic),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 100),
               width: _isRecording ? 140 : 150,

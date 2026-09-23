@@ -414,7 +414,7 @@ class _NeuralNetworkPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
-      ..color = HBColors.primaryLight.withOpacity(0.5)
+      ..color = HBColors.primaryLight.withValues(alpha: 0.5)
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
 
@@ -436,8 +436,8 @@ class _NeuralNetworkPainter extends CustomPainter {
     for (int i = 0; i < nodes.length; i++) {
       for (int j = i + 1; j < nodes.length; j++) {
         // Simple pulsing opacity based on animation
-        paint.color = HBColors.primaryLight.withOpacity(
-          (0.2 + (animationValue * 0.3)) % 0.8,
+        paint.color = HBColors.primaryLight.withValues(
+          alpha: (0.2 + (animationValue * 0.3)) % 0.8,
         );
         canvas.drawLine(nodes[i], nodes[j], paint);
       }
@@ -449,7 +449,7 @@ class _NeuralNetworkPainter extends CustomPainter {
       canvas.drawCircle(
         node,
         12.0,
-        paint..color = HBColors.primaryLight.withOpacity(0.3),
+        paint..color = HBColors.primaryLight.withValues(alpha: 0.3),
       );
     }
   }

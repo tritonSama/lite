@@ -6,7 +6,7 @@ part 'comms_message.g.dart';
 enum CommsChannel { direct, team, global }
 
 @freezed
-class CommsMessage with _$CommsMessage {
+abstract class CommsMessage with _$CommsMessage {
   const factory CommsMessage({
     required String id,
     required String senderId,
