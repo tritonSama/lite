@@ -9,6 +9,7 @@ import '../features/board/presentation/board_page.dart';
 import '../features/board/presentation/category_tasks_page.dart';
 import '../features/tasks/presentation/task_detail_page.dart';
 import '../features/teams/presentation/teams_page.dart';
+import '../features/teams/presentation/constellation/constellation_map_page.dart';
 import '../features/game/presentation/game_page.dart';
 import '../features/mission_control/presentation/mission_control_page.dart';
 import '../features/teams/presentation/team_detail_page.dart';
@@ -120,6 +121,10 @@ GoRouter appRouter(Ref ref) {
                 path: '/teams',
                 builder: (_, __) => const TeamsPage(),
                 routes: [
+                  GoRoute(
+                    path: 'constellation',
+                    builder: (_, __) => const ConstellationMapPage(),
+                  ),
                   GoRoute(
                     path: ':teamId',
                     builder: (_, state) =>

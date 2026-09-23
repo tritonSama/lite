@@ -17,6 +17,17 @@ _Team _$TeamFromJson(Map<String, dynamic> json) => _Team(
           ?.map((e) => e as String)
           .toList() ??
       const [],
+  parentIds:
+      (json['parentIds'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
+  sisterClubIds:
+      (json['sisterClubIds'] as List<dynamic>?)
+          ?.map((e) => e as String)
+          .toList() ??
+      const [],
+  treatyIds:
+      (json['treatyIds'] as List<dynamic>?)?.map((e) => e as String).toList() ??
+      const [],
   rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
   completedJobCount: (json['completedJobCount'] as num?)?.toInt() ?? 0,
   createdAt: const TimestampConverter().fromJson(
@@ -31,6 +42,9 @@ Map<String, dynamic> _$TeamToJson(_Team instance) => <String, dynamic>{
   'ownerId': instance.ownerId,
   'memberCount': instance.memberCount,
   'credentialIds': instance.credentialIds,
+  'parentIds': instance.parentIds,
+  'sisterClubIds': instance.sisterClubIds,
+  'treatyIds': instance.treatyIds,
   'rating': instance.rating,
   'completedJobCount': instance.completedJobCount,
   'createdAt': const TimestampConverter().toJson(instance.createdAt),

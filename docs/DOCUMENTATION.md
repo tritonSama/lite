@@ -31,8 +31,12 @@ The application is built using Flutter for the frontend, communicating with Fire
 *   **Task (`Task`):** Represents a job request. Includes budget, location, required credentials, status, and creator/provider IDs.
 *   **UserProfile (`UserProfile`):** Represents a user on the platform. Includes skills, ratings, job counts, and basic info.
 *   **Offer (`Offer`):** Represents a bid on a task. Includes amount, proposed dates, status, and attached credentials.
-*   **Team (`Team`):** Represents a group of workers.
-*   **Membership (`Membership`):** Junction between a user and a team, including roles.
+*   **Team/Guild (`Team`):** Represents a group of workers, historically called "Teams" but conceptualized in the UI as "Guilds" or "Factions". Supports branching logic:
+    *   `parentIds`: Links a child Cliq back to its mother Organizations.
+    *   `sisterClubIds`: Links sibling clubs.
+    *   `treatyIds`: Connects independent Guilds in partnerships.
+    *   Permissions are resolved dynamically: a member of a child Cliq implicitly inherits access permissions to the mother Organization.
+*   **Membership (`Membership`):** Junction between a user and a team/guild, including roles.
 *   **Credential (`Credential`):** Represents an uploaded license/certification, its verification status, and type.
 
 ### Task State Machine
@@ -75,7 +79,7 @@ The application features 5 major sections, managed by persistent bottom navigati
 1.  **Board (`/board`):** Feed of open tasks, nearby tasks, categories, and projects.
 2.  **Create (`/create`):** Wizard to create tasks/service requests.
 3.  **Bids (`/bids`):** Manage offers received, own offers made, and active contracts.
-4.  **Teams (`/teams`):** Create/join teams, manage team credentials and jobs.
+4.  **Teams/Guilds (`/teams`):** Create/join guilds, manage credentials and jobs. Features the **Constellation Map** (`/teams/constellation`), an interactive 3D solar system view rendered using the Fluorescent 3D Engine to visualize parent/child structures, sibling links, and treaty partnerships as glowing nodes and tethers.
 5.  **Profile (`/profile`):** User skills, ratings, credentials, history, and earnings.
 
 ## Future: Nexus Protocol Ecosystem

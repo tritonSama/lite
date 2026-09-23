@@ -49,14 +49,17 @@ This document outlines the step-by-step roadmap to build out the remaining featu
     *   Admin dashboard (or Cloud Functions) for Admin verification of uploaded documents.
     *   Enforce required credentials before allowing a user to submit an offer on specific tasks.
 
-## Sprint 6: Teams Foundation
+## Sprint 6: Teams & Guilds Foundation
 
-*   **Goal:** Allow users to form teams to tackle larger tasks.
+*   **Goal:** Allow users to form teams/guilds to tackle larger tasks and build complex organizations.
 *   **Tasks:**
-    *   Build out `TeamsPage`.
+    *   Build out `TeamsPage` and `TeamDetailPage`.
     *   Create Team functionality (Name, Description).
     *   Invite users to Team (creates `Membership` records).
     *   Allow an Offer to be submitted *on behalf of a team* rather than an individual.
+    *   **Completed:** Implemented Constellation Map using the 3D Fluorescent Engine.
+    *   **Completed:** Expanded Team data model to support branching (`parentIds`), sister clubs (`sisterClubIds`), and partnerships (`treatyIds`).
+    *   **Completed:** Dynamic permission resolution (child cliq members inherit mother org access).
 
 ## Sprint 7: Official Projects & Event Coordination
 

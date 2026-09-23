@@ -15,7 +15,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Team {
 
- String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; double get rating; int get completedJobCount;@TimestampConverter() DateTime get createdAt;
+ String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; List<String> get parentIds;// Organizations this team branched from (Guilds)
+ List<String> get sisterClubIds;// Sister clubs (Guilds)
+ List<String> get treatyIds;// Treaties with other teams
+ double get rating; int get completedJobCount;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +31,16 @@ $TeamCopyWith<Team> get copyWith => _$TeamCopyWithImpl<Team>(this as Team, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, credentialIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(credentialIds),rating,completedJobCount,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(credentialIds),const DeepCollectionEquality().hash(parentIds),const DeepCollectionEquality().hash(sisterClubIds),const DeepCollectionEquality().hash(treatyIds),rating,completedJobCount,createdAt);
 
 @override
 String toString() {
-  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
+  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
 }
 
 
@@ -48,7 +51,7 @@ abstract mixin class $TeamCopyWith<$Res>  {
   factory $TeamCopyWith(Team value, $Res Function(Team) _then) = _$TeamCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
+ String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -65,7 +68,7 @@ class _$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
   return _then(_self.copyWith(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -73,6 +76,9 @@ as String,description: freezed == description ? _self.description : description 
 as String?,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String,memberCount: null == memberCount ? _self.memberCount : memberCount // ignore: cast_nullable_to_non_nullable
 as int,credentialIds: null == credentialIds ? _self.credentialIds : credentialIds // ignore: cast_nullable_to_non_nullable
+as List<String>,parentIds: null == parentIds ? _self.parentIds : parentIds // ignore: cast_nullable_to_non_nullable
+as List<String>,sisterClubIds: null == sisterClubIds ? _self.sisterClubIds : sisterClubIds // ignore: cast_nullable_to_non_nullable
+as List<String>,treatyIds: null == treatyIds ? _self.treatyIds : treatyIds // ignore: cast_nullable_to_non_nullable
 as List<String>,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,completedJobCount: null == completedJobCount ? _self.completedJobCount : completedJobCount // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
@@ -161,10 +167,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
   return orElse();
 
 }
@@ -182,10 +188,10 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _Team():
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -202,10 +208,10 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
   return null;
 
 }
@@ -217,7 +223,7 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 @JsonSerializable()
 
 class _Team implements Team {
-  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0, final  List<String> credentialIds = const [], this.rating = 0.0, this.completedJobCount = 0, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds;
+  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0, final  List<String> credentialIds = const [], final  List<String> parentIds = const [], final  List<String> sisterClubIds = const [], final  List<String> treatyIds = const [], this.rating = 0.0, this.completedJobCount = 0, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds,_parentIds = parentIds,_sisterClubIds = sisterClubIds,_treatyIds = treatyIds;
   factory _Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 
 @override final  String id;
@@ -232,6 +238,32 @@ class _Team implements Team {
   return EqualUnmodifiableListView(_credentialIds);
 }
 
+ final  List<String> _parentIds;
+@override@JsonKey() List<String> get parentIds {
+  if (_parentIds is EqualUnmodifiableListView) return _parentIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_parentIds);
+}
+
+// Organizations this team branched from (Guilds)
+ final  List<String> _sisterClubIds;
+// Organizations this team branched from (Guilds)
+@override@JsonKey() List<String> get sisterClubIds {
+  if (_sisterClubIds is EqualUnmodifiableListView) return _sisterClubIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_sisterClubIds);
+}
+
+// Sister clubs (Guilds)
+ final  List<String> _treatyIds;
+// Sister clubs (Guilds)
+@override@JsonKey() List<String> get treatyIds {
+  if (_treatyIds is EqualUnmodifiableListView) return _treatyIds;
+  // ignore: implicit_dynamic_type
+  return EqualUnmodifiableListView(_treatyIds);
+}
+
+// Treaties with other teams
 @override@JsonKey() final  double rating;
 @override@JsonKey() final  int completedJobCount;
 @override@TimestampConverter() final  DateTime createdAt;
@@ -249,16 +281,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other._credentialIds, _credentialIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other._credentialIds, _credentialIds)&&const DeepCollectionEquality().equals(other._parentIds, _parentIds)&&const DeepCollectionEquality().equals(other._sisterClubIds, _sisterClubIds)&&const DeepCollectionEquality().equals(other._treatyIds, _treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),rating,completedJobCount,createdAt);
+int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),const DeepCollectionEquality().hash(_parentIds),const DeepCollectionEquality().hash(_sisterClubIds),const DeepCollectionEquality().hash(_treatyIds),rating,completedJobCount,createdAt);
 
 @override
 String toString() {
-  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
+  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
 }
 
 
@@ -269,7 +301,7 @@ abstract mixin class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$TeamCopyWith(_Team value, $Res Function(_Team) _then) = __$TeamCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
+ String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -286,7 +318,7 @@ class __$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
   return _then(_Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -294,6 +326,9 @@ as String,description: freezed == description ? _self.description : description 
 as String?,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String,memberCount: null == memberCount ? _self.memberCount : memberCount // ignore: cast_nullable_to_non_nullable
 as int,credentialIds: null == credentialIds ? _self._credentialIds : credentialIds // ignore: cast_nullable_to_non_nullable
+as List<String>,parentIds: null == parentIds ? _self._parentIds : parentIds // ignore: cast_nullable_to_non_nullable
+as List<String>,sisterClubIds: null == sisterClubIds ? _self._sisterClubIds : sisterClubIds // ignore: cast_nullable_to_non_nullable
+as List<String>,treatyIds: null == treatyIds ? _self._treatyIds : treatyIds // ignore: cast_nullable_to_non_nullable
 as List<String>,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,completedJobCount: null == completedJobCount ? _self.completedJobCount : completedJobCount // ignore: cast_nullable_to_non_nullable
 as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
