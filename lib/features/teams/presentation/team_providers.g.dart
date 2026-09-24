@@ -163,7 +163,7 @@ final class HasTeamPermissionProvider
   }
 }
 
-String _$hasTeamPermissionHash() => r'572c34b56fd51f151ec6a8d9d141d3df4f761d09';
+String _$hasTeamPermissionHash() => r'feef61e5be16078b3a77a3d4739aebed32625288';
 
 /// Helper provider to get permissions for a user in a team.
 /// Resolves dynamically: if user is member of a child, they have permissions

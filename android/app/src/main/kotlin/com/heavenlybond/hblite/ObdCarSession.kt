@@ -1,0 +1,11 @@
+package com.heavenlybond.hblite
+
+import android.content.Intent
+import androidx.car.app.Screen
+import androidx.car.app.Session
+
+class ObdCarSession : Session() {
+    override fun onCreateScreen(intent: Intent): Screen {
+        return ObdCarScreen(carContext)
+    }
+}

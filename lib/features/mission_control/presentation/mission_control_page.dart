@@ -196,6 +196,13 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                   label: 'Wars',
                   onTap: () {},
                 ),
+                _QuickActionTile(
+                  icon: Icons.speed,
+                  label: 'OBD2 Data',
+                  onTap: () {
+                    context.push('/mission-control/obd');
+                  },
+                ),
               ],
             ),
           ),
