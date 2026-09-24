@@ -11,7 +11,7 @@ part of 'board_providers.dart';
 /// Stream of published/bidding tasks for the Board feed.
 
 @ProviderFor(publicTasks)
-final publicTasksProvider = PublicTasksProvider._();
+const publicTasksProvider = PublicTasksProvider._();
 
 /// Stream of published/bidding tasks for the Board feed.
 
@@ -24,7 +24,7 @@ final class PublicTasksProvider
         >
     with $FutureModifier<List<Task>>, $StreamProvider<List<Task>> {
   /// Stream of published/bidding tasks for the Board feed.
-  PublicTasksProvider._()
+  const PublicTasksProvider._()
     : super(
         from: null,
         argument: null,
@@ -54,7 +54,7 @@ String _$publicTasksHash() => r'9413adff0619033f88e927edaad3468bb4a0552a';
 /// Stream of tasks filtered by category.
 
 @ProviderFor(categoryTasks)
-final categoryTasksProvider = CategoryTasksFamily._();
+const categoryTasksProvider = CategoryTasksFamily._();
 
 /// Stream of tasks filtered by category.
 
@@ -67,7 +67,7 @@ final class CategoryTasksProvider
         >
     with $FutureModifier<List<Task>>, $StreamProvider<List<Task>> {
   /// Stream of tasks filtered by category.
-  CategoryTasksProvider._({
+  const CategoryTasksProvider._({
     required CategoryTasksFamily super.from,
     required TaskCategory super.argument,
   }) : super(
@@ -116,7 +116,7 @@ String _$categoryTasksHash() => r'edd50f633a508e9a59a6b1cf71de66d31086359b';
 
 final class CategoryTasksFamily extends $Family
     with $FunctionalFamilyOverride<Stream<List<Task>>, TaskCategory> {
-  CategoryTasksFamily._()
+  const CategoryTasksFamily._()
     : super(
         retry: null,
         name: r'categoryTasksProvider',

@@ -4,7 +4,9 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../app/theme.dart';
 import '../../tasks/data/task_repository.dart';
+import '../../teams/presentation/team_providers.dart';
 import '../domain/task.dart';
+import 'make_offer_modal.dart';
 
 part 'task_detail_page.g.dart';
 
@@ -39,6 +41,14 @@ class TaskDetailPage extends ConsumerWidget {
 class _TaskDetailBody extends StatelessWidget {
   final Task task;
   const _TaskDetailBody({required this.task});
+
+  void _showMakeOfferModal(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      builder: (context) => MakeOfferModal(taskId: task.id),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +101,25 @@ class _TaskDetailBody extends StatelessWidget {
                   .toList(),
             ),
           ],
+
+          const SizedBox(height: HBSpacing.xl),
+          Consumer(
+            builder: (context, ref, child) {
+              final currentTeamId = ref.watch(selectedTeamProvider);
+              final isCreator = task.creatorId == currentTeamId;
+              if (isCreator) {
+                return const SizedBox.shrink(); // Creator shouldn't bid on their own task
+              }
+              return SizedBox(
+                width: double.infinity,
+                child: FilledButton.icon(
+                  icon: const Icon(Icons.handshake_outlined),
+                  label: const Text('Make an Offer'),
+                  onPressed: () => _showMakeOfferModal(context),
+                ),
+              );
+            },
+          ),
         ],
       ),
     );
