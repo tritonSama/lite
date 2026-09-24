@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flame/game.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../app/theme.dart';
 import '../data/weather_service.dart';
 import '../domain/weather_data.dart';
-import 'globe_game.dart';
-import 'mission_control_providers.dart';
+import 'game_map_overlay.dart';
 import '../../comms/presentation/comms_overlay.dart';
 
 class MissionControlPage extends ConsumerStatefulWidget {
@@ -137,20 +135,10 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
           ),
           Expanded(
             flex: 2,
-            child: ref.watch(friendLocationsProvider).when(
-                  data: (friends) {
-                    return GameWidget(
-                      game: GlobeGame(friends: friends),
-                    );
-                  },
-                  loading: () => const Center(
-                    child: CircularProgressIndicator(color: HBColors.primary),
-                  ),
-                  error: (error, stack) => Center(
-                    child: Text('Error loading friends: $error',
-                        style: const TextStyle(color: Colors.redAccent)),
-                  ),
-                ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(HBRadius.md),
+              child: const GameMapOverlay(),
+            ),
           ),
           Expanded(
             flex: 1,
@@ -248,4 +236,3 @@ class _QuickActionTile extends StatelessWidget {
     );
   }
 }
-
