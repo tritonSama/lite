@@ -7,6 +7,7 @@ import '../data/weather_service.dart';
 import '../domain/weather_data.dart';
 import 'game_map_overlay.dart';
 import '../../comms/presentation/comms_overlay.dart';
+import 'mission_control_providers.dart';
 
 class MissionControlPage extends ConsumerStatefulWidget {
   const MissionControlPage({super.key});
@@ -17,21 +18,23 @@ class MissionControlPage extends ConsumerStatefulWidget {
 
 class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   final WeatherService _weatherService = WeatherService();
-  late Future<WeatherData?> _weatherFuture;
+  Future<WeatherData?>? _weatherFuture;
+  final GlobalKey<GameMapOverlayState> _mapKey = GlobalKey();
   
   // Default to San Francisco
-  final double lat = 37.7749;
-  final double lng = -122.4194;
+  double lat = 37.7749;
+  double lng = -122.4194;
+  bool _weatherFetched = false;
 
   @override
   void initState() {
     super.initState();
-    _fetchWeather();
   }
   
   void _fetchWeather() {
     setState(() {
       _weatherFuture = _weatherService.fetchWeather(lat, lng);
+      _weatherFetched = true;
     });
   }
   
@@ -46,6 +49,16 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen(userLocationProvider, (previous, next) {
+      next.whenData((position) {
+        if (!_weatherFetched || (lat != position.latitude || lng != position.longitude)) {
+          lat = position.latitude;
+          lng = position.longitude;
+          _fetchWeather();
+        }
+      });
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Mission Control'),
@@ -54,7 +67,9 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
         children: [
           Padding(
             padding: const EdgeInsets.all(HBSpacing.md),
-            child: FutureBuilder<WeatherData?>(
+            child: _weatherFuture == null
+                ? const SizedBox.shrink()
+                : FutureBuilder<WeatherData?>(
               future: _weatherFuture,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -137,7 +152,7 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
             flex: 2,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(HBRadius.md),
-              child: const GameMapOverlay(),
+              child: GameMapOverlay(key: _mapKey),
             ),
           ),
           Expanded(
@@ -152,7 +167,9 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                 _QuickActionTile(
                   icon: Icons.gps_fixed,
                   label: 'GPS',
-                  onTap: () {},
+                  onTap: () {
+                    _mapKey.currentState?.centerOnUser();
+                  },
                 ),
                 _QuickActionTile(
                   icon: Icons.satellite_alt,

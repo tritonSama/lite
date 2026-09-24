@@ -34,6 +34,8 @@ class _RadarBackgroundState extends ConsumerState<RadarBackground>
   @override
   Widget build(BuildContext context) {
     final friendsAsync = ref.watch(friendLocationsProvider);
+    final userLocationAsync = ref.watch(userLocationProvider);
+    final userPos = userLocationAsync.whenOrNull(data: (d) => d);
 
     return AnimatedBuilder(
       animation: _controller,
@@ -43,6 +45,8 @@ class _RadarBackgroundState extends ConsumerState<RadarBackground>
           painter: _RadarPainter(
             sweepAngle: _controller.value * 2 * math.pi,
             friends: friendsAsync.value ?? [],
+            userLat: userPos?.latitude ?? 37.77,
+            userLng: userPos?.longitude ?? -122.41,
           ),
         );
       },
@@ -53,8 +57,15 @@ class _RadarBackgroundState extends ConsumerState<RadarBackground>
 class _RadarPainter extends CustomPainter {
   final double sweepAngle;
   final List<FriendLocation> friends;
+  final double userLat;
+  final double userLng;
 
-  _RadarPainter({required this.sweepAngle, required this.friends});
+  _RadarPainter({
+    required this.sweepAngle,
+    required this.friends,
+    required this.userLat,
+    required this.userLng,
+  });
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -116,9 +127,9 @@ class _RadarPainter extends CustomPainter {
       ..maskFilter = const MaskFilter.blur(BlurStyle.normal, 8);
 
     for (final friend in friends) {
-      // Very simple mock projection relative to SF (37.77, -122.41) just to spread them out on radar
-      final dy = (friend.latitude - 37.77) * 2;
-      final dx = (friend.longitude + 122.41) * 2;
+      // Very simple mock projection relative to user's location
+      final dy = (friend.latitude - userLat) * 2;
+      final dx = (friend.longitude - userLng) * 2; // Subtracting userLng (note: east is positive)
 
       // Normalize and fit inside radius
       final dist = math.sqrt(dx * dx + dy * dy);
@@ -145,10 +156,9 @@ class _RadarPainter extends CustomPainter {
       double normalizedBlipAngle = angleToBlip;
       if (normalizedBlipAngle < 0) normalizedBlipAngle += 2 * math.pi;
 
-      double normalizedSweep = sweepAngle;
+      final normalizedSweep = sweepAngle;
 
-      double diff = normalizedSweep - normalizedBlipAngle;
-      if (diff < 0) diff += 2 * math.pi;
+      final diff = (normalizedSweep - normalizedBlipAngle + 2 * math.pi) % (2 * math.pi);
 
       if (diff < math.pi / 2) {
         // It's in the fading sweep
