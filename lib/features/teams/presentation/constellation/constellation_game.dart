@@ -6,6 +6,7 @@ import 'package:fluorescent_core/fluorescent_core.dart';
 import 'dart:math';
 
 import 'package:fluorescent_flame/fluorescent_flame.dart';
+import 'dart:math' as math;
 import 'package:vector_math/vector_math_64.dart' as vmath;
 
 import '../../domain/team.dart';
@@ -156,7 +157,7 @@ class ConstellationGame extends FlameGame with PanDetector {
       final angle = i * angleStep;
       final position =
           center +
-          Vector2(radius * vmath.cos(angle), radius * vmath.sin(angle));
+          Vector2(radius * math.cos(angle), radius * math.sin(angle));
 
       final node = ConstellationNode(
         team: team,
