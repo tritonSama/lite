@@ -1,3 +1,5 @@
+System.setProperty("android.prefs.root", System.getenv("ANDROID_PREFS_ROOT") ?: "")
+
 pluginManagement {
     val flutterSdkPath =
         run {

@@ -7,7 +7,7 @@ plugins {
 }
 
 android {
-    namespace = "heavenlybond.lite"
+    namespace = "com.heavenlybond.hblite"
     compileSdk = 36
     ndkVersion = flutter.ndkVersion
 
