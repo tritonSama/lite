@@ -5,12 +5,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 part 'auth_providers.g.dart';
 
 @riverpod
-Stream<User?> authState(Ref ref) =>
-    FirebaseAuth.instance.authStateChanges();
+Stream<User?> authState(Ref ref) => FirebaseAuth.instance.authStateChanges();
 
 @riverpod
-User? currentUser(Ref ref) =>
-    ref.watch(authStateProvider).value;
+User? currentUser(Ref ref) => ref.watch(authStateProvider).value;
 
 // ── Auth actions notifier ─────────────────────────────────────────────────────
 @riverpod
@@ -21,8 +19,10 @@ class AuthNotifier extends _$AuthNotifier {
   Future<void> signInWithEmail(String email, String password) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(
-      () => FirebaseAuth.instance
-          .signInWithEmailAndPassword(email: email, password: password),
+      () => FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      ),
     );
   }
 
@@ -33,22 +33,24 @@ class AuthNotifier extends _$AuthNotifier {
   }) async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final cred = await FirebaseAuth.instance
-          .createUserWithEmailAndPassword(email: email, password: password);
+      final cred = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
       await cred.user?.updateDisplayName(displayName);
-      
+
       // Create Firestore user document
       if (cred.user != null) {
         await FirebaseFirestore.instance
             .collection('users')
             .doc(cred.user!.uid)
             .set({
-          'id': cred.user!.uid,
-          'email': email,
-          'displayName': displayName,
-          'createdAt': FieldValue.serverTimestamp(),
-          'reputation': 0,
-        });
+              'id': cred.user!.uid,
+              'email': email,
+              'displayName': displayName,
+              'createdAt': FieldValue.serverTimestamp(),
+              'reputation': 0,
+            });
       }
     });
   }

@@ -11,10 +11,7 @@ class ToolsPage extends StatelessWidget {
       appBar: AppBar(title: const Text('Comms & Tools')),
       body: const Column(
         children: [
-          Expanded(
-            flex: 2,
-            child: _GlobeVisualization(),
-          ),
+          Expanded(flex: 2, child: _GlobeVisualization()),
           Expanded(
             flex: 1,
             child: Center(
@@ -23,10 +20,15 @@ class ToolsPage extends StatelessWidget {
                 children: [
                   Icon(Icons.satellite_alt, size: 48, color: HBColors.primary),
                   SizedBox(height: HBSpacing.md),
-                  Text('Global Comms Link', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+                  Text(
+                    'Global Comms Link',
+                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
                   SizedBox(height: HBSpacing.sm),
-                  Text('Walkie Talkie & GPS coming soon',
-                      style: TextStyle(color: Colors.grey)),
+                  Text(
+                    'Walkie Talkie & GPS coming soon',
+                    style: TextStyle(color: Colors.grey),
+                  ),
                 ],
               ),
             ),
@@ -112,8 +114,10 @@ class _GlobePainter extends CustomPainter {
       final path = Path();
       path.moveTo(center.dx, center.dy - radius);
       path.quadraticBezierTo(
-        center.dx + dx * 2, center.dy,
-        center.dx, center.dy + radius,
+        center.dx + dx * 2,
+        center.dy,
+        center.dx,
+        center.dy + radius,
       );
       canvas.drawPath(path, linePaint);
     }

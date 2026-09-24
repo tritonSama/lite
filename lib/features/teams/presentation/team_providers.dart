@@ -37,7 +37,11 @@ Future<List<Team>> teams(Ref ref) async {
 /// Resolves dynamically: if user is member of a child, they have permissions
 /// in the parent organizations as well.
 @riverpod
-Future<bool> hasTeamPermission(Ref ref, {required String userId, required String targetTeamId}) async {
+Future<bool> hasTeamPermission(
+  Ref ref, {
+  required String userId,
+  required String targetTeamId,
+}) async {
   final repo = ref.watch(teamRepositoryProvider);
   final allTeams = await repo.getAllTeams();
 

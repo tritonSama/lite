@@ -9,7 +9,8 @@ class NotificationsButton extends ConsumerStatefulWidget {
   const NotificationsButton({super.key});
 
   @override
-  ConsumerState<NotificationsButton> createState() => _NotificationsButtonState();
+  ConsumerState<NotificationsButton> createState() =>
+      _NotificationsButtonState();
 }
 
 class _NotificationsButtonState extends ConsumerState<NotificationsButton> {
@@ -44,7 +45,8 @@ class _NotificationsButtonState extends ConsumerState<NotificationsButton> {
   @override
   Widget build(BuildContext context) {
     final notificationsAsync = ref.watch(userNotificationsProvider);
-    final unreadCount = notificationsAsync.value?.where((n) => !n.isRead).length ?? 0;
+    final unreadCount =
+        notificationsAsync.value?.where((n) => !n.isRead).length ?? 0;
 
     return Stack(
       alignment: Alignment.center,
@@ -63,10 +65,7 @@ class _NotificationsButtonState extends ConsumerState<NotificationsButton> {
                 color: HBColors.error,
                 shape: BoxShape.circle,
               ),
-              constraints: const BoxConstraints(
-                minWidth: 16,
-                minHeight: 16,
-              ),
+              constraints: const BoxConstraints(minWidth: 16, minHeight: 16),
               child: Center(
                 child: Text(
                   unreadCount > 9 ? '9+' : unreadCount.toString(),

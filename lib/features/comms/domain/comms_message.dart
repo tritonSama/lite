@@ -17,5 +17,6 @@ abstract class CommsMessage with _$CommsMessage {
     String? targetId, // User ID for direct, Team ID for team
   }) = _CommsMessage;
 
-  factory CommsMessage.fromJson(Map<String, dynamic> json) => _$CommsMessageFromJson(json);
+  factory CommsMessage.fromJson(Map<String, dynamic> json) =>
+      _$CommsMessageFromJson(json);
 }

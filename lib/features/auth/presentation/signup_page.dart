@@ -31,7 +31,9 @@ class _SignupPageState extends ConsumerState<SignupPage> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    await ref.read(authProvider.notifier).signUpWithEmail(
+    await ref
+        .read(authProvider.notifier)
+        .signUpWithEmail(
           email: _emailCtrl.text.trim(),
           password: _passwordCtrl.text,
           displayName: _nameCtrl.text.trim(),
@@ -81,7 +83,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     prefixIcon: Icon(Icons.person_outline),
                   ),
                   validator: (v) {
-                    if (v == null || v.trim().isEmpty) return 'Name is required';
+                    if (v == null || v.trim().isEmpty)
+                      return 'Name is required';
                     if (v.trim().length < 2) return 'Name is too short';
                     return null;
                   },
@@ -114,16 +117,19 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                      ),
                       onPressed: () =>
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
                   ),
                   validator: (v) {
                     if (v == null || v.isEmpty) return 'Password is required';
-                    if (v.length < 8) return 'Password must be at least 8 characters';
+                    if (v.length < 8)
+                      return 'Password must be at least 8 characters';
                     return null;
                   },
                 ),
@@ -140,7 +146,8 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                     prefixIcon: Icon(Icons.lock_outline),
                   ),
                   validator: (v) {
-                    if (v != _passwordCtrl.text) return 'Passwords do not match';
+                    if (v != _passwordCtrl.text)
+                      return 'Passwords do not match';
                     return null;
                   },
                 ),
@@ -150,9 +157,11 @@ class _SignupPageState extends ConsumerState<SignupPage> {
                   onPressed: isLoading ? null : _submit,
                   child: isLoading
                       ? const SizedBox(
-                          height: 20, width: 20,
+                          height: 20,
+                          width: 20,
                           child: CircularProgressIndicator(
-                            strokeWidth: 2, color: Colors.white,
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
                         )
                       : const Text('Create Account'),

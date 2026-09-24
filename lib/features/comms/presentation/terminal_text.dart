@@ -57,9 +57,6 @@ class _TerminalTextState extends State<TerminalText> {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      '$_displayedText${_isTyping ? '_' : ''}',
-      style: widget.style,
-    );
+    return Text('$_displayedText${_isTyping ? '_' : ''}', style: widget.style);
   }
 }

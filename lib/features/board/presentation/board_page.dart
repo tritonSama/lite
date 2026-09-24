@@ -125,7 +125,9 @@ class _MyClubOfferingsTab extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('Error: $e')),
       data: (offerings) {
-        final clubOfferings = offerings.where((o) => o['creatorId'] == selectedTeamId).toList();
+        final clubOfferings = offerings
+            .where((o) => o['creatorId'] == selectedTeamId)
+            .toList();
 
         if (clubOfferings.isEmpty) {
           return Center(
@@ -136,8 +138,8 @@ class _MyClubOfferingsTab extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   selectedTeamId == null
-                    ? 'Join a team in Teams page'
-                    : 'No offerings for your club yet.',
+                      ? 'Join a team in Teams page'
+                      : 'No offerings for your club yet.',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -203,7 +205,10 @@ class _OfferingCardState extends ConsumerState<OfferingCard> {
       child: Column(
         children: [
           ListTile(
-            title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
+            title: Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
             subtitle: Text('Category: $category • Bounty: $bounty'),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
@@ -248,13 +253,17 @@ class _InteractingTab extends StatelessWidget {
         children: [
           const Icon(Icons.gavel, size: 72, color: HBColors.primary),
           const SizedBox(height: HBSpacing.md),
-          Text('Offers & Contracts',
-              style: Theme.of(context).textTheme.headlineMedium),
+          Text(
+            'Offers & Contracts',
+            style: Theme.of(context).textTheme.headlineMedium,
+          ),
           const SizedBox(height: HBSpacing.sm),
-          Text('Negotiate and manage bids here.',
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  )),
+          Text(
+            'Negotiate and manage bids here.',
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
+          ),
         ],
       ),
     );
@@ -281,8 +290,10 @@ class _LocalTabState extends State<_LocalTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Search Radius: ${_radius.toInt()} miles',
-                   style: Theme.of(context).textTheme.titleMedium),
+              Text(
+                'Search Radius: ${_radius.toInt()} miles',
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
               Slider(
                 value: _radius,
                 min: 1.0,

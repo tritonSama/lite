@@ -27,9 +27,15 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
       decoded = jsonDecode(dataStr) as Map<String, dynamic>;
     } catch (_) {}
 
-    _titleCtrl = TextEditingController(text: decoded['title']?.toString() ?? '');
-    _descCtrl = TextEditingController(text: decoded['description']?.toString() ?? '');
-    _bountyCtrl = TextEditingController(text: decoded['bounty']?.toString() ?? '0');
+    _titleCtrl = TextEditingController(
+      text: decoded['title']?.toString() ?? '',
+    );
+    _descCtrl = TextEditingController(
+      text: decoded['description']?.toString() ?? '',
+    );
+    _bountyCtrl = TextEditingController(
+      text: decoded['bounty']?.toString() ?? '0',
+    );
   }
 
   @override
@@ -106,10 +112,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
           onPressed: () => Navigator.of(context).pop(),
           child: const Text('Cancel'),
         ),
-        ElevatedButton(
-          onPressed: _save,
-          child: const Text('Save'),
-        ),
+        ElevatedButton(onPressed: _save, child: const Text('Save')),
       ],
     );
   }

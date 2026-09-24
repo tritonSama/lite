@@ -16,16 +16,41 @@ class TeamsPage extends ConsumerStatefulWidget {
   ConsumerState<TeamsPage> createState() => _TeamsPageState();
 }
 
-class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProviderStateMixin {
+class _TeamsPageState extends ConsumerState<TeamsPage>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final dbService = LocalDatabaseService.instance;
 
   // Elemental teams data
   final List<Map<String, dynamic>> elementalTeams = [
-    {'id': 'water', 'name': 'Water Clan', 'membersOnline': 124, 'icon': Icons.water_drop, 'color': Colors.blue},
-    {'id': 'fire', 'name': 'Fire Tribe', 'membersOnline': 89, 'icon': Icons.local_fire_department, 'color': Colors.orange},
-    {'id': 'earth', 'name': 'Earth Guild', 'membersOnline': 210, 'icon': Icons.eco, 'color': Colors.green},
-    {'id': 'wind', 'name': 'Wind Order', 'membersOnline': 156, 'icon': Icons.air, 'color': Colors.cyan},
+    {
+      'id': 'water',
+      'name': 'Water Clan',
+      'membersOnline': 124,
+      'icon': Icons.water_drop,
+      'color': Colors.blue,
+    },
+    {
+      'id': 'fire',
+      'name': 'Fire Tribe',
+      'membersOnline': 89,
+      'icon': Icons.local_fire_department,
+      'color': Colors.orange,
+    },
+    {
+      'id': 'earth',
+      'name': 'Earth Guild',
+      'membersOnline': 210,
+      'icon': Icons.eco,
+      'color': Colors.green,
+    },
+    {
+      'id': 'wind',
+      'name': 'Wind Order',
+      'membersOnline': 156,
+      'icon': Icons.air,
+      'color': Colors.cyan,
+    },
   ];
 
   List<Map<String, dynamic>> _teamOfferings = [];
@@ -53,7 +78,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
       final db = await dbService.database;
       final results = await db.query('tasks', orderBy: 'createdAt DESC');
       setState(() {
-        _teamOfferings = results.map((e) => Map<String, dynamic>.from(e)).toList();
+        _teamOfferings = results
+            .map((e) => Map<String, dynamic>.from(e))
+            .toList();
       });
     } catch (e) {
       debugPrint('Error loading offerings: $e');
@@ -94,13 +121,17 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
     final selectedTeamId = ref.read(selectedTeamProvider);
     if (selectedTeamId == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Join a team first before declaring war!')),
+        const SnackBar(
+          content: Text('Join a team first before declaring war!'),
+        ),
       );
       return;
     }
     if (selectedTeamId == enemyTeamId) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("You can't declare war on your own team!")),
+        const SnackBar(
+          content: Text("You can't declare war on your own team!"),
+        ),
       );
       return;
     }
@@ -149,25 +180,37 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: CreateOfferingForm(
-          onSaved: (title, description, category, bounty, teamId, listingType, rentalDuration) async {
-            final db = await dbService.database;
-            final now = DateTime.now().millisecondsSinceEpoch;
-            final id = const Uuid().v4();
-            await db.insert('tasks', {
-              'id': id,
-              'creatorId': teamId,
-              'data': '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty}',
-              'listingType': listingType,
-              'rentalDuration': rentalDuration,
-              'createdAt': now,
-            });
-            if (!context.mounted) return;
-            Navigator.pop(context);
-            _loadOfferings();
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Listing created successfully!')),
-            );
-          },
+          onSaved:
+              (
+                title,
+                description,
+                category,
+                bounty,
+                teamId,
+                listingType,
+                rentalDuration,
+              ) async {
+                final db = await dbService.database;
+                final now = DateTime.now().millisecondsSinceEpoch;
+                final id = const Uuid().v4();
+                await db.insert('tasks', {
+                  'id': id,
+                  'creatorId': teamId,
+                  'data':
+                      '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty}',
+                  'listingType': listingType,
+                  'rentalDuration': rentalDuration,
+                  'createdAt': now,
+                });
+                if (!context.mounted) return;
+                Navigator.pop(context);
+                _loadOfferings();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Listing created successfully!'),
+                  ),
+                );
+              },
         ),
       ),
     );
@@ -229,7 +272,8 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
           itemBuilder: (context, index) {
             final team = elementalTeams[index];
             final isSelected = team['id'] == selectedTeamId;
-            final isEnemy = selectedTeamId != null && team['id'] != selectedTeamId;
+            final isEnemy =
+                selectedTeamId != null && team['id'] != selectedTeamId;
 
             return Card(
               margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
@@ -246,7 +290,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
                 title: Text(
                   team['name'] as String,
                   style: TextStyle(
-                    fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                    fontWeight: isSelected
+                        ? FontWeight.bold
+                        : FontWeight.normal,
                   ),
                 ),
                 subtitle: Text('${team['membersOnline']} members online'),
@@ -257,7 +303,10 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
                         children: [
                           if (isEnemy)
                             IconButton(
-                              icon: const Icon(Icons.military_tech, color: HBColors.error),
+                              icon: const Icon(
+                                Icons.military_tech,
+                                color: HBColors.error,
+                              ),
                               tooltip: 'Declare War',
                               onPressed: () => _declareWar(
                                 team['id'] as String,
@@ -266,7 +315,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
                             ),
                           ElevatedButton(
                             onPressed: () {
-                              ref.read(selectedTeamProvider.notifier).selectTeam(team['id'] as String);
+                              ref
+                                  .read(selectedTeamProvider.notifier)
+                                  .selectTeam(team['id'] as String);
                             },
                             child: const Text('Join'),
                           ),
@@ -274,7 +325,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
                       ),
                 onTap: () {
                   if (!isSelected) {
-                    ref.read(selectedTeamProvider.notifier).selectTeam(team['id'] as String);
+                    ref
+                        .read(selectedTeamProvider.notifier)
+                        .selectTeam(team['id'] as String);
                   }
                 },
               ),
@@ -322,14 +375,14 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
           child: _isLoading
               ? const Center(child: CircularProgressIndicator())
               : filtered.isEmpty
-                  ? const Center(child: Text('No listings yet. Create one!'))
-                  : ListView.builder(
-                      itemCount: filtered.length,
-                      itemBuilder: (context, index) {
-                        final item = filtered[index];
-                        return _buildMarketplaceCard(item);
-                      },
-                    ),
+              ? const Center(child: Text('No listings yet. Create one!'))
+              : ListView.builder(
+                  itemCount: filtered.length,
+                  itemBuilder: (context, index) {
+                    final item = filtered[index];
+                    return _buildMarketplaceCard(item);
+                  },
+                ),
         ),
       ],
     );
@@ -415,9 +468,16 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.military_tech, size: 64, color: Colors.grey.withValues(alpha: 0.4)),
+            Icon(
+              Icons.military_tech,
+              size: 64,
+              color: Colors.grey.withValues(alpha: 0.4),
+            ),
             const SizedBox(height: HBSpacing.md),
-            const Text('No active wars', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text(
+              'No active wars',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: HBSpacing.sm),
             const Text(
               'Join a team, then declare war\non a rival from the Teams tab!',
@@ -499,25 +559,56 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
                     children: [
                       Icon(challengerIcon, size: 36, color: HBColors.primary),
                       const SizedBox(height: 4),
-                      Text(challengerName, textAlign: TextAlign.center,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      Text(
+                        challengerName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('${war.challengerScore}',
-                          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: HBColors.primary)),
+                      Text(
+                        '${war.challengerScore}',
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: HBColors.primary,
+                        ),
+                      ),
                     ],
                   ),
                 ),
-                const Text('VS', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white38)),
+                const Text(
+                  'VS',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white38,
+                  ),
+                ),
                 Expanded(
                   child: Column(
                     children: [
                       Icon(defenderIcon, size: 36, color: HBColors.error),
                       const SizedBox(height: 4),
-                      Text(defenderName, textAlign: TextAlign.center,
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      Text(
+                        defenderName,
+                        textAlign: TextAlign.center,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
                       const SizedBox(height: 4),
-                      Text('${war.defenderScore}',
-                          style: const TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: HBColors.error)),
+                      Text(
+                        '${war.defenderScore}',
+                        style: const TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: HBColors.error,
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -529,7 +620,11 @@ class _TeamsPageState extends ConsumerState<TeamsPage> with SingleTickerProvider
               const SizedBox(height: HBSpacing.sm),
               Text(
                 '"${war.message}"',
-                style: const TextStyle(fontStyle: FontStyle.italic, color: Colors.white54, fontSize: 12),
+                style: const TextStyle(
+                  fontStyle: FontStyle.italic,
+                  color: Colors.white54,
+                  fontSize: 12,
+                ),
                 textAlign: TextAlign.center,
               ),
             ],
@@ -552,7 +647,8 @@ class CreateOfferingForm extends StatefulWidget {
     String teamId,
     String listingType,
     String? rentalDuration,
-  ) onSaved;
+  )
+  onSaved;
 
   const CreateOfferingForm({super.key, required this.onSaved});
 
@@ -580,7 +676,10 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Create Listing', style: Theme.of(context).textTheme.titleLarge),
+              Text(
+                'Create Listing',
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
               const SizedBox(height: 16),
 
               // Listing Type
@@ -588,9 +687,18 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                 initialValue: _listingType,
                 decoration: const InputDecoration(labelText: 'Listing Type'),
                 items: const [
-                  DropdownMenuItem(value: 'forSale', child: Text('💰 For Sale')),
-                  DropdownMenuItem(value: 'wantedToBuy', child: Text('🛒 Wanted (Buy)')),
-                  DropdownMenuItem(value: 'forRent', child: Text('🔑 For Rent')),
+                  DropdownMenuItem(
+                    value: 'forSale',
+                    child: Text('💰 For Sale'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'wantedToBuy',
+                    child: Text('🛒 Wanted (Buy)'),
+                  ),
+                  DropdownMenuItem(
+                    value: 'forRent',
+                    child: Text('🔑 For Rent'),
+                  ),
                 ],
                 onChanged: (v) => setState(() {
                   _listingType = v!;
@@ -617,7 +725,10 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                   DropdownMenuItem(value: 'Service', child: Text('Service')),
                   DropdownMenuItem(value: 'Event', child: Text('Event')),
                   DropdownMenuItem(value: 'Item', child: Text('Item')),
-                  DropdownMenuItem(value: 'Equipment', child: Text('Equipment')),
+                  DropdownMenuItem(
+                    value: 'Equipment',
+                    child: Text('Equipment'),
+                  ),
                   DropdownMenuItem(value: 'Vehicle', child: Text('Vehicle')),
                 ],
                 onChanged: (v) => setState(() => _category = v!),
@@ -625,7 +736,9 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
               const SizedBox(height: 16),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: _listingType == 'forRent' ? 'Price (per period)' : 'Price',
+                  labelText: _listingType == 'forRent'
+                      ? 'Price (per period)'
+                      : 'Price',
                 ),
                 keyboardType: TextInputType.number,
                 initialValue: '100',
@@ -642,7 +755,10 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                     DropdownMenuItem(value: 'hourly', child: Text('Per Hour')),
                     DropdownMenuItem(value: 'daily', child: Text('Per Day')),
                     DropdownMenuItem(value: 'weekly', child: Text('Per Week')),
-                    DropdownMenuItem(value: 'monthly', child: Text('Per Month')),
+                    DropdownMenuItem(
+                      value: 'monthly',
+                      child: Text('Per Month'),
+                    ),
                   ],
                   onChanged: (v) => setState(() => _rentalDuration = v),
                 ),
@@ -672,7 +788,9 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                       _bounty,
                       _selectedTeamId,
                       _listingType,
-                      _listingType == 'forRent' ? (_rentalDuration ?? 'daily') : null,
+                      _listingType == 'forRent'
+                          ? (_rentalDuration ?? 'daily')
+                          : null,
                     );
                   }
                 },
