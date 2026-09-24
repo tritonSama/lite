@@ -15,7 +15,8 @@ class CommsOverlay extends ConsumerStatefulWidget {
   ConsumerState<CommsOverlay> createState() => _CommsOverlayState();
 }
 
-class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerProviderStateMixin {
+class _CommsOverlayState extends ConsumerState<CommsOverlay>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   final TextEditingController _textController = TextEditingController();
 
@@ -42,7 +43,9 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
       _ => CommsChannel.direct,
     };
 
-    ref.read(commsMessagesProvider.notifier).sendMessage(_textController.text, channel);
+    ref
+        .read(commsMessagesProvider.notifier)
+        .sendMessage(_textController.text, channel);
     _textController.clear();
   }
 
@@ -62,14 +65,18 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
             offset: const Offset(0, -5),
           ),
         ],
-        borderRadius: const BorderRadius.vertical(top: Radius.circular(HBRadius.xl)),
+        borderRadius: const BorderRadius.vertical(
+          top: Radius.circular(HBRadius.xl),
+        ),
       ),
       child: Stack(
         children: [
           // Cyberpunk Radar Background
           const Positioned.fill(
             child: ClipRRect(
-              borderRadius: BorderRadius.vertical(top: Radius.circular(HBRadius.xl)),
+              borderRadius: BorderRadius.vertical(
+                top: Radius.circular(HBRadius.xl),
+              ),
               child: RadarBackground(),
             ),
           ),
@@ -80,7 +87,10 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
               // Drag Handle
               Center(
                 child: Container(
-                  margin: const EdgeInsets.only(top: HBSpacing.sm, bottom: HBSpacing.md),
+                  margin: const EdgeInsets.only(
+                    top: HBSpacing.sm,
+                    bottom: HBSpacing.md,
+                  ),
                   width: 40,
                   height: 4,
                   decoration: BoxDecoration(
@@ -146,12 +156,16 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
                         ? HBColors.primary.withValues(alpha: 0.2)
                         : Colors.black.withValues(alpha: 0.5),
                     border: Border.all(
-                      color: isMe ? HBColors.primary : HBColors.secondary.withValues(alpha: 0.5),
+                      color: isMe
+                          ? HBColors.primary
+                          : HBColors.secondary.withValues(alpha: 0.5),
                     ),
                     borderRadius: BorderRadius.circular(HBRadius.sm),
                   ),
                   child: Column(
-                    crossAxisAlignment: isMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+                    crossAxisAlignment: isMe
+                        ? CrossAxisAlignment.end
+                        : CrossAxisAlignment.start,
                     children: [
                       Text(
                         message.senderName,
@@ -163,7 +177,10 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
                       ),
                       const SizedBox(height: 4),
                       if (isMe)
-                        Text(message.content, style: const TextStyle(color: Colors.white))
+                        Text(
+                          message.content,
+                          style: const TextStyle(color: Colors.white),
+                        )
                       else
                         TerminalText(
                           text: message.content,
@@ -192,7 +209,9 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     hintText: 'Enter transmission...',
-                    hintStyle: TextStyle(color: Colors.white.withValues(alpha: 0.5)),
+                    hintStyle: TextStyle(
+                      color: Colors.white.withValues(alpha: 0.5),
+                    ),
                     filled: true,
                     fillColor: HBColors.neutral,
                     border: OutlineInputBorder(
@@ -201,7 +220,9 @@ class _CommsOverlayState extends ConsumerState<CommsOverlay> with SingleTickerPr
                     ),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(HBRadius.sm),
-                      borderSide: BorderSide(color: HBColors.primary.withValues(alpha: 0.5)),
+                      borderSide: BorderSide(
+                        color: HBColors.primary.withValues(alpha: 0.5),
+                      ),
                     ),
                   ),
                   onSubmitted: (_) => _sendMessage(),

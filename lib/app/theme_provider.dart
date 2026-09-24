@@ -32,6 +32,9 @@ class ThemeModeNotifier extends _$ThemeModeNotifier {
     state = newMode;
 
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_themePrefKey, newMode == ThemeMode.light ? 'light' : 'dark');
+    await prefs.setString(
+      _themePrefKey,
+      newMode == ThemeMode.light ? 'light' : 'dark',
+    );
   }
 }

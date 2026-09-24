@@ -34,17 +34,23 @@ class TaskCard extends StatelessWidget {
               const SizedBox(height: HBSpacing.sm),
 
               // Title
-              Text(task.title,
-                  style: tt.titleLarge,
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis),
+              Text(
+                task.title,
+                style: tt.titleLarge,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
               const SizedBox(height: HBSpacing.xs),
 
               // Description preview
-              Text(task.description,
-                  style: tt.bodyMedium?.copyWith(color: Theme.of(context).colorScheme.onSurfaceVariant),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis),
+              Text(
+                task.description,
+                style: tt.bodyMedium?.copyWith(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant,
+                ),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
 
               const SizedBox(height: HBSpacing.md),
               const Divider(),
@@ -56,7 +62,9 @@ class TaskCard extends StatelessWidget {
                   // Bounty
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
+                      horizontal: HBSpacing.sm,
+                      vertical: HBSpacing.xs,
+                    ),
                     decoration: BoxDecoration(
                       color: HBColors.warning.withOpacity(0.12),
                       borderRadius: BorderRadius.circular(HBRadius.sm),
@@ -75,8 +83,11 @@ class TaskCard extends StatelessWidget {
                   Expanded(
                     child: Row(
                       children: [
-                        Icon(Icons.location_on_outlined,
-                            size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.location_on_outlined,
+                          size: 14,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(width: 2),
                         Expanded(
                           child: Text(
@@ -92,7 +103,11 @@ class TaskCard extends StatelessWidget {
                   // Bid count
                   Row(
                     children: [
-                      Icon(Icons.gavel, size: 14, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                      Icon(
+                        Icons.gavel,
+                        size: 14,
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
                       const SizedBox(width: 2),
                       Text('${task.bidCount} bids', style: tt.bodySmall),
                     ],
@@ -116,17 +131,18 @@ class _CategoryBadge extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
+        horizontal: HBSpacing.sm,
+        vertical: HBSpacing.xs,
+      ),
       decoration: BoxDecoration(
         color: HBColors.primary.withOpacity(0.10),
         borderRadius: BorderRadius.circular(HBRadius.full),
       ),
       child: Text(
         '${category.emoji} ${category.label}',
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: HBColors.primary),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: HBColors.primary),
       ),
     );
   }
@@ -138,34 +154,40 @@ class _StatusChip extends StatelessWidget {
   const _StatusChip({required this.status});
 
   Color _colorFor(BuildContext context) => switch (status) {
-        TaskStatus.published || TaskStatus.fundingOpen || TaskStatus.bidding =>
-          HBColors.secondary,
-        TaskStatus.inProgress || TaskStatus.scheduled || TaskStatus.providerSelected || TaskStatus.teamForming =>
-          HBColors.info,
-        TaskStatus.completed || TaskStatus.approved || TaskStatus.paymentReleased || TaskStatus.submittedForVerification =>
-          HBColors.success,
-        TaskStatus.cancelled || TaskStatus.expired =>
-          Theme.of(context).colorScheme.onSurfaceVariant,
-        TaskStatus.disputed => HBColors.error,
-        TaskStatus.draft => HBColors.neutralLighter,
-      };
+    TaskStatus.published ||
+    TaskStatus.fundingOpen ||
+    TaskStatus.bidding => HBColors.secondary,
+    TaskStatus.inProgress ||
+    TaskStatus.scheduled ||
+    TaskStatus.providerSelected ||
+    TaskStatus.teamForming => HBColors.info,
+    TaskStatus.completed ||
+    TaskStatus.approved ||
+    TaskStatus.paymentReleased ||
+    TaskStatus.submittedForVerification => HBColors.success,
+    TaskStatus.cancelled ||
+    TaskStatus.expired => Theme.of(context).colorScheme.onSurfaceVariant,
+    TaskStatus.disputed => HBColors.error,
+    TaskStatus.draft => HBColors.neutralLighter,
+  };
 
   @override
   Widget build(BuildContext context) {
     final c = _colorFor(context);
     return Container(
       padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.sm, vertical: HBSpacing.xs),
+        horizontal: HBSpacing.sm,
+        vertical: HBSpacing.xs,
+      ),
       decoration: BoxDecoration(
         color: c.withOpacity(0.12),
         borderRadius: BorderRadius.circular(HBRadius.full),
       ),
       child: Text(
         status.label,
-        style: Theme.of(context)
-            .textTheme
-            .labelSmall
-            ?.copyWith(color: c, fontWeight: FontWeight.w600),
+        style: Theme.of(
+          context,
+        ).textTheme.labelSmall?.copyWith(color: c, fontWeight: FontWeight.w600),
       ),
     );
   }

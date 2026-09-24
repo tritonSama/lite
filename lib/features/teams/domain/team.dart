@@ -17,7 +17,8 @@ abstract class Team with _$Team {
     required String ownerId,
     @Default(0) int memberCount,
     @Default([]) List<String> credentialIds,
-    @Default([]) List<String> parentIds, // Organizations this team branched from (Guilds)
+    @Default([])
+    List<String> parentIds, // Organizations this team branched from (Guilds)
     @Default([]) List<String> sisterClubIds, // Sister clubs (Guilds)
     @Default([]) List<String> treatyIds, // Treaties with other teams
     @Default(0.0) double rating,

@@ -5,7 +5,7 @@ class TeamDetailPage extends StatelessWidget {
   const TeamDetailPage({required this.teamId, super.key});
   @override
   Widget build(BuildContext context) => Scaffold(
-        appBar: AppBar(title: const Text('Team')),
-        body: Center(child: Text('Team: $teamId — Sprint 8')),
-      );
+    appBar: AppBar(title: const Text('Team')),
+    body: Center(child: Text('Team: $teamId — Sprint 8')),
+  );
 }

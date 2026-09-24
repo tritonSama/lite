@@ -2,12 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 /// Converts Firestore [GeoPoint] ↔ `{lat, lng}` JSON map.
-class GeoPointConverter implements JsonConverter<GeoPoint, Map<String, dynamic>> {
+class GeoPointConverter
+    implements JsonConverter<GeoPoint, Map<String, dynamic>> {
   const GeoPointConverter();
 
   @override
   GeoPoint fromJson(Map<String, dynamic> json) {
-    if (!json.containsKey('lat') || json['lat'] == null || !json.containsKey('lng') || json['lng'] == null) {
+    if (!json.containsKey('lat') ||
+        json['lat'] == null ||
+        !json.containsKey('lng') ||
+        json['lng'] == null) {
       throw const FormatException("Missing 'lat' or 'lng'");
     }
     if (json['lat'] is! num) {
@@ -23,8 +27,10 @@ class GeoPointConverter implements JsonConverter<GeoPoint, Map<String, dynamic>>
   }
 
   @override
-  Map<String, dynamic> toJson(GeoPoint g) =>
-      {'lat': g.latitude, 'lng': g.longitude};
+  Map<String, dynamic> toJson(GeoPoint g) => {
+    'lat': g.latitude,
+    'lng': g.longitude,
+  };
 }
 
 /// Converts Firestore [Timestamp] ↔ [DateTime].

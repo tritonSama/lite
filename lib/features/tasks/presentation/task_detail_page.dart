@@ -55,7 +55,9 @@ class _TaskDetailBody extends StatelessWidget {
             decoration: BoxDecoration(
               color: HBColors.warning.withValues(alpha: 0.08),
               borderRadius: BorderRadius.circular(HBRadius.lg),
-              border: Border.all(color: HBColors.warning.withValues(alpha: 0.3)),
+              border: Border.all(
+                color: HBColors.warning.withValues(alpha: 0.3),
+              ),
             ),
             child: Column(
               children: [
@@ -76,10 +78,16 @@ class _TaskDetailBody extends StatelessWidget {
 
           // Meta info
           _MetaRow(icon: Icons.location_on_outlined, text: task.locationLabel),
-          _MetaRow(icon: Icons.calendar_today_outlined,
-              text: 'Due ${task.desiredCompletionDate.toLocal().toString().split(' ').first}'),
-          _MetaRow(icon: Icons.group_outlined,
-              text: '${task.workerCount} worker${task.workerCount != 1 ? "s" : ""} needed'),
+          _MetaRow(
+            icon: Icons.calendar_today_outlined,
+            text:
+                'Due ${task.desiredCompletionDate.toLocal().toString().split(' ').first}',
+          ),
+          _MetaRow(
+            icon: Icons.group_outlined,
+            text:
+                '${task.workerCount} worker${task.workerCount != 1 ? "s" : ""} needed',
+          ),
           if (task.requiredSkills.isNotEmpty) ...[
             const SizedBox(height: HBSpacing.md),
             Text('Required Skills', style: tt.titleMedium),
@@ -108,7 +116,11 @@ class _MetaRow extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: HBSpacing.xs),
       child: Row(
         children: [
-          Icon(icon, size: 18, color: Theme.of(context).colorScheme.onSurfaceVariant),
+          Icon(
+            icon,
+            size: 18,
+            color: Theme.of(context).colorScheme.onSurfaceVariant,
+          ),
           const SizedBox(width: HBSpacing.sm),
           Expanded(
             child: Text(text, style: Theme.of(context).textTheme.bodyMedium),

@@ -10,7 +10,8 @@ class WalkieTalkieTab extends StatefulWidget {
   State<WalkieTalkieTab> createState() => _WalkieTalkieTabState();
 }
 
-class _WalkieTalkieTabState extends State<WalkieTalkieTab> with SingleTickerProviderStateMixin {
+class _WalkieTalkieTabState extends State<WalkieTalkieTab>
+    with SingleTickerProviderStateMixin {
   bool _isRecording = false;
   late final AnimationController _waveController;
 
@@ -84,7 +85,7 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab> with SingleTickerProv
                           color: HBColors.tertiary.withValues(alpha: 0.8),
                           blurRadius: 30,
                           spreadRadius: 10,
-                        )
+                        ),
                       ]
                     : [],
               ),
@@ -126,7 +127,11 @@ class _AudioWavePainter extends CustomPainter {
         ..color = HBColors.primary.withValues(alpha: 0.5)
         ..strokeWidth = 2
         ..style = PaintingStyle.stroke;
-      canvas.drawLine(Offset(0, size.height / 2), Offset(size.width, size.height / 2), paint);
+      canvas.drawLine(
+        Offset(0, size.height / 2),
+        Offset(size.width, size.height / 2),
+        paint,
+      );
       return;
     }
 
@@ -155,8 +160,12 @@ class _AudioWavePainter extends CustomPainter {
       // Fade out at edges
       final envelope = math.sin(normalizedX * math.pi);
 
-      final wave1 = math.sin(normalizedX * math.pi * 10 + animationValue * math.pi * 4);
-      final wave2 = math.cos(normalizedX * math.pi * 15 - animationValue * math.pi * 2);
+      final wave1 = math.sin(
+        normalizedX * math.pi * 10 + animationValue * math.pi * 4,
+      );
+      final wave2 = math.cos(
+        normalizedX * math.pi * 15 - animationValue * math.pi * 2,
+      );
 
       final totalWave = (wave1 + wave2) * 0.5 * envelope;
 
@@ -170,6 +179,7 @@ class _AudioWavePainter extends CustomPainter {
 
   @override
   bool shouldRepaint(covariant _AudioWavePainter oldDelegate) {
-    return oldDelegate.isRecording != isRecording || oldDelegate.animationValue != animationValue;
+    return oldDelegate.isRecording != isRecording ||
+        oldDelegate.animationValue != animationValue;
   }
 }

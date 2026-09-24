@@ -26,7 +26,9 @@ part 'router.g.dart';
 final _rootKey = GlobalKey<NavigatorState>(debugLabel: 'root');
 final _boardKey = GlobalKey<NavigatorState>(debugLabel: 'board');
 final _gameKey = GlobalKey<NavigatorState>(debugLabel: 'game');
-final _missionControlKey = GlobalKey<NavigatorState>(debugLabel: 'missionControl');
+final _missionControlKey = GlobalKey<NavigatorState>(
+  debugLabel: 'missionControl',
+);
 final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
@@ -90,10 +92,7 @@ GoRouter appRouter(Ref ref) {
           StatefulShellBranch(
             navigatorKey: _gameKey,
             routes: [
-              GoRoute(
-                path: '/game',
-                builder: (_, __) => const GamePage(),
-              ),
+              GoRoute(path: '/game', builder: (_, __) => const GamePage()),
             ],
           ),
 
@@ -109,10 +108,7 @@ GoRouter appRouter(Ref ref) {
                     path: 'comms-config',
                     builder: (_, __) => const CommsConfigPage(),
                   ),
-                  GoRoute(
-                    path: 'obd',
-                    builder: (_, __) => const ObdScreen(),
-                  ),
+                  GoRoute(path: 'obd', builder: (_, __) => const ObdScreen()),
                 ],
               ),
             ],

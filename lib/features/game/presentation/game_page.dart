@@ -13,7 +13,10 @@ class GamePage extends ConsumerStatefulWidget {
 }
 
 class _GamePageState extends ConsumerState<GamePage> {
-  final LatLng _initialPosition = const LatLng(37.7749, -122.4194); // SF for demo
+  final LatLng _initialPosition = const LatLng(
+    37.7749,
+    -122.4194,
+  ); // SF for demo
 
   Map<String, dynamic>? _selectedQuest;
 
@@ -238,19 +241,24 @@ class _GamePageState extends ConsumerState<GamePage> {
                   lngOffset += 0.01;
                 }
 
-                final pos = LatLng(_initialPosition.latitude + latOffset, _initialPosition.longitude + lngOffset);
+                final pos = LatLng(
+                  _initialPosition.latitude + latOffset,
+                  _initialPosition.longitude + lngOffset,
+                );
 
                 markers.add(
                   Marker(
                     markerId: MarkerId(o['id'].toString()),
                     position: pos,
-                    icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueCyan),
+                    icon: BitmapDescriptor.defaultMarkerWithHue(
+                      BitmapDescriptor.hueCyan,
+                    ),
                     onTap: () {
                       setState(() {
                         _selectedQuest = o;
                       });
                     },
-                  )
+                  ),
                 );
               }
 
@@ -268,7 +276,7 @@ class _GamePageState extends ConsumerState<GamePage> {
                   setState(() => _selectedQuest = null);
                 },
               );
-            }
+            },
           ),
 
           if (_selectedQuest != null)
@@ -295,7 +303,13 @@ class _GamePageState extends ConsumerState<GamePage> {
                 children: [
                   Icon(Icons.gps_fixed, color: HBColors.primary, size: 16),
                   SizedBox(width: 8),
-                  Text('SCANNING LOCAL AREA...', style: TextStyle(color: HBColors.primary, fontWeight: FontWeight.bold)),
+                  Text(
+                    'SCANNING LOCAL AREA...',
+                    style: TextStyle(
+                      color: HBColors.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -355,7 +369,12 @@ class _QuestCard extends StatelessWidget {
               ],
             ),
             const Divider(color: HBColors.primary),
-            Text(title, style: Theme.of(context).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold)),
+            Text(
+              title,
+              style: Theme.of(
+                context,
+              ).textTheme.titleLarge?.copyWith(fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 8),
             Text(description, maxLines: 2, overflow: TextOverflow.ellipsis),
             const SizedBox(height: 16),
@@ -364,8 +383,19 @@ class _QuestCard extends StatelessWidget {
               children: [
                 Row(
                   children: [
-                    const Icon(Icons.attach_money, color: Colors.green, size: 18),
-                    Text(bounty, style: const TextStyle(color: Colors.green, fontWeight: FontWeight.bold, fontSize: 16)),
+                    const Icon(
+                      Icons.attach_money,
+                      color: Colors.green,
+                      size: 18,
+                    ),
+                    Text(
+                      bounty,
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
                   ],
                 ),
                 ElevatedButton(

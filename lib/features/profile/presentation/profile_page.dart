@@ -41,9 +41,10 @@ class ProfilePage extends ConsumerWidget {
                           ? user!.displayName![0].toUpperCase()
                           : '?',
                       style: const TextStyle(
-                          fontSize: 36,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                        fontSize: 36,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
                     )
                   : null,
             ),
@@ -55,8 +56,8 @@ class ProfilePage extends ConsumerWidget {
             Text(
               user?.email ?? '',
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Theme.of(context).colorScheme.onSurfaceVariant,
-                  ),
+                color: Theme.of(context).colorScheme.onSurfaceVariant,
+              ),
             ),
             const SizedBox(height: HBSpacing.xl),
 

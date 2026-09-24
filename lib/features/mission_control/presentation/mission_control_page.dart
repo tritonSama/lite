@@ -18,7 +18,7 @@ class MissionControlPage extends ConsumerStatefulWidget {
 class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   final WeatherService _weatherService = WeatherService();
   late Future<WeatherData?> _weatherFuture;
-  
+
   // Default to San Francisco
   final double lat = 37.7749;
   final double lng = -122.4194;
@@ -28,13 +28,13 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
     super.initState();
     _fetchWeather();
   }
-  
+
   void _fetchWeather() {
     setState(() {
       _weatherFuture = _weatherService.fetchWeather(lat, lng);
     });
   }
-  
+
   IconData _getWeatherIcon(String description) {
     final lower = description.toLowerCase();
     if (lower.contains('rain')) return Icons.water_drop;
@@ -47,9 +47,7 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Mission Control'),
-      ),
+      appBar: AppBar(title: const Text('Mission Control')),
       body: Column(
         children: [
           Padding(
@@ -61,13 +59,17 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(HBRadius.md),
-                      side: BorderSide(color: HBColors.primary.withValues(alpha: 0.5)),
+                      side: BorderSide(
+                        color: HBColors.primary.withValues(alpha: 0.5),
+                      ),
                     ),
                     color: HBColors.neutral,
                     child: const Padding(
                       padding: EdgeInsets.all(HBSpacing.lg),
                       child: Center(
-                        child: CircularProgressIndicator(color: HBColors.primary),
+                        child: CircularProgressIndicator(
+                          color: HBColors.primary,
+                        ),
                       ),
                     ),
                   );
@@ -78,7 +80,9 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(HBRadius.md),
-                      side: BorderSide(color: HBColors.primary.withValues(alpha: 0.5)),
+                      side: BorderSide(
+                        color: HBColors.primary.withValues(alpha: 0.5),
+                      ),
                     ),
                     color: HBColors.neutral,
                     child: Padding(
@@ -86,7 +90,10 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                       child: Center(
                         child: Column(
                           children: [
-                            const Text('Weather Unavailable', style: TextStyle(color: Colors.redAccent)),
+                            const Text(
+                              'Weather Unavailable',
+                              style: TextStyle(color: Colors.redAccent),
+                            ),
                             const SizedBox(height: HBSpacing.sm),
                             ElevatedButton(
                               onPressed: _fetchWeather,
@@ -112,18 +119,47 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(_getWeatherIcon(data.description), size: 48, color: HBColors.secondary),
-                            Text('${data.temperature.toStringAsFixed(1)}°F', style: const TextStyle(fontSize: 32, fontWeight: FontWeight.bold, color: Colors.white)),
-                            Text(data.cityName, style: const TextStyle(fontSize: 18, color: HBColors.primary)),
+                            Icon(
+                              _getWeatherIcon(data.description),
+                              size: 48,
+                              color: HBColors.secondary,
+                            ),
+                            Text(
+                              '${data.temperature.toStringAsFixed(1)}°F',
+                              style: const TextStyle(
+                                fontSize: 32,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                            Text(
+                              data.cityName,
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: HBColors.primary,
+                              ),
+                            ),
                           ],
                         ),
                         const SizedBox(height: HBSpacing.sm),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text('Humidity: ${data.humidity}%', style: const TextStyle(color: Colors.white70)),
-                            Text('Wind: ${data.windSpeed} mph', style: const TextStyle(color: Colors.white70)),
-                            Text(data.description.toUpperCase(), style: const TextStyle(color: HBColors.secondary, fontWeight: FontWeight.bold)),
+                            Text(
+                              'Humidity: ${data.humidity}%',
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                            Text(
+                              'Wind: ${data.windSpeed} mph',
+                              style: const TextStyle(color: Colors.white70),
+                            ),
+                            Text(
+                              data.description.toUpperCase(),
+                              style: const TextStyle(
+                                color: HBColors.secondary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ],
                         ),
                       ],
@@ -229,7 +265,13 @@ class _QuickActionTile extends StatelessWidget {
           children: [
             Icon(icon, color: HBColors.primary),
             const SizedBox(width: HBSpacing.sm),
-            Text(label, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
           ],
         ),
       ),

@@ -42,7 +42,11 @@ class BoardSearchDelegate extends SearchDelegate {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(Icons.search, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
+            Icon(
+              Icons.search,
+              size: 64,
+              color: Theme.of(context).colorScheme.onSurfaceVariant,
+            ),
             const SizedBox(height: HBSpacing.md),
             Text(
               'Search tasks and users',
