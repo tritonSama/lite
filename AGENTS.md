@@ -8,7 +8,7 @@ This document is used to track the AI agents working on this repository, their r
 | :--- | :--- | :--- | :--- | :--- |
 | Agent Alpha | UI / Frontend | Updating the Create Task wizard | In Progress | Focusing on Step 1 |
 | Agent Beta | Backend / Firebase | Implementing Security Rules | Completed | Awaiting review |
-| Jules | UI / Game Dev | Adding the RPG Game text-based framework and Fluorescent Engine hologram | In Progress | Following user prompt |
+| Jules | UI / Local DB | Sprint 3: Bidding & Offers Mechanism | In Progress | Local SQLite + Data Streams via Fluoridian blockchain integration |
 | Agent Gamma | UI / Auth | Fixing Game Page crash and build issues | In Progress | |
 
 ## Instructions for Agents

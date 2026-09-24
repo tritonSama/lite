@@ -10,12 +10,12 @@ part of 'task_repository.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(taskRepository)
-final taskRepositoryProvider = TaskRepositoryProvider._();
+const taskRepositoryProvider = TaskRepositoryProvider._();
 
 final class TaskRepositoryProvider
     extends $FunctionalProvider<TaskRepository, TaskRepository, TaskRepository>
     with $Provider<TaskRepository> {
-  TaskRepositoryProvider._()
+  const TaskRepositoryProvider._()
     : super(
         from: null,
         argument: null,

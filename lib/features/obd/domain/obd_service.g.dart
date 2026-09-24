@@ -10,12 +10,12 @@ part of 'obd_service.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(obdService)
-final obdServiceProvider = ObdServiceProvider._();
+const obdServiceProvider = ObdServiceProvider._();
 
 final class ObdServiceProvider
     extends $FunctionalProvider<ObdService, ObdService, ObdService>
     with $Provider<ObdService> {
-  ObdServiceProvider._()
+  const ObdServiceProvider._()
     : super(
         from: null,
         argument: null,
@@ -51,11 +51,11 @@ final class ObdServiceProvider
 String _$obdServiceHash() => r'25dd86c7397d0b15192bb4c3b79958bf34639d7e';
 
 @ProviderFor(ObdStateNotifier)
-final obdStateProvider = ObdStateNotifierProvider._();
+const obdStateProvider = ObdStateNotifierProvider._();
 
 final class ObdStateNotifierProvider
     extends $NotifierProvider<ObdStateNotifier, ObdData> {
-  ObdStateNotifierProvider._()
+  const ObdStateNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -89,6 +89,7 @@ abstract class _$ObdStateNotifier extends $Notifier<ObdData> {
   @$mustCallSuper
   @override
   void runBuild() {
+    final created = build();
     final ref = this.ref as $Ref<ObdData, ObdData>;
     final element =
         ref.element
@@ -98,6 +99,6 @@ abstract class _$ObdStateNotifier extends $Notifier<ObdData> {
               Object?,
               Object?
             >;
-    element.handleCreate(ref, build);
+    element.handleValue(ref, created);
   }
 }
