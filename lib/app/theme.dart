@@ -5,18 +5,18 @@ import 'package:google_fonts/google_fonts.dart';
 class HBColors {
   HBColors._();
 
-  static const Color primary = Color(0xFF0096C7);       // Cyan
+  static const Color primary = Color(0xFF0096C7); // Cyan
   static const Color primaryLight = Color(0xFF4DBBDF);
   static const Color primaryDark = Color(0xFF006A8C);
 
-  static const Color secondary = Color(0xFFD4AF37);     // Gold
+  static const Color secondary = Color(0xFFD4AF37); // Gold
   static const Color secondaryLight = Color(0xFFE2C86F);
   static const Color secondaryDark = Color(0xFF947A26);
 
-  static const Color tertiary = Color(0xFF5300FF);      // Purple/Magenta
+  static const Color tertiary = Color(0xFF5300FF); // Purple/Magenta
   static const Color tertiaryLight = Color(0xFF834DFF);
 
-  static const Color neutral = Color(0xFF0C0F1D);       // Deep Dark Background
+  static const Color neutral = Color(0xFF0C0F1D); // Deep Dark Background
   static const Color neutralLight = Color(0xFF1E2336);
   static const Color neutralLighter = Color(0xFF2C324A);
 
@@ -45,76 +45,88 @@ class HBTextStyles {
   HBTextStyles._();
 
   // Helper to get Google Fonts based on role
-  static TextStyle getDisplayFont(TextStyle base) => GoogleFonts.spaceGrotesk(textStyle: base);
-  static TextStyle getBodyFont(TextStyle base) => GoogleFonts.inter(textStyle: base);
-  static TextStyle getMonoFont(TextStyle base) => GoogleFonts.jetBrainsMono(textStyle: base);
+  static TextStyle getDisplayFont(TextStyle base) =>
+      GoogleFonts.spaceGrotesk(textStyle: base);
+  static TextStyle getBodyFont(TextStyle base) =>
+      GoogleFonts.inter(textStyle: base);
+  static TextStyle getMonoFont(TextStyle base) =>
+      GoogleFonts.jetBrainsMono(textStyle: base);
 
-  static TextStyle displayLarge(Color color) => getDisplayFont(TextStyle(
-    fontSize: 32, fontWeight: FontWeight.w700, letterSpacing: -0.5,
-    color: color,
-  ));
-  static TextStyle displayMedium(Color color) => getDisplayFont(TextStyle(
-    fontSize: 26, fontWeight: FontWeight.w600, letterSpacing: -0.25,
-    color: color,
-  ));
-  static TextStyle headlineLarge(Color color) => getDisplayFont(TextStyle(
-    fontSize: 22, fontWeight: FontWeight.w600,
-    color: color,
-  ));
-  static TextStyle headlineMedium(Color color) => getDisplayFont(TextStyle(
-    fontSize: 18, fontWeight: FontWeight.w600,
-    color: color,
-  ));
-  static TextStyle titleLarge(Color color) => getDisplayFont(TextStyle(
-    fontSize: 16, fontWeight: FontWeight.w600,
-    color: color,
-  ));
-  static TextStyle titleMedium(Color color) => getDisplayFont(TextStyle(
-    fontSize: 14, fontWeight: FontWeight.w500,
-    color: color,
-  ));
+  static TextStyle displayLarge(Color color) => getDisplayFont(
+    TextStyle(
+      fontSize: 32,
+      fontWeight: FontWeight.w700,
+      letterSpacing: -0.5,
+      color: color,
+    ),
+  );
+  static TextStyle displayMedium(Color color) => getDisplayFont(
+    TextStyle(
+      fontSize: 26,
+      fontWeight: FontWeight.w600,
+      letterSpacing: -0.25,
+      color: color,
+    ),
+  );
+  static TextStyle headlineLarge(Color color) => getDisplayFont(
+    TextStyle(fontSize: 22, fontWeight: FontWeight.w600, color: color),
+  );
+  static TextStyle headlineMedium(Color color) => getDisplayFont(
+    TextStyle(fontSize: 18, fontWeight: FontWeight.w600, color: color),
+  );
+  static TextStyle titleLarge(Color color) => getDisplayFont(
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w600, color: color),
+  );
+  static TextStyle titleMedium(Color color) => getDisplayFont(
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w500, color: color),
+  );
 
-  static TextStyle bodyLarge(Color color) => getBodyFont(TextStyle(
-    fontSize: 16, fontWeight: FontWeight.w400,
-    color: color,
-  ));
-  static TextStyle bodyMedium(Color color) => getBodyFont(TextStyle(
-    fontSize: 14, fontWeight: FontWeight.w400,
-    color: color,
-  ));
-  static TextStyle bodySmall(Color color) => getBodyFont(TextStyle(
-    fontSize: 12, fontWeight: FontWeight.w400,
-    color: color,
-  ));
+  static TextStyle bodyLarge(Color color) => getBodyFont(
+    TextStyle(fontSize: 16, fontWeight: FontWeight.w400, color: color),
+  );
+  static TextStyle bodyMedium(Color color) => getBodyFont(
+    TextStyle(fontSize: 14, fontWeight: FontWeight.w400, color: color),
+  );
+  static TextStyle bodySmall(Color color) => getBodyFont(
+    TextStyle(fontSize: 12, fontWeight: FontWeight.w400, color: color),
+  );
 
-  static TextStyle labelLarge(Color color) => getMonoFont(TextStyle(
-    fontSize: 14, fontWeight: FontWeight.w600, letterSpacing: 0.1,
-    color: color,
-  ));
-  static TextStyle labelSmall(Color color) => getMonoFont(TextStyle(
-    fontSize: 11, fontWeight: FontWeight.w500, letterSpacing: 0.5,
-    color: color,
-  ));
+  static TextStyle labelLarge(Color color) => getMonoFont(
+    TextStyle(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      letterSpacing: 0.1,
+      color: color,
+    ),
+  );
+  static TextStyle labelSmall(Color color) => getMonoFont(
+    TextStyle(
+      fontSize: 11,
+      fontWeight: FontWeight.w500,
+      letterSpacing: 0.5,
+      color: color,
+    ),
+  );
 }
 
 // ── Spacing ───────────────────────────────────────────────────────────────────
 class HBSpacing {
   HBSpacing._();
-  static const double xs  = 4.0;
-  static const double sm  = 8.0;
-  static const double md  = 16.0;
-  static const double lg  = 24.0;
-  static const double xl  = 32.0;
+  static const double xs = 4.0;
+  static const double sm = 8.0;
+  static const double md = 16.0;
+  static const double lg = 24.0;
+  static const double xl = 32.0;
   static const double xxl = 48.0;
 }
 
 // ── Radius ────────────────────────────────────────────────────────────────────
 class HBRadius {
   HBRadius._();
-  static const double sm  = 4.0; // Sharper corners for tactical look
-  static const double md  = 8.0; // Sharper corners for tactical look
-  static const double lg  = 12.0;
-  static const double xl  = 16.0;
+  static const double sm = 4.0; // Sharper corners for tactical look
+  static const double md = 8.0; // Sharper corners for tactical look
+  static const double lg = 12.0;
+  static const double xl = 16.0;
   static const double full = 999.0;
 }
 
@@ -130,7 +142,7 @@ List<BoxShadow> getNeonGlow(Color color) {
       color: color.withValues(alpha: 0.2),
       blurRadius: 24,
       spreadRadius: 4,
-    )
+    ),
   ];
 }
 
@@ -162,7 +174,9 @@ ThemeData hbLightTheme() {
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: Colors.white,
       indicatorColor: HBColors.primary.withValues(alpha: 0.2),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(colorScheme.onSurfaceVariant)),
+      labelTextStyle: WidgetStateProperty.all(
+        HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
+      ),
     ),
 
     cardTheme: CardThemeData(
@@ -176,32 +190,36 @@ ThemeData hbLightTheme() {
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: HBColors.primary,
-        foregroundColor: Colors.white,
-        elevation: 8,
-        shadowColor: HBColors.primary.withValues(alpha: 0.5),
-        padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(HBRadius.sm),
-        ),
-        textStyle: HBTextStyles.labelLarge(Colors.white),
-      ).copyWith(
-        shadowColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
-             return HBColors.primary;
-          }
-          return HBColors.primary.withValues(alpha: 0.5);
-        }),
-        elevation: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
-             return 16.0;
-          }
-          return 8.0;
-        }),
-      ),
+      style:
+          ElevatedButton.styleFrom(
+            backgroundColor: HBColors.primary,
+            foregroundColor: Colors.white,
+            elevation: 8,
+            shadowColor: HBColors.primary.withValues(alpha: 0.5),
+            padding: const EdgeInsets.symmetric(
+              horizontal: HBSpacing.lg,
+              vertical: HBSpacing.md,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(HBRadius.sm),
+            ),
+            textStyle: HBTextStyles.labelLarge(Colors.white),
+          ).copyWith(
+            shadowColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered) ||
+                  states.contains(WidgetState.pressed)) {
+                return HBColors.primary;
+              }
+              return HBColors.primary.withValues(alpha: 0.5);
+            }),
+            elevation: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered) ||
+                  states.contains(WidgetState.pressed)) {
+                return 16.0;
+              }
+              return 8.0;
+            }),
+          ),
     ),
 
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -209,7 +227,8 @@ ThemeData hbLightTheme() {
         foregroundColor: HBColors.primary,
         side: const BorderSide(color: HBColors.primary),
         padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
+          horizontal: HBSpacing.lg,
+          vertical: HBSpacing.md,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(HBRadius.sm),
@@ -238,7 +257,8 @@ ThemeData hbLightTheme() {
         borderSide: const BorderSide(color: HBColors.error),
       ),
       contentPadding: const EdgeInsets.symmetric(
-        horizontal: HBSpacing.md, vertical: HBSpacing.md,
+        horizontal: HBSpacing.md,
+        vertical: HBSpacing.md,
       ),
       labelStyle: HBTextStyles.bodyMedium(colorScheme.onSurface),
       hintStyle: HBTextStyles.bodyMedium(colorScheme.onSurfaceVariant),
@@ -261,17 +281,17 @@ ThemeData hbLightTheme() {
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(colorScheme.onSurface),
+      displayLarge: HBTextStyles.displayLarge(colorScheme.onSurface),
       displayMedium: HBTextStyles.displayMedium(colorScheme.onSurface),
       headlineLarge: HBTextStyles.headlineLarge(colorScheme.onSurface),
       headlineMedium: HBTextStyles.headlineMedium(colorScheme.onSurface),
-      titleLarge:    HBTextStyles.titleLarge(colorScheme.onSurface),
-      titleMedium:   HBTextStyles.titleMedium(colorScheme.onSurface),
-      bodyLarge:     HBTextStyles.bodyLarge(colorScheme.onSurface),
-      bodyMedium:    HBTextStyles.bodyMedium(colorScheme.onSurface),
-      bodySmall:     HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
-      labelLarge:    HBTextStyles.labelLarge(colorScheme.onSurface),
-      labelSmall:    HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
+      titleLarge: HBTextStyles.titleLarge(colorScheme.onSurface),
+      titleMedium: HBTextStyles.titleMedium(colorScheme.onSurface),
+      bodyLarge: HBTextStyles.bodyLarge(colorScheme.onSurface),
+      bodyMedium: HBTextStyles.bodyMedium(colorScheme.onSurface),
+      bodySmall: HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
+      labelLarge: HBTextStyles.labelLarge(colorScheme.onSurface),
+      labelSmall: HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
     ),
   );
 }
@@ -305,7 +325,9 @@ ThemeData hbDarkTheme() {
     navigationBarTheme: NavigationBarThemeData(
       backgroundColor: HBColors.neutralLight,
       indicatorColor: HBColors.primary.withValues(alpha: 0.3),
-      labelTextStyle: WidgetStateProperty.all(HBTextStyles.labelSmall(colorScheme.onSurfaceVariant)),
+      labelTextStyle: WidgetStateProperty.all(
+        HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
+      ),
     ),
 
     cardTheme: CardThemeData(
@@ -319,32 +341,36 @@ ThemeData hbDarkTheme() {
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: HBColors.primary,
-        foregroundColor: Colors.white,
-        elevation: 8,
-        shadowColor: HBColors.primary.withValues(alpha: 0.5),
-        padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
-        ),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(HBRadius.sm),
-        ),
-        textStyle: HBTextStyles.labelLarge(Colors.white),
-      ).copyWith(
-        shadowColor: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
-             return HBColors.primary;
-          }
-          return HBColors.primary.withValues(alpha: 0.5);
-        }),
-        elevation: WidgetStateProperty.resolveWith((states) {
-          if (states.contains(WidgetState.hovered) || states.contains(WidgetState.pressed)) {
-             return 16.0; // Acts as a stronger glow
-          }
-          return 8.0; // Base glow
-        }),
-      ),
+      style:
+          ElevatedButton.styleFrom(
+            backgroundColor: HBColors.primary,
+            foregroundColor: Colors.white,
+            elevation: 8,
+            shadowColor: HBColors.primary.withValues(alpha: 0.5),
+            padding: const EdgeInsets.symmetric(
+              horizontal: HBSpacing.lg,
+              vertical: HBSpacing.md,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(HBRadius.sm),
+            ),
+            textStyle: HBTextStyles.labelLarge(Colors.white),
+          ).copyWith(
+            shadowColor: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered) ||
+                  states.contains(WidgetState.pressed)) {
+                return HBColors.primary;
+              }
+              return HBColors.primary.withValues(alpha: 0.5);
+            }),
+            elevation: WidgetStateProperty.resolveWith((states) {
+              if (states.contains(WidgetState.hovered) ||
+                  states.contains(WidgetState.pressed)) {
+                return 16.0; // Acts as a stronger glow
+              }
+              return 8.0; // Base glow
+            }),
+          ),
     ),
 
     outlinedButtonTheme: OutlinedButtonThemeData(
@@ -352,7 +378,8 @@ ThemeData hbDarkTheme() {
         foregroundColor: HBColors.primaryLight,
         side: const BorderSide(color: HBColors.primaryLight),
         padding: const EdgeInsets.symmetric(
-          horizontal: HBSpacing.lg, vertical: HBSpacing.md,
+          horizontal: HBSpacing.lg,
+          vertical: HBSpacing.md,
         ),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(HBRadius.sm),
@@ -381,7 +408,8 @@ ThemeData hbDarkTheme() {
         borderSide: const BorderSide(color: HBColors.error),
       ),
       contentPadding: const EdgeInsets.symmetric(
-        horizontal: HBSpacing.md, vertical: HBSpacing.md,
+        horizontal: HBSpacing.md,
+        vertical: HBSpacing.md,
       ),
       labelStyle: HBTextStyles.bodyMedium(colorScheme.onSurface),
       hintStyle: HBTextStyles.bodyMedium(colorScheme.onSurfaceVariant),
@@ -404,17 +432,17 @@ ThemeData hbDarkTheme() {
     ),
 
     textTheme: TextTheme(
-      displayLarge:  HBTextStyles.displayLarge(colorScheme.onSurface),
+      displayLarge: HBTextStyles.displayLarge(colorScheme.onSurface),
       displayMedium: HBTextStyles.displayMedium(colorScheme.onSurface),
       headlineLarge: HBTextStyles.headlineLarge(colorScheme.onSurface),
       headlineMedium: HBTextStyles.headlineMedium(colorScheme.onSurface),
-      titleLarge:    HBTextStyles.titleLarge(colorScheme.onSurface),
-      titleMedium:   HBTextStyles.titleMedium(colorScheme.onSurface),
-      bodyLarge:     HBTextStyles.bodyLarge(colorScheme.onSurface),
-      bodyMedium:    HBTextStyles.bodyMedium(colorScheme.onSurface),
-      bodySmall:     HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
-      labelLarge:    HBTextStyles.labelLarge(colorScheme.onSurface),
-      labelSmall:    HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
+      titleLarge: HBTextStyles.titleLarge(colorScheme.onSurface),
+      titleMedium: HBTextStyles.titleMedium(colorScheme.onSurface),
+      bodyLarge: HBTextStyles.bodyLarge(colorScheme.onSurface),
+      bodyMedium: HBTextStyles.bodyMedium(colorScheme.onSurface),
+      bodySmall: HBTextStyles.bodySmall(colorScheme.onSurfaceVariant),
+      labelLarge: HBTextStyles.labelLarge(colorScheme.onSurface),
+      labelSmall: HBTextStyles.labelSmall(colorScheme.onSurfaceVariant),
     ),
   );
 }

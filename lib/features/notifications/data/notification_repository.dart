@@ -12,16 +12,19 @@ class NotificationRepository {
 
   NotificationRepository({required this.userId});
 
-  CollectionReference<NotificationModel> get _collection =>
-      _db.collection('users').doc(userId).collection('notifications').withConverter(
-            fromFirestore: (snap, _) =>
-                NotificationModel.fromJson({...snap.data()!, 'id': snap.id}),
-            toFirestore: (notif, _) {
-              final json = notif.toJson();
-              json.remove('id');
-              return json;
-            },
-          );
+  CollectionReference<NotificationModel> get _collection => _db
+      .collection('users')
+      .doc(userId)
+      .collection('notifications')
+      .withConverter(
+        fromFirestore: (snap, _) =>
+            NotificationModel.fromJson({...snap.data()!, 'id': snap.id}),
+        toFirestore: (notif, _) {
+          final json = notif.toJson();
+          json.remove('id');
+          return json;
+        },
+      );
 
   Stream<List<NotificationModel>> watchNotifications() {
     return _collection

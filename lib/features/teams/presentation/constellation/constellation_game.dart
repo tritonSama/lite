@@ -156,8 +156,7 @@ class ConstellationGame extends FlameGame with PanDetector {
 
       final angle = i * angleStep;
       final position =
-          center +
-          Vector2(radius * math.cos(angle), radius * math.sin(angle));
+          center + Vector2(radius * math.cos(angle), radius * math.sin(angle));
 
       final node = ConstellationNode(
         team: team,

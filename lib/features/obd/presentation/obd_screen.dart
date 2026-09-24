@@ -20,13 +20,11 @@ class _ObdScreenState extends ConsumerState<ObdScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final obdState = ref.watch(obdStateNotifierProvider);
-    final obdNotifier = ref.read(obdStateNotifierProvider.notifier);
+    final obdState = ref.watch(obdStateProvider);
+    final obdNotifier = ref.read(obdStateProvider.notifier);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('OBD2 Telemetry'),
-      ),
+      appBar: AppBar(title: const Text('OBD2 Telemetry')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -58,7 +56,10 @@ class _ObdScreenState extends ConsumerState<ObdScreen> {
                     children: [
                       const Text(
                         'Connected',
-                        style: TextStyle(color: Colors.green, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                       const SizedBox(height: 16),
                       Text(
@@ -75,14 +76,19 @@ class _ObdScreenState extends ConsumerState<ObdScreen> {
                         onPressed: () {
                           obdNotifier.disconnect();
                         },
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                        child: const Text('Disconnect', style: TextStyle(color: Colors.white)),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        child: const Text(
+                          'Disconnect',
+                          style: TextStyle(color: Colors.white),
+                        ),
                       ),
                     ],
                   ),
                 ),
-              )
-            ]
+              ),
+            ],
           ],
         ),
       ),

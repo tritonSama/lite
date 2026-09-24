@@ -65,14 +65,19 @@ class NotificationsOverlay extends ConsumerWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            ref.read(notificationRepositoryProvider)?.markAllAsRead();
+                            ref
+                                .read(notificationRepositoryProvider)
+                                ?.markAllAsRead();
                           },
                           style: TextButton.styleFrom(
                             padding: EdgeInsets.zero,
                             minimumSize: Size.zero,
                             tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                           ),
-                          child: const Text('Mark all read', style: TextStyle(fontSize: 12)),
+                          child: const Text(
+                            'Mark all read',
+                            style: TextStyle(fontSize: 12),
+                          ),
                         ),
                       ],
                     ),
@@ -96,8 +101,11 @@ class NotificationsOverlay extends ConsumerWidget {
                             child: Center(
                               child: Text(
                                 'No notifications',
-                                style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                      color: Theme.of(context).colorScheme.onSurfaceVariant,
+                                style: Theme.of(context).textTheme.bodyMedium
+                                    ?.copyWith(
+                                      color: Theme.of(
+                                        context,
+                                      ).colorScheme.onSurfaceVariant,
                                     ),
                               ),
                             ),
@@ -120,8 +128,11 @@ class NotificationsOverlay extends ConsumerWidget {
                               ),
                               title: Text(
                                 notif.title,
-                                style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                      fontWeight: notif.isRead ? FontWeight.normal : FontWeight.bold,
+                                style: Theme.of(context).textTheme.titleSmall
+                                    ?.copyWith(
+                                      fontWeight: notif.isRead
+                                          ? FontWeight.normal
+                                          : FontWeight.bold,
                                     ),
                               ),
                               subtitle: Column(
@@ -130,22 +141,33 @@ class NotificationsOverlay extends ConsumerWidget {
                                   const SizedBox(height: 4),
                                   Text(
                                     notif.body,
-                                    style: Theme.of(context).textTheme.bodySmall,
+                                    style: Theme.of(
+                                      context,
+                                    ).textTheme.bodySmall,
                                   ),
                                   const SizedBox(height: 4),
                                   Text(
                                     timeago.format(notif.createdAt),
-                                    style: Theme.of(context).textTheme.labelSmall?.copyWith(
-                                          color: Theme.of(context).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .labelSmall
+                                        ?.copyWith(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .onSurfaceVariant
+                                              .withValues(alpha: 0.7),
                                         ),
                                   ),
                                 ],
                               ),
                               onTap: () {
                                 if (!notif.isRead) {
-                                  ref.read(notificationRepositoryProvider)?.markAsRead(notif.id);
+                                  ref
+                                      .read(notificationRepositoryProvider)
+                                      ?.markAsRead(notif.id);
                                 }
-                                if (notif.route != null && notif.route!.isNotEmpty) {
+                                if (notif.route != null &&
+                                    notif.route!.isNotEmpty) {
                                   onClose();
                                   context.push(notif.route!);
                                 }

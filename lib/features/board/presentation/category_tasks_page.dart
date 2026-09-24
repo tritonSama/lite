@@ -23,9 +23,7 @@ class CategoryTasksPage extends ConsumerWidget {
     final tasksAsync = ref.watch(categoryTasksProvider(category));
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('${category.emoji} ${category.label} Tasks'),
-      ),
+      appBar: AppBar(title: Text('${category.emoji} ${category.label} Tasks')),
       body: Column(
         children: [
           // Clear Filter Chip
@@ -54,11 +52,21 @@ class CategoryTasksPage extends ConsumerWidget {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Icon(Icons.error_outline, size: 48, color: HBColors.error),
+                      const Icon(
+                        Icons.error_outline,
+                        size: 48,
+                        color: HBColors.error,
+                      ),
                       const SizedBox(height: HBSpacing.md),
-                      Text('Failed to load tasks', style: Theme.of(context).textTheme.titleMedium),
+                      Text(
+                        'Failed to load tasks',
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
                       const SizedBox(height: HBSpacing.sm),
-                      Text(e.toString(), style: Theme.of(context).textTheme.bodySmall),
+                      Text(
+                        e.toString(),
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
                     ],
                   ),
                 ),
@@ -69,25 +77,39 @@ class CategoryTasksPage extends ConsumerWidget {
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                  Icon(Icons.inbox_outlined, size: 64, color: Theme.of(context).colorScheme.onSurfaceVariant),
+                        Icon(
+                          Icons.inbox_outlined,
+                          size: 64,
+                          color: Theme.of(context).colorScheme.onSurfaceVariant,
+                        ),
                         const SizedBox(height: HBSpacing.md),
-                        Text('No tasks found', style: Theme.of(context).textTheme.titleMedium),
+                        Text(
+                          'No tasks found',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
                         const SizedBox(height: HBSpacing.sm),
-                        Text('No tasks currently match this category.',
-                            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                                  color: Theme.of(context).colorScheme.onSurfaceVariant,
-                                )),
+                        Text(
+                          'No tasks currently match this category.',
+                          style: Theme.of(context).textTheme.bodyMedium
+                              ?.copyWith(
+                                color: Theme.of(
+                                  context,
+                                ).colorScheme.onSurfaceVariant,
+                              ),
+                        ),
                       ],
                     ),
                   );
                 }
 
                 return RefreshIndicator(
-                  onRefresh: () async => ref.invalidate(categoryTasksProvider(category)),
+                  onRefresh: () async =>
+                      ref.invalidate(categoryTasksProvider(category)),
                   child: ListView.separated(
                     padding: const EdgeInsets.all(HBSpacing.md),
                     itemCount: tasks.length,
-                    separatorBuilder: (_, __) => const SizedBox(height: HBSpacing.md),
+                    separatorBuilder: (_, __) =>
+                        const SizedBox(height: HBSpacing.md),
                     itemBuilder: (ctx, i) => TaskCard(
                       task: tasks[i],
                       onTap: () => ctx.push('/board/task/${tasks[i].id}'),

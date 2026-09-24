@@ -27,15 +27,17 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   Future<void> _submit() async {
     if (!_formKey.currentState!.validate()) return;
-    await ref.read(authProvider.notifier).signInWithEmail(
-          _emailCtrl.text.trim(),
-          _passwordCtrl.text,
-        );
+    await ref
+        .read(authProvider.notifier)
+        .signInWithEmail(_emailCtrl.text.trim(), _passwordCtrl.text);
     if (!mounted) return;
     final state = ref.read(authProvider);
     if (state.hasError) {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(state.error.toString()), backgroundColor: HBColors.error),
+        SnackBar(
+          content: Text(state.error.toString()),
+          backgroundColor: HBColors.error,
+        ),
       );
     }
   }
@@ -57,8 +59,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const SizedBox(height: HBSpacing.xxl),
 
                 // Logo / brand
-                const Icon(Icons.handshake_rounded,
-                    size: 72, color: HBColors.primary),
+                const Icon(
+                  Icons.handshake_rounded,
+                  size: 72,
+                  color: HBColors.primary,
+                ),
                 const SizedBox(height: HBSpacing.md),
                 Text(
                   'HeavenlyBond Lite',
@@ -68,8 +73,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Text(
                   'Community tasks & services',
                   style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                        color: Theme.of(context).colorScheme.onSurfaceVariant,
-                      ),
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  ),
                   textAlign: TextAlign.center,
                 ),
 
@@ -102,9 +107,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     labelText: 'Password',
                     prefixIcon: const Icon(Icons.lock_outline),
                     suffixIcon: IconButton(
-                      icon: Icon(_obscurePassword
-                          ? Icons.visibility_off_outlined
-                          : Icons.visibility_outlined),
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off_outlined
+                            : Icons.visibility_outlined,
+                      ),
                       onPressed: () =>
                           setState(() => _obscurePassword = !_obscurePassword),
                     ),
@@ -121,9 +128,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   onPressed: isLoading ? null : _submit,
                   child: isLoading
                       ? const SizedBox(
-                          height: 20, width: 20,
+                          height: 20,
+                          width: 20,
                           child: CircularProgressIndicator(
-                            strokeWidth: 2, color: Colors.white,
+                            strokeWidth: 2,
+                            color: Colors.white,
                           ),
                         )
                       : const Text('Sign In'),

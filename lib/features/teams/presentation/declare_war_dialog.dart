@@ -105,7 +105,10 @@ class _DeclareWarDialogState extends State<DeclareWarDialog> {
       actions: [
         TextButton(
           onPressed: () => Navigator.pop(context),
-          child: const Text('Stand Down', style: TextStyle(color: Colors.white54)),
+          child: const Text(
+            'Stand Down',
+            style: TextStyle(color: Colors.white54),
+          ),
         ),
         ElevatedButton(
           onPressed: () {

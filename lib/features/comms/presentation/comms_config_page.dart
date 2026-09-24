@@ -20,7 +20,10 @@ class _CommsConfigPageState extends State<CommsConfigPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('COMMS CONFIGURATION', style: TextStyle(letterSpacing: 2)),
+        title: const Text(
+          'COMMS CONFIGURATION',
+          style: TextStyle(letterSpacing: 2),
+        ),
       ),
       body: ListView(
         padding: const EdgeInsets.all(HBSpacing.lg),
@@ -57,7 +60,10 @@ class _CommsConfigPageState extends State<CommsConfigPage> {
           const SizedBox(height: HBSpacing.md),
           const Text(
             'Radar Sweep Range (km)',
-            style: TextStyle(color: HBColors.primary, fontWeight: FontWeight.bold),
+            style: TextStyle(
+              color: HBColors.primary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Slider(
             value: _radarRange,
@@ -74,8 +80,14 @@ class _CommsConfigPageState extends State<CommsConfigPage> {
           _buildSectionHeader('SYSTEM'),
           ListTile(
             leading: const Icon(Icons.delete_forever, color: Colors.redAccent),
-            title: const Text('Clear Local Comms Cache', style: TextStyle(color: Colors.redAccent)),
-            subtitle: const Text('Purge all SQLite message data from this device.', style: TextStyle(color: Colors.white70)),
+            title: const Text(
+              'Clear Local Comms Cache',
+              style: TextStyle(color: Colors.redAccent),
+            ),
+            subtitle: const Text(
+              'Purge all SQLite message data from this device.',
+              style: TextStyle(color: Colors.white70),
+            ),
             onTap: () {
               // TODO: Implement SQLite clear
               ScaffoldMessenger.of(context).showSnackBar(
@@ -110,7 +122,13 @@ class _CommsConfigPageState extends State<CommsConfigPage> {
     required ValueChanged<bool> onChanged,
   }) {
     return SwitchListTile(
-      title: Text(title, style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+      title: Text(
+        title,
+        style: const TextStyle(
+          color: Colors.white,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       subtitle: Text(subtitle, style: const TextStyle(color: Colors.white70)),
       value: value,
       onChanged: onChanged,

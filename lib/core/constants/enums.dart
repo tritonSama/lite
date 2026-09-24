@@ -22,37 +22,37 @@ enum TaskStatus {
 
   /// Human-readable label shown in the UI.
   String get label => switch (this) {
-        draft                    => 'Draft',
-        published                => 'Open',
-        fundingOpen              => 'Accepting Funds',
-        bidding                  => 'Bidding Open',
-        providerSelected         => 'Provider Selected',
-        teamForming              => 'Team Forming',
-        scheduled                => 'Scheduled',
-        inProgress               => 'In Progress',
-        submittedForVerification => 'Pending Review',
-        approved                 => 'Approved',
-        paymentReleased          => 'Payment Released',
-        completed                => 'Completed',
-        cancelled                => 'Cancelled',
-        disputed                 => 'Disputed',
-        expired                  => 'Expired',
-      };
+    draft => 'Draft',
+    published => 'Open',
+    fundingOpen => 'Accepting Funds',
+    bidding => 'Bidding Open',
+    providerSelected => 'Provider Selected',
+    teamForming => 'Team Forming',
+    scheduled => 'Scheduled',
+    inProgress => 'In Progress',
+    submittedForVerification => 'Pending Review',
+    approved => 'Approved',
+    paymentReleased => 'Payment Released',
+    completed => 'Completed',
+    cancelled => 'Cancelled',
+    disputed => 'Disputed',
+    expired => 'Expired',
+  };
 
   bool get isTerminal => switch (this) {
-        completed || cancelled || expired => true,
-        _ => false,
-      };
+    completed || cancelled || expired => true,
+    _ => false,
+  };
 
   bool get isActive => switch (this) {
-        inProgress || submittedForVerification || approved => true,
-        _ => false,
-      };
+    inProgress || submittedForVerification || approved => true,
+    _ => false,
+  };
 
   bool get isOpen => switch (this) {
-        published || fundingOpen || bidding => true,
-        _ => false,
-      };
+    published || fundingOpen || bidding => true,
+    _ => false,
+  };
 }
 
 // ── Offer status ──────────────────────────────────────────────────────────────
@@ -65,13 +65,13 @@ enum OfferStatus {
   expired;
 
   String get label => switch (this) {
-        pending   => 'Pending',
-        accepted  => 'Accepted',
-        rejected  => 'Rejected',
-        countered => 'Countered',
-        withdrawn => 'Withdrawn',
-        expired   => 'Expired',
-      };
+    pending => 'Pending',
+    accepted => 'Accepted',
+    rejected => 'Rejected',
+    countered => 'Countered',
+    withdrawn => 'Withdrawn',
+    expired => 'Expired',
+  };
 }
 
 // ── Credential types ──────────────────────────────────────────────────────────
@@ -86,15 +86,15 @@ enum CredentialType {
   other;
 
   String get label => switch (this) {
-        driversLicense    => "Driver's License",
-        cdl               => 'Commercial Driver License (CDL)',
-        electricalLicense => 'Electrical License',
-        contractorLicense => 'Contractor License',
-        insurance         => 'Insurance Certificate',
-        foodHandler       => 'Food Handler Certification',
-        backgroundCheck   => 'Background Check',
-        other             => 'Other',
-      };
+    driversLicense => "Driver's License",
+    cdl => 'Commercial Driver License (CDL)',
+    electricalLicense => 'Electrical License',
+    contractorLicense => 'Contractor License',
+    insurance => 'Insurance Certificate',
+    foodHandler => 'Food Handler Certification',
+    backgroundCheck => 'Background Check',
+    other => 'Other',
+  };
 }
 
 // ── Credential verification status ───────────────────────────────────────────
@@ -106,12 +106,12 @@ enum CredentialStatus {
   expired;
 
   String get label => switch (this) {
-        uploaded    => 'Uploaded',
-        underReview => 'Under Review',
-        verified    => 'Verified',
-        rejected    => 'Rejected',
-        expired     => 'Expired',
-      };
+    uploaded => 'Uploaded',
+    underReview => 'Under Review',
+    verified => 'Verified',
+    rejected => 'Rejected',
+    expired => 'Expired',
+  };
 }
 
 // ── Membership roles ──────────────────────────────────────────────────────────
@@ -134,24 +134,24 @@ enum TaskCategory {
   other;
 
   String get label => switch (this) {
-        cleanup     => 'Cleanup',
-        moving      => 'Moving',
-        delivery    => 'Delivery',
-        event       => 'Event',
-        repair      => 'Repair',
-        landscaping => 'Landscaping',
-        other       => 'Other',
-      };
+    cleanup => 'Cleanup',
+    moving => 'Moving',
+    delivery => 'Delivery',
+    event => 'Event',
+    repair => 'Repair',
+    landscaping => 'Landscaping',
+    other => 'Other',
+  };
 
   String get emoji => switch (this) {
-        cleanup     => '🧹',
-        moving      => '📦',
-        delivery    => '🚚',
-        event       => '🎉',
-        repair      => '🔧',
-        landscaping => '🌿',
-        other       => '📋',
-      };
+    cleanup => '🧹',
+    moving => '📦',
+    delivery => '🚚',
+    event => '🎉',
+    repair => '🔧',
+    landscaping => '🌿',
+    other => '📋',
+  };
 }
 
 // ── War status ────────────────────────────────────────────────────────────────
@@ -163,20 +163,20 @@ enum WarStatus {
   defeat;
 
   String get label => switch (this) {
-        pending   => 'Pending',
-        active    => 'Active',
-        ceasefire => 'Ceasefire',
-        victory   => 'Victory',
-        defeat    => 'Defeat',
-      };
+    pending => 'Pending',
+    active => 'Active',
+    ceasefire => 'Ceasefire',
+    victory => 'Victory',
+    defeat => 'Defeat',
+  };
 
   String get emoji => switch (this) {
-        pending   => '⏳',
-        active    => '⚔️',
-        ceasefire => '🕊️',
-        victory   => '🏆',
-        defeat    => '💀',
-      };
+    pending => '⏳',
+    active => '⚔️',
+    ceasefire => '🕊️',
+    victory => '🏆',
+    defeat => '💀',
+  };
 }
 
 // ── Listing type ──────────────────────────────────────────────────────────────
@@ -186,14 +186,14 @@ enum ListingType {
   forRent;
 
   String get label => switch (this) {
-        forSale     => 'For Sale',
-        wantedToBuy => 'Wanted',
-        forRent     => 'For Rent',
-      };
+    forSale => 'For Sale',
+    wantedToBuy => 'Wanted',
+    forRent => 'For Rent',
+  };
 
   String get emoji => switch (this) {
-        forSale     => '💰',
-        wantedToBuy => '🛒',
-        forRent     => '🔑',
-      };
+    forSale => '💰',
+    wantedToBuy => '🛒',
+    forRent => '🔑',
+  };
 }

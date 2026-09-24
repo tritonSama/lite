@@ -82,9 +82,7 @@ class LocalDatabaseService {
       await db.execute(
         "ALTER TABLE tasks ADD COLUMN listingType TEXT NOT NULL DEFAULT 'forSale'",
       );
-      await db.execute(
-        'ALTER TABLE tasks ADD COLUMN rentalDuration TEXT',
-      );
+      await db.execute('ALTER TABLE tasks ADD COLUMN rentalDuration TEXT');
 
       // Create wars table
       await db.execute('''
