@@ -18,6 +18,7 @@ import '../features/profile/presentation/public_profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
 import '../features/nexus/presentation/nexus_compute_page.dart';
 import '../features/comms/presentation/comms_config_page.dart';
+import '../features/obd/presentation/obd_screen.dart';
 
 part 'router.g.dart';
 
@@ -107,6 +108,10 @@ GoRouter appRouter(Ref ref) {
                   GoRoute(
                     path: 'comms-config',
                     builder: (_, __) => const CommsConfigPage(),
+                  ),
+                  GoRoute(
+                    path: 'obd',
+                    builder: (_, __) => const ObdScreen(),
                   ),
                 ],
               ),

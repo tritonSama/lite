@@ -40,6 +40,13 @@ android {
     }
 }
 
+dependencies {
+    implementation("androidx.car.app:app:1.4.0")
+    // Simple obd-java-api library or custom parsing will be used,
+    // but the library below is standard for OBD2
+    implementation("com.github.pires:obd-java-api:1.0")
+}
+
 kotlin {
     compilerOptions {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
