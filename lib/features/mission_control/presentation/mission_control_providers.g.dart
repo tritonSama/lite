@@ -9,6 +9,40 @@ part of 'mission_control_providers.dart';
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // ignore_for_file: type=lint, type=warning
 
+@ProviderFor(userLocation)
+final userLocationProvider = UserLocationProvider._();
+
+final class UserLocationProvider
+    extends
+        $FunctionalProvider<AsyncValue<Position>, Position, Stream<Position>>
+    with $FutureModifier<Position>, $StreamProvider<Position> {
+  UserLocationProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'userLocationProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$userLocationHash();
+
+  @$internal
+  @override
+  $StreamProviderElement<Position> $createElement($ProviderPointer pointer) =>
+      $StreamProviderElement(pointer);
+
+  @override
+  Stream<Position> create(Ref ref) {
+    return userLocation(ref);
+  }
+}
+
+String _$userLocationHash() => r'280da4f4ee8bcea65ae66b165db12fab55ca895f';
+
 @ProviderFor(friendLocations)
 final friendLocationsProvider = FriendLocationsProvider._();
 

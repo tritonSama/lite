@@ -11,10 +11,10 @@ class GameMapOverlay extends ConsumerStatefulWidget {
   const GameMapOverlay({super.key});
 
   @override
-  ConsumerState<GameMapOverlay> createState() => _GameMapOverlayState();
+  ConsumerState<GameMapOverlay> createState() => GameMapOverlayState();
 }
 
-class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
+class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   String currentStyle = 'assets/styles/night_city.json';
   final List<String> themes = [
     'assets/styles/night_city.json', // Cyberpunk
@@ -24,34 +24,14 @@ class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   MapLibreMapController? _mapController;
   Position? _lastPosition;
   bool _styleLoaded = false;
-  StreamSubscription<Position>? _positionStreamSub;
-
   @override
   void initState() {
     super.initState();
-    _startLocationTracking();
   }
 
   @override
   void dispose() {
-    _positionStreamSub?.cancel();
     super.dispose();
-  }
-
-  void _startLocationTracking() {
-    _positionStreamSub = Geolocator.getPositionStream(
-      locationSettings: const LocationSettings(
-        accuracy: LocationAccuracy.high,
-        distanceFilter: 5,
-      ),
-    ).listen((position) {
-      if (mounted) {
-        setState(() => _lastPosition = position);
-        if (_styleLoaded) {
-          _updateLocationLayer();
-        }
-      }
-    });
   }
 
   void _switchTheme(String stylePath) {
@@ -73,6 +53,19 @@ class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
     _addFriendsLayer();
   }
 
+  void centerOnUser() {
+    if (_mapController != null && _lastPosition != null) {
+      _mapController!.animateCamera(
+        CameraUpdate.newCameraPosition(
+          CameraPosition(
+            target: LatLng(_lastPosition!.latitude, _lastPosition!.longitude),
+            zoom: 14.0,
+          ),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     // Listen for friends location changes
@@ -80,6 +73,15 @@ class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
       if (_styleLoaded) {
         _updateFriendsLayer(next.whenOrNull(data: (d) => d) ?? []);
       }
+    });
+
+    ref.listen(userLocationProvider, (previous, next) {
+      next.whenData((position) {
+        setState(() => _lastPosition = position);
+        if (_styleLoaded) {
+          _updateLocationLayer();
+        }
+      });
     });
 
     return Stack(
