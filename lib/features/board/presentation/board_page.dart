@@ -9,11 +9,7 @@ import '../../../app/theme.dart';
 import '../../notifications/presentation/notifications_button.dart';
 import 'board_search_delegate.dart';
 import 'local_offerings_provider.dart';
-import 'local_offers_provider.dart';
-import 'local_radius_provider.dart';
-import '../../tasks/domain/offer.dart';
 import '../../teams/presentation/team_providers.dart';
-import 'package:go_router/go_router.dart';
 import 'dart:convert';
 import 'edit_offering_dialog.dart';
 
@@ -129,9 +125,7 @@ class _MyClubOfferingsTab extends ConsumerWidget {
       loading: () => const Center(child: CircularProgressIndicator()),
       error: (e, _) => Center(child: Text('Error: $e')),
       data: (offerings) {
-        final clubOfferings = offerings
-            .where((o) => o['creatorId'] == selectedTeamId)
-            .toList();
+        final clubOfferings = offerings.where((o) => o['creatorId'] == selectedTeamId).toList();
 
         if (clubOfferings.isEmpty) {
           return Center(
@@ -142,8 +136,8 @@ class _MyClubOfferingsTab extends ConsumerWidget {
                 const SizedBox(height: 16),
                 Text(
                   selectedTeamId == null
-                      ? 'Join a team in Teams page'
-                      : 'No offerings for your club yet.',
+                    ? 'Join a team in Teams page'
+                    : 'No offerings for your club yet.',
                   style: Theme.of(context).textTheme.titleMedium,
                 ),
               ],
@@ -209,10 +203,7 @@ class _OfferingCardState extends ConsumerState<OfferingCard> {
       child: Column(
         children: [
           ListTile(
-            title: Text(
-              title,
-              style: const TextStyle(fontWeight: FontWeight.bold),
-            ),
+            title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text('Category: $category • Bounty: $bounty'),
             trailing: IconButton(
               icon: Icon(_expanded ? Icons.expand_less : Icons.expand_more),
@@ -246,56 +237,10 @@ class _OfferingCardState extends ConsumerState<OfferingCard> {
 }
 
 // ── Interacting Tab (Bids & Negotiations) ────────────────────────────────────
-class _InteractingTab extends ConsumerWidget {
+class _InteractingTab extends StatelessWidget {
   const _InteractingTab();
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final offersAsync = ref.watch(myOffersProvider);
-
-    return offersAsync.when(
-      loading: () => const Center(child: CircularProgressIndicator()),
-      error: (e, _) => Center(child: Text('Error: $e')),
-      data: (offers) {
-        if (offers.isEmpty) {
-          return Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                const Icon(Icons.gavel, size: 72, color: HBColors.primary),
-                const SizedBox(height: HBSpacing.md),
-                Text('Offers & Contracts',
-                    style: Theme.of(context).textTheme.headlineMedium),
-                const SizedBox(height: HBSpacing.sm),
-                Text('No bids or offers found.',
-                    style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant,
-                        )),
-              ],
-            ),
-          );
-        }
-
-        return RefreshIndicator(
-          onRefresh: () async => ref.refresh(myOffersProvider.future),
-          child: ListView.builder(
-            padding: const EdgeInsets.all(16.0),
-            itemCount: offers.length,
-            itemBuilder: (context, index) {
-              final offer = offers[index];
-              return Card(
-                margin: const EdgeInsets.only(bottom: 8.0),
-                child: ListTile(
-                  leading: const Icon(Icons.handshake),
-                  title: Text('Bid: \$${offer.amount.toStringAsFixed(2)}'),
-                  subtitle: Text('Task ID: ${offer.taskId}\nStatus: ${offer.status.label}'),
-                  isThreeLine: true,
-                ),
-              );
-            },
-          ),
-        );
-      }
   Widget build(BuildContext context) {
     return Center(
       child: Column(
@@ -303,17 +248,13 @@ class _InteractingTab extends ConsumerWidget {
         children: [
           const Icon(Icons.gavel, size: 72, color: HBColors.primary),
           const SizedBox(height: HBSpacing.md),
-          Text(
-            'Offers & Contracts',
-            style: Theme.of(context).textTheme.headlineMedium,
-          ),
+          Text('Offers & Contracts',
+              style: Theme.of(context).textTheme.headlineMedium),
           const SizedBox(height: HBSpacing.sm),
-          Text(
-            'Negotiate and manage bids here.',
-            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-              color: Theme.of(context).colorScheme.onSurfaceVariant,
-            ),
-          ),
+          Text('Negotiate and manage bids here.',
+              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.onSurfaceVariant,
+                  )),
         ],
       ),
     );
@@ -321,19 +262,18 @@ class _InteractingTab extends ConsumerWidget {
 }
 
 // ── Local Tab (Radius Selection Mockup) ───────────────────────────────────────
-class _LocalTab extends ConsumerStatefulWidget {
+class _LocalTab extends StatefulWidget {
   const _LocalTab();
 
   @override
-  ConsumerState<_LocalTab> createState() => _LocalTabState();
+  State<_LocalTab> createState() => _LocalTabState();
 }
 
-class _LocalTabState extends ConsumerState<_LocalTab> {
+class _LocalTabState extends State<_LocalTab> {
+  double _radius = 10.0;
+
   @override
   Widget build(BuildContext context) {
-    final radius = ref.watch(searchRadiusProvider);
-    final localTasksAsync = ref.watch(localTasksWithinRadiusProvider);
-
     return Column(
       children: [
         Padding(
@@ -341,47 +281,26 @@ class _LocalTabState extends ConsumerState<_LocalTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Search Radius: ${radius.toInt()} miles',
+              Text('Search Radius: ${_radius.toInt()} miles',
                    style: Theme.of(context).textTheme.titleMedium),
-              Text(
-                'Search Radius: ${_radius.toInt()} miles',
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
               Slider(
-                value: radius,
+                value: _radius,
                 min: 1.0,
                 max: 100.0,
                 divisions: 99,
-                label: '${radius.toInt()} mi',
+                label: '${_radius.toInt()} mi',
                 onChanged: (val) {
-                  ref.read(searchRadiusProvider.notifier).state = val;
+                  setState(() => _radius = val);
                 },
               ),
             ],
           ),
         ),
-        Expanded(
-          child: localTasksAsync.when(
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Center(child: Text('Error: $e')),
-            data: (tasks) {
-              if (tasks.isEmpty) {
-                return const Center(child: Text('No active tasks found within radius.'));
-              }
-              return ListView.builder(
-                itemCount: tasks.length,
-                itemBuilder: (context, index) {
-                  final task = tasks[index];
-                  return ListTile(
-                    title: Text(task.title),
-                    subtitle: Text(task.locationLabel),
-                    trailing: Text('\$${task.budgetAmount}'),
-                    onTap: () => context.push('/board/task/${task.id}'),
-                  );
-                },
-              );
-            }
-          )
+        const Expanded(
+          child: _PlaceholderTab(
+            label: 'Local offerings will appear here',
+            icon: Icons.location_on_outlined,
+          ),
         ),
       ],
     );

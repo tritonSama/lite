@@ -11,10 +11,10 @@ class GameMapOverlay extends ConsumerStatefulWidget {
   const GameMapOverlay({super.key});
 
   @override
-  ConsumerState<GameMapOverlay> createState() => GameMapOverlayState();
+  ConsumerState<GameMapOverlay> createState() => _GameMapOverlayState();
 }
 
-class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
+class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   String currentStyle = 'assets/styles/night_city.json';
   final List<String> themes = [
     'assets/styles/night_city.json', // Cyberpunk
@@ -24,31 +24,34 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   MapLibreMapController? _mapController;
   Position? _lastPosition;
   bool _styleLoaded = false;
+  StreamSubscription<Position>? _positionStreamSub;
+
   @override
   void initState() {
     super.initState();
+    _startLocationTracking();
   }
 
   @override
   void dispose() {
+    _positionStreamSub?.cancel();
     super.dispose();
   }
 
   void _startLocationTracking() {
-    _positionStreamSub =
-        Geolocator.getPositionStream(
-          locationSettings: const LocationSettings(
-            accuracy: LocationAccuracy.high,
-            distanceFilter: 5,
-          ),
-        ).listen((position) {
-          if (mounted) {
-            setState(() => _lastPosition = position);
-            if (_styleLoaded) {
-              _updateLocationLayer();
-            }
-          }
-        });
+    _positionStreamSub = Geolocator.getPositionStream(
+      locationSettings: const LocationSettings(
+        accuracy: LocationAccuracy.high,
+        distanceFilter: 5,
+      ),
+    ).listen((position) {
+      if (mounted) {
+        setState(() => _lastPosition = position);
+        if (_styleLoaded) {
+          _updateLocationLayer();
+        }
+      }
+    });
   }
 
   void _switchTheme(String stylePath) {
@@ -70,19 +73,6 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
     _addFriendsLayer();
   }
 
-  void centerOnUser() {
-    if (_mapController != null && _lastPosition != null) {
-      _mapController!.animateCamera(
-        CameraUpdate.newCameraPosition(
-          CameraPosition(
-            target: LatLng(_lastPosition!.latitude, _lastPosition!.longitude),
-            zoom: 14.0,
-          ),
-        ),
-      );
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     // Listen for friends location changes
@@ -92,15 +82,6 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
       }
     });
 
-    ref.listen(userLocationProvider, (previous, next) {
-      next.whenData((position) {
-        setState(() => _lastPosition = position);
-        if (_styleLoaded) {
-          _updateLocationLayer();
-        }
-      });
-    });
-
     return Stack(
       children: [
         MapLibreMap(
@@ -108,11 +89,8 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
           onStyleLoadedCallback: _onStyleLoaded,
           initialCameraPosition: CameraPosition(
             target: _lastPosition != null
-                ? LatLng(_lastPosition!.latitude, _lastPosition!.longitude)
-                : const LatLng(
-                    34.05,
-                    -118.24,
-                  ), // Default to LA if no position yet
+              ? LatLng(_lastPosition!.latitude, _lastPosition!.longitude)
+              : const LatLng(34.05, -118.24), // Default to LA if no position yet
             zoom: 14,
           ),
           styleString: currentStyle,
@@ -135,23 +113,12 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: isSelected
-                        ? HBColors.primary
-                        : HBColors.neutral,
+                    backgroundColor: isSelected ? HBColors.primary : HBColors.neutral,
                     foregroundColor: isSelected ? Colors.black : Colors.white,
                     side: const BorderSide(color: HBColors.primary),
                   ),
                   onPressed: () => _switchTheme(t),
-                  child: Text(
-                    name
-                        .replaceAll('.json', '')
-                        .replaceAll('_', ' ')
-                        .toUpperCase(),
-                    style: const TextStyle(
-                      fontSize: 10,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+                  child: Text(name.replaceAll('.json', '').replaceAll('_', ' ').toUpperCase(), style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
                 ),
               );
             }).toList(),
@@ -162,15 +129,14 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   }
 
   Future<void> _updateLocationLayer() async {
-    if (_mapController == null || _lastPosition == null || !_styleLoaded)
-      return;
+    if (_mapController == null || _lastPosition == null || !_styleLoaded) return;
 
     final geoJsonData = {
       "type": "Feature",
       "geometry": {
         "type": "Point",
-        "coordinates": [_lastPosition!.longitude, _lastPosition!.latitude],
-      },
+        "coordinates": [_lastPosition!.longitude, _lastPosition!.latitude]
+      }
     };
 
     try {
@@ -188,13 +154,13 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
             "type": "Feature",
             "geometry": {
               "type": "Point",
-              "coordinates": [
-                _lastPosition!.longitude,
-                _lastPosition!.latitude,
-              ],
-            },
+              "coordinates": [_lastPosition!.longitude, _lastPosition!.latitude]
+            }
           }
-        : {"type": "FeatureCollection", "features": []};
+        : {
+            "type": "FeatureCollection",
+            "features": []
+          };
 
     try {
       await _mapController!.addGeoJsonSource('user-location', geoJsonData);
@@ -216,20 +182,22 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   Future<void> _updateFriendsLayer(List<FriendLocation> friends) async {
     if (_mapController == null || !_styleLoaded) return;
 
-    final features = friends
-        .map(
-          (f) => {
-            "type": "Feature",
-            "properties": {"name": f.name, "id": f.id},
-            "geometry": {
-              "type": "Point",
-              "coordinates": [f.longitude, f.latitude],
-            },
-          },
-        )
-        .toList();
+    final features = friends.map((f) => {
+      "type": "Feature",
+      "properties": {
+        "name": f.name,
+        "id": f.id,
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [f.longitude, f.latitude]
+      }
+    }).toList();
 
-    final geoJsonData = {"type": "FeatureCollection", "features": features};
+    final geoJsonData = {
+      "type": "FeatureCollection",
+      "features": features,
+    };
 
     try {
       await _mapController!.setGeoJsonSource('friends-locations', geoJsonData);
@@ -239,53 +207,55 @@ class GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   }
 
   Future<void> _addFriendsLayer() async {
-    if (_mapController == null) return;
+     if (_mapController == null) return;
 
-    final friendsAsyncValue = ref.read(friendLocationsProvider);
-    final friends = friendsAsyncValue.whenOrNull(data: (d) => d) ?? [];
+     final friendsAsyncValue = ref.read(friendLocationsProvider);
+     final friends = friendsAsyncValue.whenOrNull(data: (d) => d) ?? [];
 
-    final features = friends
-        .map(
-          (f) => {
-            "type": "Feature",
-            "properties": {"name": f.name, "id": f.id},
-            "geometry": {
-              "type": "Point",
-              "coordinates": [f.longitude, f.latitude],
-            },
-          },
-        )
-        .toList();
+     final features = friends.map((f) => {
+       "type": "Feature",
+       "properties": {
+         "name": f.name,
+         "id": f.id,
+       },
+       "geometry": {
+         "type": "Point",
+         "coordinates": [f.longitude, f.latitude]
+       }
+     }).toList();
 
-    final geoJsonData = {"type": "FeatureCollection", "features": features};
+     final geoJsonData = {
+       "type": "FeatureCollection",
+       "features": features,
+     };
 
-    try {
-      await _mapController!.addGeoJsonSource('friends-locations', geoJsonData);
-      await _mapController!.addCircleLayer(
-        'friends-locations',
-        'friends-dots',
-        const CircleLayerProperties(
-          circleRadius: 6,
-          circleColor: '#D4AF37', // Gold/secondary color
-          circleStrokeWidth: 1,
-          circleStrokeColor: '#FFFFFF',
-        ),
-      );
+     try {
+        await _mapController!.addGeoJsonSource('friends-locations', geoJsonData);
+        await _mapController!.addCircleLayer(
+          'friends-locations',
+          'friends-dots',
+          const CircleLayerProperties(
+            circleRadius: 6,
+            circleColor: '#D4AF37', // Gold/secondary color
+            circleStrokeWidth: 1,
+            circleStrokeColor: '#FFFFFF',
+          ),
+        );
 
-      await _mapController!.addSymbolLayer(
-        'friends-locations',
-        'friends-labels',
-        const SymbolLayerProperties(
-          textField: ['get', 'name'],
-          textSize: 12,
-          textColor: '#FFFFFF',
-          textHaloColor: '#D4AF37',
-          textHaloWidth: 1,
-          textOffset: [0, 1.5],
-        ),
-      );
-    } catch (e) {
-      debugPrint("Error adding friends layer: $e");
-    }
+        await _mapController!.addSymbolLayer(
+          'friends-locations',
+          'friends-labels',
+          const SymbolLayerProperties(
+            textField: ['get', 'name'],
+            textSize: 12,
+            textColor: '#FFFFFF',
+            textHaloColor: '#D4AF37',
+            textHaloWidth: 1,
+            textOffset: [0, 1.5],
+          ),
+        );
+     } catch (e) {
+        debugPrint("Error adding friends layer: $e");
+     }
   }
 }

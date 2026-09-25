@@ -208,7 +208,7 @@ return $default(_that.x,_that.y);case _:
 
 class _Point implements Point {
   const _Point(this.x, this.y);
-
+  
 
 @override final  int x;
 @override final  int y;
@@ -467,7 +467,7 @@ return $default(_that.value);case _:
 
 class _Card implements Card {
   const _Card(this.value);
-
+  
 
 @override final  int value;
 
@@ -729,7 +729,7 @@ return $default(_that.id,_that.hp,_that.unplacedTraps,_that.piecesToPlace,_that.
 
 class _PlayerState implements PlayerState {
   const _PlayerState({required this.id, this.hp = 20, required final  List<Card> unplacedTraps, this.piecesToPlace = 7, this.flagPlaced = false, this.setupComplete = false}): _unplacedTraps = unplacedTraps;
-
+  
 
 @override final  PlayerId id;
 @override@JsonKey() final  int hp;
@@ -1054,7 +1054,7 @@ return $default(_that.phase,_that.turnPhase,_that.currentPlayer,_that.pieces,_th
 
 class _GameState implements GameState {
   const _GameState({this.phase = GamePhase.setup, this.turnPhase = TurnPhase.rollForMovement, this.currentPlayer = PlayerId.p1, final  Map<Point, PlayerId> pieces = const {}, final  Map<Point, MapEntry<PlayerId, Card>> traps = const {}, final  Map<Point, PlayerId> flags = const {}, required final  Map<PlayerId, PlayerState> players, this.movementPointsLeft = 0, this.selectedPiece, this.pendingTrapLocation, this.pendingCombatLocation, final  List<String> combatLogs = const [], this.winner}): _pieces = pieces,_traps = traps,_flags = flags,_players = players,_combatLogs = combatLogs;
-
+  
 
 @override@JsonKey() final  GamePhase phase;
 @override@JsonKey() final  TurnPhase turnPhase;
