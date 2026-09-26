@@ -11,17 +11,17 @@ enum TurnPhase { rollForMovement, move, resolveTrap, resolveCombat }
 enum SetupItemType { piece, trap, flag }
 
 @freezed
-class Point with _$Point {
+abstract class Point with _$Point {
   const factory Point(int x, int y) = _Point;
 }
 
 @freezed
-class Card with _$Card {
+abstract class Card with _$Card {
   const factory Card(int value) = _Card;
 }
 
 @freezed
-class PlayerState with _$PlayerState {
+abstract class PlayerState with _$PlayerState {
   const factory PlayerState({
     required PlayerId id,
     @Default(20) int hp,
@@ -33,7 +33,7 @@ class PlayerState with _$PlayerState {
 }
 
 @freezed
-class GameState with _$GameState {
+abstract class GameState with _$GameState {
   const factory GameState({
     @Default(GamePhase.setup) GamePhase phase,
     @Default(TurnPhase.rollForMovement) TurnPhase turnPhase,

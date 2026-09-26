@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'game_state.dart';
@@ -9,6 +9,7 @@ part of 'game_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ $PointCopyWith<Point> get copyWith => _$PointCopyWithImpl<Point>(this as Point, 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Point&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y));
+  final _this = this as Point;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Point&&(identical(other.x, _this.x) || other.x == _this.x)&&(identical(other.y, _this.y) || other.y == _this.y));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,x,y);
+int get hashCode {
+  final _this = this as Point;
+  return Object.hash(runtimeType,_this.x,_this.y);
+}
 
 @override
 String toString() {
-  return 'Point(x: $x, y: $y)';
+  final _this = this as Point;
+  return 'Point(x: ${_this.x}, y: ${_this.y})';
 }
 
 
@@ -63,9 +69,9 @@ class _$PointCopyWithImpl<$Res>
 /// Create a copy of Point
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? x = null,Object? y = null,}) {
-  return _then(_self.copyWith(
-x: null == x ? _self.x : x // ignore: cast_nullable_to_non_nullable
-as int,y: null == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
+  return _then(Point(
+null == x ? _self.x : x // ignore: cast_nullable_to_non_nullable
+as int,null == y ? _self.y : y // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -223,16 +229,18 @@ _$PointCopyWith<_Point> get copyWith => __$PointCopyWithImpl<_Point>(this, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Point&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Point&&(identical(other.x, x) || other.x == x)&&(identical(other.y, y) || other.y == y));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,x,y);
+int get hashCode {
+    return Object.hash(runtimeType,x,y);
+}
 
 @override
 String toString() {
-  return 'Point(x: $x, y: $y)';
+    return 'Point(x: $x, y: $y)';
 }
 
 
@@ -285,16 +293,21 @@ $CardCopyWith<Card> get copyWith => _$CardCopyWithImpl<Card>(this as Card, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Card&&(identical(other.value, value) || other.value == value));
+  final _this = this as Card;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Card&&(identical(other.value, _this.value) || other.value == _this.value));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,value);
+int get hashCode {
+  final _this = this as Card;
+  return Object.hash(runtimeType,_this.value);
+}
 
 @override
 String toString() {
-  return 'Card(value: $value)';
+  final _this = this as Card;
+  return 'Card(value: ${_this.value})';
 }
 
 
@@ -323,8 +336,8 @@ class _$CardCopyWithImpl<$Res>
 /// Create a copy of Card
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? value = null,}) {
-  return _then(_self.copyWith(
-value: null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
+  return _then(Card(
+null == value ? _self.value : value // ignore: cast_nullable_to_non_nullable
 as int,
   ));
 }
@@ -481,16 +494,18 @@ _$CardCopyWith<_Card> get copyWith => __$CardCopyWithImpl<_Card>(this, _$identit
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Card&&(identical(other.value, value) || other.value == value));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Card&&(identical(other.value, value) || other.value == value));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,value);
+int get hashCode {
+    return Object.hash(runtimeType,value);
+}
 
 @override
 String toString() {
-  return 'Card(value: $value)';
+    return 'Card(value: $value)';
 }
 
 
@@ -542,16 +557,21 @@ $PlayerStateCopyWith<PlayerState> get copyWith => _$PlayerStateCopyWithImpl<Play
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerState&&(identical(other.id, id) || other.id == id)&&(identical(other.hp, hp) || other.hp == hp)&&const DeepCollectionEquality().equals(other.unplacedTraps, unplacedTraps)&&(identical(other.piecesToPlace, piecesToPlace) || other.piecesToPlace == piecesToPlace)&&(identical(other.flagPlaced, flagPlaced) || other.flagPlaced == flagPlaced)&&(identical(other.setupComplete, setupComplete) || other.setupComplete == setupComplete));
+  final _this = this as PlayerState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is PlayerState&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.hp, _this.hp) || other.hp == _this.hp)&&const DeepCollectionEquality().equals(other.unplacedTraps, _this.unplacedTraps)&&(identical(other.piecesToPlace, _this.piecesToPlace) || other.piecesToPlace == _this.piecesToPlace)&&(identical(other.flagPlaced, _this.flagPlaced) || other.flagPlaced == _this.flagPlaced)&&(identical(other.setupComplete, _this.setupComplete) || other.setupComplete == _this.setupComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,hp,const DeepCollectionEquality().hash(unplacedTraps),piecesToPlace,flagPlaced,setupComplete);
+int get hashCode {
+  final _this = this as PlayerState;
+  return Object.hash(runtimeType,_this.id,_this.hp,const DeepCollectionEquality().hash(_this.unplacedTraps),_this.piecesToPlace,_this.flagPlaced,_this.setupComplete);
+}
 
 @override
 String toString() {
-  return 'PlayerState(id: $id, hp: $hp, unplacedTraps: $unplacedTraps, piecesToPlace: $piecesToPlace, flagPlaced: $flagPlaced, setupComplete: $setupComplete)';
+  final _this = this as PlayerState;
+  return 'PlayerState(id: ${_this.id}, hp: ${_this.hp}, unplacedTraps: ${_this.unplacedTraps}, piecesToPlace: ${_this.piecesToPlace}, flagPlaced: ${_this.flagPlaced}, setupComplete: ${_this.setupComplete})';
 }
 
 
@@ -580,7 +600,7 @@ class _$PlayerStateCopyWithImpl<$Res>
 /// Create a copy of PlayerState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? hp = null,Object? unplacedTraps = null,Object? piecesToPlace = null,Object? flagPlaced = null,Object? setupComplete = null,}) {
-  return _then(_self.copyWith(
+  return _then(PlayerState(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as PlayerId,hp: null == hp ? _self.hp : hp // ignore: cast_nullable_to_non_nullable
 as int,unplacedTraps: null == unplacedTraps ? _self.unplacedTraps : unplacedTraps // ignore: cast_nullable_to_non_nullable
@@ -728,7 +748,7 @@ return $default(_that.id,_that.hp,_that.unplacedTraps,_that.piecesToPlace,_that.
 
 
 class _PlayerState implements PlayerState {
-  const _PlayerState({required this.id, this.hp = 20, required final  List<Card> unplacedTraps, this.piecesToPlace = 7, this.flagPlaced = false, this.setupComplete = false}): _unplacedTraps = unplacedTraps;
+  const _PlayerState({required this.id, this.hp = 20, required  List<Card> unplacedTraps, this.piecesToPlace = 7, this.flagPlaced = false, this.setupComplete = false}): _unplacedTraps = unplacedTraps;
   
 
 @override final  PlayerId id;
@@ -754,16 +774,18 @@ _$PlayerStateCopyWith<_PlayerState> get copyWith => __$PlayerStateCopyWithImpl<_
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerState&&(identical(other.id, id) || other.id == id)&&(identical(other.hp, hp) || other.hp == hp)&&const DeepCollectionEquality().equals(other._unplacedTraps, _unplacedTraps)&&(identical(other.piecesToPlace, piecesToPlace) || other.piecesToPlace == piecesToPlace)&&(identical(other.flagPlaced, flagPlaced) || other.flagPlaced == flagPlaced)&&(identical(other.setupComplete, setupComplete) || other.setupComplete == setupComplete));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _PlayerState&&(identical(other.id, id) || other.id == id)&&(identical(other.hp, hp) || other.hp == hp)&&const DeepCollectionEquality().equals(other.unplacedTraps, _unplacedTraps)&&(identical(other.piecesToPlace, piecesToPlace) || other.piecesToPlace == piecesToPlace)&&(identical(other.flagPlaced, flagPlaced) || other.flagPlaced == flagPlaced)&&(identical(other.setupComplete, setupComplete) || other.setupComplete == setupComplete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,id,hp,const DeepCollectionEquality().hash(_unplacedTraps),piecesToPlace,flagPlaced,setupComplete);
+int get hashCode {
+    return Object.hash(runtimeType,id,hp,const DeepCollectionEquality().hash(_unplacedTraps),piecesToPlace,flagPlaced,setupComplete);
+}
 
 @override
 String toString() {
-  return 'PlayerState(id: $id, hp: $hp, unplacedTraps: $unplacedTraps, piecesToPlace: $piecesToPlace, flagPlaced: $flagPlaced, setupComplete: $setupComplete)';
+    return 'PlayerState(id: $id, hp: $hp, unplacedTraps: $unplacedTraps, piecesToPlace: $piecesToPlace, flagPlaced: $flagPlaced, setupComplete: $setupComplete)';
 }
 
 
@@ -809,11 +831,7 @@ as bool,
 /// @nodoc
 mixin _$GameState {
 
- GamePhase get phase; TurnPhase get turnPhase; PlayerId get currentPlayer;// Board state
- Map<Point, PlayerId> get pieces; Map<Point, MapEntry<PlayerId, Card>> get traps; Map<Point, PlayerId> get flags; Map<PlayerId, PlayerState> get players;// Turn specific state
- int get movementPointsLeft; Point? get selectedPiece; Point? get pendingTrapLocation;// where the trap is triggered
- Point? get pendingCombatLocation;// where combat is happening
- List<String> get combatLogs; PlayerId? get winner;
+ GamePhase get phase; TurnPhase get turnPhase; PlayerId get currentPlayer; Map<Point, PlayerId> get pieces; Map<Point, MapEntry<PlayerId, Card>> get traps; Map<Point, PlayerId> get flags; Map<PlayerId, PlayerState> get players; int get movementPointsLeft; Point? get selectedPiece; Point? get pendingTrapLocation; Point? get pendingCombatLocation; List<String> get combatLogs; PlayerId? get winner;
 /// Create a copy of GameState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -824,16 +842,21 @@ $GameStateCopyWith<GameState> get copyWith => _$GameStateCopyWithImpl<GameState>
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is GameState&&(identical(other.phase, phase) || other.phase == phase)&&(identical(other.turnPhase, turnPhase) || other.turnPhase == turnPhase)&&(identical(other.currentPlayer, currentPlayer) || other.currentPlayer == currentPlayer)&&const DeepCollectionEquality().equals(other.pieces, pieces)&&const DeepCollectionEquality().equals(other.traps, traps)&&const DeepCollectionEquality().equals(other.flags, flags)&&const DeepCollectionEquality().equals(other.players, players)&&(identical(other.movementPointsLeft, movementPointsLeft) || other.movementPointsLeft == movementPointsLeft)&&(identical(other.selectedPiece, selectedPiece) || other.selectedPiece == selectedPiece)&&(identical(other.pendingTrapLocation, pendingTrapLocation) || other.pendingTrapLocation == pendingTrapLocation)&&(identical(other.pendingCombatLocation, pendingCombatLocation) || other.pendingCombatLocation == pendingCombatLocation)&&const DeepCollectionEquality().equals(other.combatLogs, combatLogs)&&(identical(other.winner, winner) || other.winner == winner));
+  final _this = this as GameState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is GameState&&(identical(other.phase, _this.phase) || other.phase == _this.phase)&&(identical(other.turnPhase, _this.turnPhase) || other.turnPhase == _this.turnPhase)&&(identical(other.currentPlayer, _this.currentPlayer) || other.currentPlayer == _this.currentPlayer)&&const DeepCollectionEquality().equals(other.pieces, _this.pieces)&&const DeepCollectionEquality().equals(other.traps, _this.traps)&&const DeepCollectionEquality().equals(other.flags, _this.flags)&&const DeepCollectionEquality().equals(other.players, _this.players)&&(identical(other.movementPointsLeft, _this.movementPointsLeft) || other.movementPointsLeft == _this.movementPointsLeft)&&(identical(other.selectedPiece, _this.selectedPiece) || other.selectedPiece == _this.selectedPiece)&&(identical(other.pendingTrapLocation, _this.pendingTrapLocation) || other.pendingTrapLocation == _this.pendingTrapLocation)&&(identical(other.pendingCombatLocation, _this.pendingCombatLocation) || other.pendingCombatLocation == _this.pendingCombatLocation)&&const DeepCollectionEquality().equals(other.combatLogs, _this.combatLogs)&&(identical(other.winner, _this.winner) || other.winner == _this.winner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,phase,turnPhase,currentPlayer,const DeepCollectionEquality().hash(pieces),const DeepCollectionEquality().hash(traps),const DeepCollectionEquality().hash(flags),const DeepCollectionEquality().hash(players),movementPointsLeft,selectedPiece,pendingTrapLocation,pendingCombatLocation,const DeepCollectionEquality().hash(combatLogs),winner);
+int get hashCode {
+  final _this = this as GameState;
+  return Object.hash(runtimeType,_this.phase,_this.turnPhase,_this.currentPlayer,const DeepCollectionEquality().hash(_this.pieces),const DeepCollectionEquality().hash(_this.traps),const DeepCollectionEquality().hash(_this.flags),const DeepCollectionEquality().hash(_this.players),_this.movementPointsLeft,_this.selectedPiece,_this.pendingTrapLocation,_this.pendingCombatLocation,const DeepCollectionEquality().hash(_this.combatLogs),_this.winner);
+}
 
 @override
 String toString() {
-  return 'GameState(phase: $phase, turnPhase: $turnPhase, currentPlayer: $currentPlayer, pieces: $pieces, traps: $traps, flags: $flags, players: $players, movementPointsLeft: $movementPointsLeft, selectedPiece: $selectedPiece, pendingTrapLocation: $pendingTrapLocation, pendingCombatLocation: $pendingCombatLocation, combatLogs: $combatLogs, winner: $winner)';
+  final _this = this as GameState;
+  return 'GameState(phase: ${_this.phase}, turnPhase: ${_this.turnPhase}, currentPlayer: ${_this.currentPlayer}, pieces: ${_this.pieces}, traps: ${_this.traps}, flags: ${_this.flags}, players: ${_this.players}, movementPointsLeft: ${_this.movementPointsLeft}, selectedPiece: ${_this.selectedPiece}, pendingTrapLocation: ${_this.pendingTrapLocation}, pendingCombatLocation: ${_this.pendingCombatLocation}, combatLogs: ${_this.combatLogs}, winner: ${_this.winner})';
 }
 
 
@@ -862,7 +885,7 @@ class _$GameStateCopyWithImpl<$Res>
 /// Create a copy of GameState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? phase = null,Object? turnPhase = null,Object? currentPlayer = null,Object? pieces = null,Object? traps = null,Object? flags = null,Object? players = null,Object? movementPointsLeft = null,Object? selectedPiece = freezed,Object? pendingTrapLocation = freezed,Object? pendingCombatLocation = freezed,Object? combatLogs = null,Object? winner = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(GameState(
 phase: null == phase ? _self.phase : phase // ignore: cast_nullable_to_non_nullable
 as GamePhase,turnPhase: null == turnPhase ? _self.turnPhase : turnPhase // ignore: cast_nullable_to_non_nullable
 as TurnPhase,currentPlayer: null == currentPlayer ? _self.currentPlayer : currentPlayer // ignore: cast_nullable_to_non_nullable
@@ -1053,15 +1076,13 @@ return $default(_that.phase,_that.turnPhase,_that.currentPlayer,_that.pieces,_th
 
 
 class _GameState implements GameState {
-  const _GameState({this.phase = GamePhase.setup, this.turnPhase = TurnPhase.rollForMovement, this.currentPlayer = PlayerId.p1, final  Map<Point, PlayerId> pieces = const {}, final  Map<Point, MapEntry<PlayerId, Card>> traps = const {}, final  Map<Point, PlayerId> flags = const {}, required final  Map<PlayerId, PlayerState> players, this.movementPointsLeft = 0, this.selectedPiece, this.pendingTrapLocation, this.pendingCombatLocation, final  List<String> combatLogs = const [], this.winner}): _pieces = pieces,_traps = traps,_flags = flags,_players = players,_combatLogs = combatLogs;
+  const _GameState({this.phase = GamePhase.setup, this.turnPhase = TurnPhase.rollForMovement, this.currentPlayer = PlayerId.p1,  Map<Point, PlayerId> pieces = const {},  Map<Point, MapEntry<PlayerId, Card>> traps = const {},  Map<Point, PlayerId> flags = const {}, required  Map<PlayerId, PlayerState> players, this.movementPointsLeft = 0, this.selectedPiece, this.pendingTrapLocation, this.pendingCombatLocation,  List<String> combatLogs = const [], this.winner}): _pieces = pieces,_traps = traps,_flags = flags,_players = players,_combatLogs = combatLogs;
   
 
 @override@JsonKey() final  GamePhase phase;
 @override@JsonKey() final  TurnPhase turnPhase;
 @override@JsonKey() final  PlayerId currentPlayer;
-// Board state
  final  Map<Point, PlayerId> _pieces;
-// Board state
 @override@JsonKey() Map<Point, PlayerId> get pieces {
   if (_pieces is EqualUnmodifiableMapView) return _pieces;
   // ignore: implicit_dynamic_type
@@ -1089,15 +1110,11 @@ class _GameState implements GameState {
   return EqualUnmodifiableMapView(_players);
 }
 
-// Turn specific state
 @override@JsonKey() final  int movementPointsLeft;
 @override final  Point? selectedPiece;
 @override final  Point? pendingTrapLocation;
-// where the trap is triggered
 @override final  Point? pendingCombatLocation;
-// where combat is happening
  final  List<String> _combatLogs;
-// where combat is happening
 @override@JsonKey() List<String> get combatLogs {
   if (_combatLogs is EqualUnmodifiableListView) return _combatLogs;
   // ignore: implicit_dynamic_type
@@ -1116,16 +1133,18 @@ _$GameStateCopyWith<_GameState> get copyWith => __$GameStateCopyWithImpl<_GameSt
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _GameState&&(identical(other.phase, phase) || other.phase == phase)&&(identical(other.turnPhase, turnPhase) || other.turnPhase == turnPhase)&&(identical(other.currentPlayer, currentPlayer) || other.currentPlayer == currentPlayer)&&const DeepCollectionEquality().equals(other._pieces, _pieces)&&const DeepCollectionEquality().equals(other._traps, _traps)&&const DeepCollectionEquality().equals(other._flags, _flags)&&const DeepCollectionEquality().equals(other._players, _players)&&(identical(other.movementPointsLeft, movementPointsLeft) || other.movementPointsLeft == movementPointsLeft)&&(identical(other.selectedPiece, selectedPiece) || other.selectedPiece == selectedPiece)&&(identical(other.pendingTrapLocation, pendingTrapLocation) || other.pendingTrapLocation == pendingTrapLocation)&&(identical(other.pendingCombatLocation, pendingCombatLocation) || other.pendingCombatLocation == pendingCombatLocation)&&const DeepCollectionEquality().equals(other._combatLogs, _combatLogs)&&(identical(other.winner, winner) || other.winner == winner));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _GameState&&(identical(other.phase, phase) || other.phase == phase)&&(identical(other.turnPhase, turnPhase) || other.turnPhase == turnPhase)&&(identical(other.currentPlayer, currentPlayer) || other.currentPlayer == currentPlayer)&&const DeepCollectionEquality().equals(other.pieces, _pieces)&&const DeepCollectionEquality().equals(other.traps, _traps)&&const DeepCollectionEquality().equals(other.flags, _flags)&&const DeepCollectionEquality().equals(other.players, _players)&&(identical(other.movementPointsLeft, movementPointsLeft) || other.movementPointsLeft == movementPointsLeft)&&(identical(other.selectedPiece, selectedPiece) || other.selectedPiece == selectedPiece)&&(identical(other.pendingTrapLocation, pendingTrapLocation) || other.pendingTrapLocation == pendingTrapLocation)&&(identical(other.pendingCombatLocation, pendingCombatLocation) || other.pendingCombatLocation == pendingCombatLocation)&&const DeepCollectionEquality().equals(other.combatLogs, _combatLogs)&&(identical(other.winner, winner) || other.winner == winner));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,phase,turnPhase,currentPlayer,const DeepCollectionEquality().hash(_pieces),const DeepCollectionEquality().hash(_traps),const DeepCollectionEquality().hash(_flags),const DeepCollectionEquality().hash(_players),movementPointsLeft,selectedPiece,pendingTrapLocation,pendingCombatLocation,const DeepCollectionEquality().hash(_combatLogs),winner);
+int get hashCode {
+    return Object.hash(runtimeType,phase,turnPhase,currentPlayer,const DeepCollectionEquality().hash(_pieces),const DeepCollectionEquality().hash(_traps),const DeepCollectionEquality().hash(_flags),const DeepCollectionEquality().hash(_players),movementPointsLeft,selectedPiece,pendingTrapLocation,pendingCombatLocation,const DeepCollectionEquality().hash(_combatLogs),winner);
+}
 
 @override
 String toString() {
-  return 'GameState(phase: $phase, turnPhase: $turnPhase, currentPlayer: $currentPlayer, pieces: $pieces, traps: $traps, flags: $flags, players: $players, movementPointsLeft: $movementPointsLeft, selectedPiece: $selectedPiece, pendingTrapLocation: $pendingTrapLocation, pendingCombatLocation: $pendingCombatLocation, combatLogs: $combatLogs, winner: $winner)';
+    return 'GameState(phase: $phase, turnPhase: $turnPhase, currentPlayer: $currentPlayer, pieces: $pieces, traps: $traps, flags: $flags, players: $players, movementPointsLeft: $movementPointsLeft, selectedPiece: $selectedPiece, pendingTrapLocation: $pendingTrapLocation, pendingCombatLocation: $pendingCombatLocation, combatLogs: $combatLogs, winner: $winner)';
 }
 
 

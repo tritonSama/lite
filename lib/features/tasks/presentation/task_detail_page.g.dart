@@ -10,12 +10,12 @@ part of 'task_detail_page.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(taskDetail)
-const taskDetailProvider = TaskDetailFamily._();
+final taskDetailProvider = TaskDetailFamily._();
 
 final class TaskDetailProvider
     extends $FunctionalProvider<AsyncValue<Task?>, Task?, Stream<Task?>>
     with $FutureModifier<Task?>, $StreamProvider<Task?> {
-  const TaskDetailProvider._({
+  TaskDetailProvider._({
     required TaskDetailFamily super.from,
     required String super.argument,
   }) : super(
@@ -62,7 +62,7 @@ String _$taskDetailHash() => r'11d545a1bc13e1feb5a41d925be16821f2720d53';
 
 final class TaskDetailFamily extends $Family
     with $FunctionalFamilyOverride<Stream<Task?>, String> {
-  const TaskDetailFamily._()
+  TaskDetailFamily._()
     : super(
         retry: null,
         name: r'taskDetailProvider',

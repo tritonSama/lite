@@ -17,8 +17,12 @@ import '../features/profile/presentation/profile_page.dart';
 import '../features/profile/presentation/public_profile_page.dart';
 import '../features/credentials/presentation/credentials_page.dart';
 import '../features/nexus/presentation/nexus_compute_page.dart';
-import '../features/comms/presentation/comms_config_page.dart';
 import '../features/obd/presentation/obd_screen.dart';
+import '../features/tasks/presentation/create_task_page.dart';
+import '../features/comms/presentation/comms_config_page.dart';
+import '../features/tasks/presentation/bids_page.dart';
+import '../features/tasks/presentation/offer_detail_page.dart';
+import '../features/tasks/presentation/task_verification_page.dart';
 
 part 'router.g.dart';
 
@@ -53,6 +57,12 @@ GoRouter appRouter(Ref ref) {
       // ── Auth routes (outside shell — no bottom nav) ─────────────────────
       GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
       GoRoute(path: '/signup', builder: (_, __) => const SignupPage()),
+      GoRoute(path: '/create', builder: (_, __) => const CreateTaskPage()),
+      GoRoute(path: '/bids', builder: (_, __) => const BidsPage()),
+      GoRoute(
+        path: '/bids/:offerId',
+        builder: (_, state) => OfferDetailPage(offerId: state.pathParameters['offerId']!),
+      ),
 
       // ── Main shell with bottom navigation ───────────────────────────────
       StatefulShellRoute.indexedStack(
@@ -70,6 +80,14 @@ GoRouter appRouter(Ref ref) {
                     path: 'task/:taskId',
                     builder: (_, state) =>
                         TaskDetailPage(taskId: state.pathParameters['taskId']!),
+                    routes: [
+                      GoRoute(
+                        path: 'verify',
+                        builder: (_, state) => TaskVerificationPage(
+                          taskId: state.pathParameters['taskId']!,
+                        ),
+                      ),
+                    ],
                   ),
                   GoRoute(
                     path: 'user/:userId',

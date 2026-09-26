@@ -10,12 +10,12 @@ part of 'auth_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(authState)
-const authStateProvider = AuthStateProvider._();
+final authStateProvider = AuthStateProvider._();
 
 final class AuthStateProvider
     extends $FunctionalProvider<AsyncValue<User?>, User?, Stream<User?>>
     with $FutureModifier<User?>, $StreamProvider<User?> {
-  const AuthStateProvider._()
+  AuthStateProvider._()
     : super(
         from: null,
         argument: null,
@@ -43,11 +43,11 @@ final class AuthStateProvider
 String _$authStateHash() => r'95993d8dde267c375436aea38420e97a7179a5e5';
 
 @ProviderFor(currentUser)
-const currentUserProvider = CurrentUserProvider._();
+final currentUserProvider = CurrentUserProvider._();
 
 final class CurrentUserProvider extends $FunctionalProvider<User?, User?, User?>
     with $Provider<User?> {
-  const CurrentUserProvider._()
+  CurrentUserProvider._()
     : super(
         from: null,
         argument: null,
@@ -83,11 +83,11 @@ final class CurrentUserProvider extends $FunctionalProvider<User?, User?, User?>
 String _$currentUserHash() => r'd4ab3806586567d46bce51b00ead2fae218808ae';
 
 @ProviderFor(AuthNotifier)
-const authProvider = AuthNotifierProvider._();
+final authProvider = AuthNotifierProvider._();
 
 final class AuthNotifierProvider
     extends $NotifierProvider<AuthNotifier, AsyncValue<void>> {
-  const AuthNotifierProvider._()
+  AuthNotifierProvider._()
     : super(
         from: null,
         argument: null,
@@ -120,8 +120,7 @@ abstract class _$AuthNotifier extends $Notifier<AsyncValue<void>> {
   AsyncValue<void> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<void>, AsyncValue<void>>;
     final element =
         ref.element
@@ -131,6 +130,6 @@ abstract class _$AuthNotifier extends $Notifier<AsyncValue<void>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }

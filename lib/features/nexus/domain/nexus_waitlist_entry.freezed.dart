@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'nexus_waitlist_entry.dart';
@@ -9,6 +9,7 @@ part of 'nexus_waitlist_entry.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $NexusWaitlistEntryCopyWith<NexusWaitlistEntry> get copyWith => _$NexusWaitlistE
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is NexusWaitlistEntry&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
+  final _this = this as NexusWaitlistEntry;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is NexusWaitlistEntry&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.email, _this.email) || other.email == _this.email)&&(identical(other.joinedAt, _this.joinedAt) || other.joinedAt == _this.joinedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,name,email,joinedAt);
+int get hashCode {
+  final _this = this as NexusWaitlistEntry;
+  return Object.hash(runtimeType,_this.userId,_this.name,_this.email,_this.joinedAt);
+}
 
 @override
 String toString() {
-  return 'NexusWaitlistEntry(userId: $userId, name: $name, email: $email, joinedAt: $joinedAt)';
+  final _this = this as NexusWaitlistEntry;
+  return 'NexusWaitlistEntry(userId: ${_this.userId}, name: ${_this.name}, email: ${_this.email}, joinedAt: ${_this.joinedAt})';
 }
 
 
@@ -66,7 +72,7 @@ class _$NexusWaitlistEntryCopyWithImpl<$Res>
 /// Create a copy of NexusWaitlistEntry
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? userId = null,Object? name = null,Object? email = null,Object? joinedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(NexusWaitlistEntry(
 userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,email: null == email ? _self.email : email // ignore: cast_nullable_to_non_nullable
@@ -233,16 +239,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _NexusWaitlistEntry&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _NexusWaitlistEntry&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.name, name) || other.name == name)&&(identical(other.email, email) || other.email == email)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,userId,name,email,joinedAt);
+int get hashCode {
+    return Object.hash(runtimeType,userId,name,email,joinedAt);
+}
 
 @override
 String toString() {
-  return 'NexusWaitlistEntry(userId: $userId, name: $name, email: $email, joinedAt: $joinedAt)';
+    return 'NexusWaitlistEntry(userId: $userId, name: $name, email: $email, joinedAt: $joinedAt)';
 }
 
 

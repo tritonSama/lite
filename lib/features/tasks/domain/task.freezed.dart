@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'task.dart';
@@ -9,6 +9,7 @@ part of 'task.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $RequiredCredentialCopyWith<RequiredCredential> get copyWith => _$RequiredCreden
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequiredCredential&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired));
+  final _this = this as RequiredCredential;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is RequiredCredential&&(identical(other.credentialType, _this.credentialType) || other.credentialType == _this.credentialType)&&(identical(other.isRequired, _this.isRequired) || other.isRequired == _this.isRequired));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,credentialType,isRequired);
+int get hashCode {
+  final _this = this as RequiredCredential;
+  return Object.hash(runtimeType,_this.credentialType,_this.isRequired);
+}
 
 @override
 String toString() {
-  return 'RequiredCredential(credentialType: $credentialType, isRequired: $isRequired)';
+  final _this = this as RequiredCredential;
+  return 'RequiredCredential(credentialType: ${_this.credentialType}, isRequired: ${_this.isRequired})';
 }
 
 
@@ -66,7 +72,7 @@ class _$RequiredCredentialCopyWithImpl<$Res>
 /// Create a copy of RequiredCredential
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? credentialType = null,Object? isRequired = null,}) {
-  return _then(_self.copyWith(
+  return _then(RequiredCredential(
 credentialType: null == credentialType ? _self.credentialType : credentialType // ignore: cast_nullable_to_non_nullable
 as CredentialType,isRequired: null == isRequired ? _self.isRequired : isRequired // ignore: cast_nullable_to_non_nullable
 as bool,
@@ -229,16 +235,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequiredCredential&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _RequiredCredential&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.isRequired, isRequired) || other.isRequired == isRequired));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,credentialType,isRequired);
+int get hashCode {
+    return Object.hash(runtimeType,credentialType,isRequired);
+}
 
 @override
 String toString() {
-  return 'RequiredCredential(credentialType: $credentialType, isRequired: $isRequired)';
+    return 'RequiredCredential(credentialType: $credentialType, isRequired: $isRequired)';
 }
 
 
@@ -294,16 +302,21 @@ $TaskCopyWith<Task> get copyWith => _$TaskCopyWithImpl<Task>(this as Task, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, id) || other.id == id)&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.photoUrls, photoUrls)&&(identical(other.location, location) || other.location == location)&&(identical(other.locationLabel, locationLabel) || other.locationLabel == locationLabel)&&(identical(other.geohash, geohash) || other.geohash == geohash)&&(identical(other.desiredCompletionDate, desiredCompletionDate) || other.desiredCompletionDate == desiredCompletionDate)&&(identical(other.budgetAmount, budgetAmount) || other.budgetAmount == budgetAmount)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&const DeepCollectionEquality().equals(other.requiredSkills, requiredSkills)&&const DeepCollectionEquality().equals(other.requiredEquipment, requiredEquipment)&&const DeepCollectionEquality().equals(other.requiredCredentials, requiredCredentials)&&(identical(other.workerCount, workerCount) || other.workerCount == workerCount)&&(identical(other.specialRequirements, specialRequirements) || other.specialRequirements == specialRequirements)&&(identical(other.platformFee, platformFee) || other.platformFee == platformFee)&&(identical(other.status, status) || other.status == status)&&(identical(other.selectedProviderId, selectedProviderId) || other.selectedProviderId == selectedProviderId)&&(identical(other.bidCount, bidCount) || other.bidCount == bidCount)&&(identical(other.category, category) || other.category == category)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as Task;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Task&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.creatorId, _this.creatorId) || other.creatorId == _this.creatorId)&&(identical(other.title, _this.title) || other.title == _this.title)&&(identical(other.description, _this.description) || other.description == _this.description)&&const DeepCollectionEquality().equals(other.photoUrls, _this.photoUrls)&&(identical(other.location, _this.location) || other.location == _this.location)&&(identical(other.locationLabel, _this.locationLabel) || other.locationLabel == _this.locationLabel)&&(identical(other.geohash, _this.geohash) || other.geohash == _this.geohash)&&(identical(other.desiredCompletionDate, _this.desiredCompletionDate) || other.desiredCompletionDate == _this.desiredCompletionDate)&&(identical(other.budgetAmount, _this.budgetAmount) || other.budgetAmount == _this.budgetAmount)&&(identical(other.currencyCode, _this.currencyCode) || other.currencyCode == _this.currencyCode)&&const DeepCollectionEquality().equals(other.requiredSkills, _this.requiredSkills)&&const DeepCollectionEquality().equals(other.requiredEquipment, _this.requiredEquipment)&&const DeepCollectionEquality().equals(other.requiredCredentials, _this.requiredCredentials)&&(identical(other.workerCount, _this.workerCount) || other.workerCount == _this.workerCount)&&(identical(other.specialRequirements, _this.specialRequirements) || other.specialRequirements == _this.specialRequirements)&&(identical(other.platformFee, _this.platformFee) || other.platformFee == _this.platformFee)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.selectedProviderId, _this.selectedProviderId) || other.selectedProviderId == _this.selectedProviderId)&&(identical(other.bidCount, _this.bidCount) || other.bidCount == _this.bidCount)&&(identical(other.category, _this.category) || other.category == _this.category)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,creatorId,title,description,const DeepCollectionEquality().hash(photoUrls),location,locationLabel,geohash,desiredCompletionDate,budgetAmount,currencyCode,const DeepCollectionEquality().hash(requiredSkills),const DeepCollectionEquality().hash(requiredEquipment),const DeepCollectionEquality().hash(requiredCredentials),workerCount,specialRequirements,platformFee,status,selectedProviderId,bidCount,category,createdAt,updatedAt]);
+int get hashCode {
+  final _this = this as Task;
+  return Object.hashAll([runtimeType,_this.id,_this.creatorId,_this.title,_this.description,const DeepCollectionEquality().hash(_this.photoUrls),_this.location,_this.locationLabel,_this.geohash,_this.desiredCompletionDate,_this.budgetAmount,_this.currencyCode,const DeepCollectionEquality().hash(_this.requiredSkills),const DeepCollectionEquality().hash(_this.requiredEquipment),const DeepCollectionEquality().hash(_this.requiredCredentials),_this.workerCount,_this.specialRequirements,_this.platformFee,_this.status,_this.selectedProviderId,_this.bidCount,_this.category,_this.createdAt,_this.updatedAt]);
+}
 
 @override
 String toString() {
-  return 'Task(id: $id, creatorId: $creatorId, title: $title, description: $description, photoUrls: $photoUrls, location: $location, locationLabel: $locationLabel, geohash: $geohash, desiredCompletionDate: $desiredCompletionDate, budgetAmount: $budgetAmount, currencyCode: $currencyCode, requiredSkills: $requiredSkills, requiredEquipment: $requiredEquipment, requiredCredentials: $requiredCredentials, workerCount: $workerCount, specialRequirements: $specialRequirements, platformFee: $platformFee, status: $status, selectedProviderId: $selectedProviderId, bidCount: $bidCount, category: $category, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as Task;
+  return 'Task(id: ${_this.id}, creatorId: ${_this.creatorId}, title: ${_this.title}, description: ${_this.description}, photoUrls: ${_this.photoUrls}, location: ${_this.location}, locationLabel: ${_this.locationLabel}, geohash: ${_this.geohash}, desiredCompletionDate: ${_this.desiredCompletionDate}, budgetAmount: ${_this.budgetAmount}, currencyCode: ${_this.currencyCode}, requiredSkills: ${_this.requiredSkills}, requiredEquipment: ${_this.requiredEquipment}, requiredCredentials: ${_this.requiredCredentials}, workerCount: ${_this.workerCount}, specialRequirements: ${_this.specialRequirements}, platformFee: ${_this.platformFee}, status: ${_this.status}, selectedProviderId: ${_this.selectedProviderId}, bidCount: ${_this.bidCount}, category: ${_this.category}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -332,7 +345,7 @@ class _$TaskCopyWithImpl<$Res>
 /// Create a copy of Task
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? creatorId = null,Object? title = null,Object? description = null,Object? photoUrls = null,Object? location = null,Object? locationLabel = null,Object? geohash = null,Object? desiredCompletionDate = null,Object? budgetAmount = null,Object? currencyCode = null,Object? requiredSkills = null,Object? requiredEquipment = null,Object? requiredCredentials = null,Object? workerCount = null,Object? specialRequirements = freezed,Object? platformFee = freezed,Object? status = null,Object? selectedProviderId = freezed,Object? bidCount = null,Object? category = null,Object? createdAt = null,Object? updatedAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(Task(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,creatorId: null == creatorId ? _self.creatorId : creatorId // ignore: cast_nullable_to_non_nullable
 as String,title: null == title ? _self.title : title // ignore: cast_nullable_to_non_nullable
@@ -497,7 +510,7 @@ return $default(_that.id,_that.creatorId,_that.title,_that.description,_that.pho
 @JsonSerializable()
 
 class _Task implements Task {
-  const _Task({required this.id, required this.creatorId, required this.title, required this.description, final  List<String> photoUrls = const [], @GeoPointConverter() required this.location, required this.locationLabel, required this.geohash, @TimestampConverter() required this.desiredCompletionDate, required this.budgetAmount, this.currencyCode = 'USD', final  List<String> requiredSkills = const [], final  List<String> requiredEquipment = const [], final  List<RequiredCredential> requiredCredentials = const [], this.workerCount = 1, this.specialRequirements, this.platformFee, this.status = TaskStatus.draft, this.selectedProviderId, this.bidCount = 0, this.category = TaskCategory.cleanup, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.updatedAt}): _photoUrls = photoUrls,_requiredSkills = requiredSkills,_requiredEquipment = requiredEquipment,_requiredCredentials = requiredCredentials;
+  const _Task({required this.id, required this.creatorId, required this.title, required this.description,  List<String> photoUrls = const [], @GeoPointConverter() required this.location, required this.locationLabel, required this.geohash, @TimestampConverter() required this.desiredCompletionDate, required this.budgetAmount, this.currencyCode = 'USD',  List<String> requiredSkills = const [],  List<String> requiredEquipment = const [],  List<RequiredCredential> requiredCredentials = const [], this.workerCount = 1, this.specialRequirements, this.platformFee, this.status = TaskStatus.draft, this.selectedProviderId, this.bidCount = 0, this.category = TaskCategory.cleanup, @TimestampConverter() required this.createdAt, @TimestampConverter() required this.updatedAt}): _photoUrls = photoUrls,_requiredSkills = requiredSkills,_requiredEquipment = requiredEquipment,_requiredCredentials = requiredCredentials;
   factory _Task.fromJson(Map<String, dynamic> json) => _$TaskFromJson(json);
 
 @override final  String id;
@@ -561,16 +574,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other._photoUrls, _photoUrls)&&(identical(other.location, location) || other.location == location)&&(identical(other.locationLabel, locationLabel) || other.locationLabel == locationLabel)&&(identical(other.geohash, geohash) || other.geohash == geohash)&&(identical(other.desiredCompletionDate, desiredCompletionDate) || other.desiredCompletionDate == desiredCompletionDate)&&(identical(other.budgetAmount, budgetAmount) || other.budgetAmount == budgetAmount)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&const DeepCollectionEquality().equals(other._requiredSkills, _requiredSkills)&&const DeepCollectionEquality().equals(other._requiredEquipment, _requiredEquipment)&&const DeepCollectionEquality().equals(other._requiredCredentials, _requiredCredentials)&&(identical(other.workerCount, workerCount) || other.workerCount == workerCount)&&(identical(other.specialRequirements, specialRequirements) || other.specialRequirements == specialRequirements)&&(identical(other.platformFee, platformFee) || other.platformFee == platformFee)&&(identical(other.status, status) || other.status == status)&&(identical(other.selectedProviderId, selectedProviderId) || other.selectedProviderId == selectedProviderId)&&(identical(other.bidCount, bidCount) || other.bidCount == bidCount)&&(identical(other.category, category) || other.category == category)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Task&&(identical(other.id, id) || other.id == id)&&(identical(other.creatorId, creatorId) || other.creatorId == creatorId)&&(identical(other.title, title) || other.title == title)&&(identical(other.description, description) || other.description == description)&&const DeepCollectionEquality().equals(other.photoUrls, _photoUrls)&&(identical(other.location, location) || other.location == location)&&(identical(other.locationLabel, locationLabel) || other.locationLabel == locationLabel)&&(identical(other.geohash, geohash) || other.geohash == geohash)&&(identical(other.desiredCompletionDate, desiredCompletionDate) || other.desiredCompletionDate == desiredCompletionDate)&&(identical(other.budgetAmount, budgetAmount) || other.budgetAmount == budgetAmount)&&(identical(other.currencyCode, currencyCode) || other.currencyCode == currencyCode)&&const DeepCollectionEquality().equals(other.requiredSkills, _requiredSkills)&&const DeepCollectionEquality().equals(other.requiredEquipment, _requiredEquipment)&&const DeepCollectionEquality().equals(other.requiredCredentials, _requiredCredentials)&&(identical(other.workerCount, workerCount) || other.workerCount == workerCount)&&(identical(other.specialRequirements, specialRequirements) || other.specialRequirements == specialRequirements)&&(identical(other.platformFee, platformFee) || other.platformFee == platformFee)&&(identical(other.status, status) || other.status == status)&&(identical(other.selectedProviderId, selectedProviderId) || other.selectedProviderId == selectedProviderId)&&(identical(other.bidCount, bidCount) || other.bidCount == bidCount)&&(identical(other.category, category) || other.category == category)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hashAll([runtimeType,id,creatorId,title,description,const DeepCollectionEquality().hash(_photoUrls),location,locationLabel,geohash,desiredCompletionDate,budgetAmount,currencyCode,const DeepCollectionEquality().hash(_requiredSkills),const DeepCollectionEquality().hash(_requiredEquipment),const DeepCollectionEquality().hash(_requiredCredentials),workerCount,specialRequirements,platformFee,status,selectedProviderId,bidCount,category,createdAt,updatedAt]);
+int get hashCode {
+    return Object.hashAll([runtimeType,id,creatorId,title,description,const DeepCollectionEquality().hash(_photoUrls),location,locationLabel,geohash,desiredCompletionDate,budgetAmount,currencyCode,const DeepCollectionEquality().hash(_requiredSkills),const DeepCollectionEquality().hash(_requiredEquipment),const DeepCollectionEquality().hash(_requiredCredentials),workerCount,specialRequirements,platformFee,status,selectedProviderId,bidCount,category,createdAt,updatedAt]);
+}
 
 @override
 String toString() {
-  return 'Task(id: $id, creatorId: $creatorId, title: $title, description: $description, photoUrls: $photoUrls, location: $location, locationLabel: $locationLabel, geohash: $geohash, desiredCompletionDate: $desiredCompletionDate, budgetAmount: $budgetAmount, currencyCode: $currencyCode, requiredSkills: $requiredSkills, requiredEquipment: $requiredEquipment, requiredCredentials: $requiredCredentials, workerCount: $workerCount, specialRequirements: $specialRequirements, platformFee: $platformFee, status: $status, selectedProviderId: $selectedProviderId, bidCount: $bidCount, category: $category, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Task(id: $id, creatorId: $creatorId, title: $title, description: $description, photoUrls: $photoUrls, location: $location, locationLabel: $locationLabel, geohash: $geohash, desiredCompletionDate: $desiredCompletionDate, budgetAmount: $budgetAmount, currencyCode: $currencyCode, requiredSkills: $requiredSkills, requiredEquipment: $requiredEquipment, requiredCredentials: $requiredCredentials, workerCount: $workerCount, specialRequirements: $specialRequirements, platformFee: $platformFee, status: $status, selectedProviderId: $selectedProviderId, bidCount: $bidCount, category: $category, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

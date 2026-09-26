@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'comms_message.dart';
@@ -9,6 +9,7 @@ part of 'comms_message.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $CommsMessageCopyWith<CommsMessage> get copyWith => _$CommsMessageCopyWithImpl<C
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommsMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.senderName, senderName) || other.senderName == senderName)&&(identical(other.content, content) || other.content == content)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.channel, channel) || other.channel == channel)&&(identical(other.targetId, targetId) || other.targetId == targetId));
+  final _this = this as CommsMessage;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is CommsMessage&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.senderId, _this.senderId) || other.senderId == _this.senderId)&&(identical(other.senderName, _this.senderName) || other.senderName == _this.senderName)&&(identical(other.content, _this.content) || other.content == _this.content)&&(identical(other.timestamp, _this.timestamp) || other.timestamp == _this.timestamp)&&(identical(other.channel, _this.channel) || other.channel == _this.channel)&&(identical(other.targetId, _this.targetId) || other.targetId == _this.targetId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,senderName,content,timestamp,channel,targetId);
+int get hashCode {
+  final _this = this as CommsMessage;
+  return Object.hash(runtimeType,_this.id,_this.senderId,_this.senderName,_this.content,_this.timestamp,_this.channel,_this.targetId);
+}
 
 @override
 String toString() {
-  return 'CommsMessage(id: $id, senderId: $senderId, senderName: $senderName, content: $content, timestamp: $timestamp, channel: $channel, targetId: $targetId)';
+  final _this = this as CommsMessage;
+  return 'CommsMessage(id: ${_this.id}, senderId: ${_this.senderId}, senderName: ${_this.senderName}, content: ${_this.content}, timestamp: ${_this.timestamp}, channel: ${_this.channel}, targetId: ${_this.targetId})';
 }
 
 
@@ -66,7 +72,7 @@ class _$CommsMessageCopyWithImpl<$Res>
 /// Create a copy of CommsMessage
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? senderId = null,Object? senderName = null,Object? content = null,Object? timestamp = null,Object? channel = null,Object? targetId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(CommsMessage(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,senderId: null == senderId ? _self.senderId : senderId // ignore: cast_nullable_to_non_nullable
 as String,senderName: null == senderName ? _self.senderName : senderName // ignore: cast_nullable_to_non_nullable
@@ -239,16 +245,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommsMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.senderName, senderName) || other.senderName == senderName)&&(identical(other.content, content) || other.content == content)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.channel, channel) || other.channel == channel)&&(identical(other.targetId, targetId) || other.targetId == targetId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _CommsMessage&&(identical(other.id, id) || other.id == id)&&(identical(other.senderId, senderId) || other.senderId == senderId)&&(identical(other.senderName, senderName) || other.senderName == senderName)&&(identical(other.content, content) || other.content == content)&&(identical(other.timestamp, timestamp) || other.timestamp == timestamp)&&(identical(other.channel, channel) || other.channel == channel)&&(identical(other.targetId, targetId) || other.targetId == targetId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,senderId,senderName,content,timestamp,channel,targetId);
+int get hashCode {
+    return Object.hash(runtimeType,id,senderId,senderName,content,timestamp,channel,targetId);
+}
 
 @override
 String toString() {
-  return 'CommsMessage(id: $id, senderId: $senderId, senderName: $senderName, content: $content, timestamp: $timestamp, channel: $channel, targetId: $targetId)';
+    return 'CommsMessage(id: $id, senderId: $senderId, senderName: $senderName, content: $content, timestamp: $timestamp, channel: $channel, targetId: $targetId)';
 }
 
 

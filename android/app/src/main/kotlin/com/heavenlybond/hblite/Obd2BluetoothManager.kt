@@ -13,6 +13,7 @@ import androidx.core.app.ActivityCompat
 import com.github.pires.obd.commands.ObdCommand
 import com.github.pires.obd.commands.SpeedCommand
 import com.github.pires.obd.commands.engine.RPMCommand
+import com.github.pires.obd.enums.ObdProtocols
 import com.github.pires.obd.commands.protocol.*
 import kotlinx.coroutines.*
 import java.io.IOException
@@ -60,7 +61,7 @@ object Obd2BluetoothManager {
                 }
 
                 initializeObd2()
-                startDataPolling()
+                startDataPolling(this)
 
             } catch (e: IOException) {
                 Log.e(TAG, "Connection failed", e)
@@ -100,37 +101,39 @@ object Obd2BluetoothManager {
         }
     }
 
-    private suspend fun startDataPolling() {
-        val socket = bluetoothSocket ?: return
-        try {
-            val inStream = socket.inputStream
-            val outStream = socket.outputStream
+    private fun startDataPolling(scope: CoroutineScope) {
+        scope.launch {
+            val socket = bluetoothSocket ?: return@launch
+            try {
+                val inStream = socket.inputStream
+                val outStream = socket.outputStream
 
-            val rpmCommand = RPMCommand()
-            val speedCommand = SpeedCommand()
+                val rpmCommand = RPMCommand()
+                val speedCommand = SpeedCommand()
 
-            while (isActive && isConnected) {
-                try {
-                    rpmCommand.run(inStream, outStream)
-                    currentRpm = rpmCommand.calculatedResult
+                while (scope.isActive && isConnected) {
+                    try {
+                        rpmCommand.run(inStream, outStream)
+                        currentRpm = rpmCommand.calculatedResult
 
-                    speedCommand.run(inStream, outStream)
-                    currentSpeed = speedCommand.calculatedResult
+                        speedCommand.run(inStream, outStream)
+                        currentSpeed = speedCommand.calculatedResult
 
-                    Log.d(TAG, "RPM: $currentRpm, Speed: $currentSpeed")
+                        Log.d(TAG, "RPM: $currentRpm, Speed: $currentSpeed")
 
-                    withContext(Dispatchers.Main) {
-                        onDataUpdate?.invoke(currentRpm, currentSpeed)
+                        withContext(Dispatchers.Main) {
+                            onDataUpdate?.invoke(currentRpm, currentSpeed)
+                        }
+
+                        delay(500) // Poll every 500ms
+                    } catch (e: Exception) {
+                        Log.e(TAG, "Error reading OBD2 data", e)
+                        break
                     }
-
-                    delay(500) // Poll every 500ms
-                } catch (e: Exception) {
-                    Log.e(TAG, "Error reading OBD2 data", e)
-                    break
                 }
+            } finally {
+                closeSocket()
             }
-        } finally {
-            closeSocket()
         }
     }
 

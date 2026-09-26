@@ -10,11 +10,11 @@ part of 'nexus_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(NexusWaitlistController)
-const nexusWaitlistControllerProvider = NexusWaitlistControllerProvider._();
+final nexusWaitlistControllerProvider = NexusWaitlistControllerProvider._();
 
 final class NexusWaitlistControllerProvider
     extends $AsyncNotifierProvider<NexusWaitlistController, void> {
-  const NexusWaitlistControllerProvider._()
+  NexusWaitlistControllerProvider._()
     : super(
         from: null,
         argument: null,
@@ -40,8 +40,7 @@ abstract class _$NexusWaitlistController extends $AsyncNotifier<void> {
   FutureOr<void> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<AsyncValue<void>, void>;
     final element =
         ref.element
@@ -51,6 +50,6 @@ abstract class _$NexusWaitlistController extends $AsyncNotifier<void> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, null);
+    return element.handleCreate(ref, build);
   }
 }

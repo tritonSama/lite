@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'compute_node_status.dart';
@@ -9,6 +9,7 @@ part of 'compute_node_status.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $ComputeNodeStatusCopyWith<ComputeNodeStatus> get copyWith => _$ComputeNodeStatu
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ComputeNodeStatus&&(identical(other.nodeId, nodeId) || other.nodeId == nodeId)&&(identical(other.healthScore, healthScore) || other.healthScore == healthScore)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.memoryAvailableMb, memoryAvailableMb) || other.memoryAvailableMb == memoryAvailableMb)&&(identical(other.cpuTemperature, cpuTemperature) || other.cpuTemperature == cpuTemperature)&&(identical(other.lastTelemetrySync, lastTelemetrySync) || other.lastTelemetrySync == lastTelemetrySync));
+  final _this = this as ComputeNodeStatus;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ComputeNodeStatus&&(identical(other.nodeId, _this.nodeId) || other.nodeId == _this.nodeId)&&(identical(other.healthScore, _this.healthScore) || other.healthScore == _this.healthScore)&&(identical(other.isActive, _this.isActive) || other.isActive == _this.isActive)&&(identical(other.memoryAvailableMb, _this.memoryAvailableMb) || other.memoryAvailableMb == _this.memoryAvailableMb)&&(identical(other.cpuTemperature, _this.cpuTemperature) || other.cpuTemperature == _this.cpuTemperature)&&(identical(other.lastTelemetrySync, _this.lastTelemetrySync) || other.lastTelemetrySync == _this.lastTelemetrySync));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,nodeId,healthScore,isActive,memoryAvailableMb,cpuTemperature,lastTelemetrySync);
+int get hashCode {
+  final _this = this as ComputeNodeStatus;
+  return Object.hash(runtimeType,_this.nodeId,_this.healthScore,_this.isActive,_this.memoryAvailableMb,_this.cpuTemperature,_this.lastTelemetrySync);
+}
 
 @override
 String toString() {
-  return 'ComputeNodeStatus(nodeId: $nodeId, healthScore: $healthScore, isActive: $isActive, memoryAvailableMb: $memoryAvailableMb, cpuTemperature: $cpuTemperature, lastTelemetrySync: $lastTelemetrySync)';
+  final _this = this as ComputeNodeStatus;
+  return 'ComputeNodeStatus(nodeId: ${_this.nodeId}, healthScore: ${_this.healthScore}, isActive: ${_this.isActive}, memoryAvailableMb: ${_this.memoryAvailableMb}, cpuTemperature: ${_this.cpuTemperature}, lastTelemetrySync: ${_this.lastTelemetrySync})';
 }
 
 
@@ -66,7 +72,7 @@ class _$ComputeNodeStatusCopyWithImpl<$Res>
 /// Create a copy of ComputeNodeStatus
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? nodeId = null,Object? healthScore = null,Object? isActive = null,Object? memoryAvailableMb = null,Object? cpuTemperature = null,Object? lastTelemetrySync = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ComputeNodeStatus(
 nodeId: null == nodeId ? _self.nodeId : nodeId // ignore: cast_nullable_to_non_nullable
 as String,healthScore: null == healthScore ? _self.healthScore : healthScore // ignore: cast_nullable_to_non_nullable
 as double,isActive: null == isActive ? _self.isActive : isActive // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ComputeNodeStatus&&(identical(other.nodeId, nodeId) || other.nodeId == nodeId)&&(identical(other.healthScore, healthScore) || other.healthScore == healthScore)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.memoryAvailableMb, memoryAvailableMb) || other.memoryAvailableMb == memoryAvailableMb)&&(identical(other.cpuTemperature, cpuTemperature) || other.cpuTemperature == cpuTemperature)&&(identical(other.lastTelemetrySync, lastTelemetrySync) || other.lastTelemetrySync == lastTelemetrySync));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ComputeNodeStatus&&(identical(other.nodeId, nodeId) || other.nodeId == nodeId)&&(identical(other.healthScore, healthScore) || other.healthScore == healthScore)&&(identical(other.isActive, isActive) || other.isActive == isActive)&&(identical(other.memoryAvailableMb, memoryAvailableMb) || other.memoryAvailableMb == memoryAvailableMb)&&(identical(other.cpuTemperature, cpuTemperature) || other.cpuTemperature == cpuTemperature)&&(identical(other.lastTelemetrySync, lastTelemetrySync) || other.lastTelemetrySync == lastTelemetrySync));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,nodeId,healthScore,isActive,memoryAvailableMb,cpuTemperature,lastTelemetrySync);
+int get hashCode {
+    return Object.hash(runtimeType,nodeId,healthScore,isActive,memoryAvailableMb,cpuTemperature,lastTelemetrySync);
+}
 
 @override
 String toString() {
-  return 'ComputeNodeStatus(nodeId: $nodeId, healthScore: $healthScore, isActive: $isActive, memoryAvailableMb: $memoryAvailableMb, cpuTemperature: $cpuTemperature, lastTelemetrySync: $lastTelemetrySync)';
+    return 'ComputeNodeStatus(nodeId: $nodeId, healthScore: $healthScore, isActive: $isActive, memoryAvailableMb: $memoryAvailableMb, cpuTemperature: $cpuTemperature, lastTelemetrySync: $lastTelemetrySync)';
 }
 
 

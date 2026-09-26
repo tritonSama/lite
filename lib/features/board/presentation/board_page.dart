@@ -11,6 +11,7 @@ import 'board_search_delegate.dart';
 import 'local_offerings_provider.dart';
 import '../../teams/presentation/team_providers.dart';
 import 'dart:convert';
+import 'package:go_router/go_router.dart';
 import 'edit_offering_dialog.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
@@ -70,6 +71,11 @@ class _BoardPageState extends ConsumerState<BoardPage>
             Tab(text: 'Interacting'),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => context.push('/create'),
+        icon: const Icon(Icons.add_task),
+        label: const Text('Post Task'),
       ),
       body: TabBarView(
         controller: _tabCtrl,

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'team.dart';
@@ -9,16 +9,14 @@ part of 'team.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$Team {
 
- String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; List<String> get parentIds;// Organizations this team branched from (Guilds)
- List<String> get sisterClubIds;// Sister clubs (Guilds)
- List<String> get treatyIds;// Treaties with other teams
- double get rating; int get completedJobCount;@TimestampConverter() DateTime get createdAt;
+ String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; List<String> get parentIds; List<String> get sisterClubIds; List<String> get treatyIds; double get rating; int get completedJobCount;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,16 +29,21 @@ $TeamCopyWith<Team> get copyWith => _$TeamCopyWithImpl<Team>(this as Team, _$ide
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  final _this = this as Team;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.ownerId, _this.ownerId) || other.ownerId == _this.ownerId)&&(identical(other.memberCount, _this.memberCount) || other.memberCount == _this.memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _this.credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _this.parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _this.sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _this.treatyIds)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(credentialIds),const DeepCollectionEquality().hash(parentIds),const DeepCollectionEquality().hash(sisterClubIds),const DeepCollectionEquality().hash(treatyIds),rating,completedJobCount,createdAt);
+int get hashCode {
+  final _this = this as Team;
+  return Object.hash(runtimeType,_this.id,_this.name,_this.description,_this.ownerId,_this.memberCount,const DeepCollectionEquality().hash(_this.credentialIds),const DeepCollectionEquality().hash(_this.parentIds),const DeepCollectionEquality().hash(_this.sisterClubIds),const DeepCollectionEquality().hash(_this.treatyIds),_this.rating,_this.completedJobCount,_this.createdAt);
+}
 
 @override
 String toString() {
-  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
+  final _this = this as Team;
+  return 'Team(id: ${_this.id}, name: ${_this.name}, description: ${_this.description}, ownerId: ${_this.ownerId}, memberCount: ${_this.memberCount}, credentialIds: ${_this.credentialIds}, parentIds: ${_this.parentIds}, sisterClubIds: ${_this.sisterClubIds}, treatyIds: ${_this.treatyIds}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -69,7 +72,7 @@ class _$TeamCopyWithImpl<$Res>
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,description: freezed == description ? _self.description : description // ignore: cast_nullable_to_non_nullable
@@ -223,7 +226,7 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 @JsonSerializable()
 
 class _Team implements Team {
-  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0, final  List<String> credentialIds = const [], final  List<String> parentIds = const [], final  List<String> sisterClubIds = const [], final  List<String> treatyIds = const [], this.rating = 0.0, this.completedJobCount = 0, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds,_parentIds = parentIds,_sisterClubIds = sisterClubIds,_treatyIds = treatyIds;
+  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0,  List<String> credentialIds = const [],  List<String> parentIds = const [],  List<String> sisterClubIds = const [],  List<String> treatyIds = const [], this.rating = 0.0, this.completedJobCount = 0, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds,_parentIds = parentIds,_sisterClubIds = sisterClubIds,_treatyIds = treatyIds;
   factory _Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 
 @override final  String id;
@@ -245,25 +248,20 @@ class _Team implements Team {
   return EqualUnmodifiableListView(_parentIds);
 }
 
-// Organizations this team branched from (Guilds)
  final  List<String> _sisterClubIds;
-// Organizations this team branched from (Guilds)
 @override@JsonKey() List<String> get sisterClubIds {
   if (_sisterClubIds is EqualUnmodifiableListView) return _sisterClubIds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_sisterClubIds);
 }
 
-// Sister clubs (Guilds)
  final  List<String> _treatyIds;
-// Sister clubs (Guilds)
 @override@JsonKey() List<String> get treatyIds {
   if (_treatyIds is EqualUnmodifiableListView) return _treatyIds;
   // ignore: implicit_dynamic_type
   return EqualUnmodifiableListView(_treatyIds);
 }
 
-// Treaties with other teams
 @override@JsonKey() final  double rating;
 @override@JsonKey() final  int completedJobCount;
 @override@TimestampConverter() final  DateTime createdAt;
@@ -281,16 +279,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other._credentialIds, _credentialIds)&&const DeepCollectionEquality().equals(other._parentIds, _parentIds)&&const DeepCollectionEquality().equals(other._sisterClubIds, _sisterClubIds)&&const DeepCollectionEquality().equals(other._treatyIds, _treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),const DeepCollectionEquality().hash(_parentIds),const DeepCollectionEquality().hash(_sisterClubIds),const DeepCollectionEquality().hash(_treatyIds),rating,completedJobCount,createdAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),const DeepCollectionEquality().hash(_parentIds),const DeepCollectionEquality().hash(_sisterClubIds),const DeepCollectionEquality().hash(_treatyIds),rating,completedJobCount,createdAt);
+}
 
 @override
 String toString() {
-  return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
+    return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
 }
 
 
@@ -356,16 +356,21 @@ $MembershipCopyWith<Membership> get copyWith => _$MembershipCopyWithImpl<Members
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Membership&&(identical(other.id, id) || other.id == id)&&(identical(other.teamId, teamId) || other.teamId == teamId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userDisplayName, userDisplayName) || other.userDisplayName == userDisplayName)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
+  final _this = this as Membership;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Membership&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.teamId, _this.teamId) || other.teamId == _this.teamId)&&(identical(other.userId, _this.userId) || other.userId == _this.userId)&&(identical(other.userDisplayName, _this.userDisplayName) || other.userDisplayName == _this.userDisplayName)&&(identical(other.userPhotoUrl, _this.userPhotoUrl) || other.userPhotoUrl == _this.userPhotoUrl)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.joinedAt, _this.joinedAt) || other.joinedAt == _this.joinedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,teamId,userId,userDisplayName,userPhotoUrl,role,status,joinedAt);
+int get hashCode {
+  final _this = this as Membership;
+  return Object.hash(runtimeType,_this.id,_this.teamId,_this.userId,_this.userDisplayName,_this.userPhotoUrl,_this.role,_this.status,_this.joinedAt);
+}
 
 @override
 String toString() {
-  return 'Membership(id: $id, teamId: $teamId, userId: $userId, userDisplayName: $userDisplayName, userPhotoUrl: $userPhotoUrl, role: $role, status: $status, joinedAt: $joinedAt)';
+  final _this = this as Membership;
+  return 'Membership(id: ${_this.id}, teamId: ${_this.teamId}, userId: ${_this.userId}, userDisplayName: ${_this.userDisplayName}, userPhotoUrl: ${_this.userPhotoUrl}, role: ${_this.role}, status: ${_this.status}, joinedAt: ${_this.joinedAt})';
 }
 
 
@@ -394,7 +399,7 @@ class _$MembershipCopyWithImpl<$Res>
 /// Create a copy of Membership
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? teamId = null,Object? userId = null,Object? userDisplayName = freezed,Object? userPhotoUrl = freezed,Object? role = null,Object? status = null,Object? joinedAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(Membership(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,teamId: null == teamId ? _self.teamId : teamId // ignore: cast_nullable_to_non_nullable
 as String,userId: null == userId ? _self.userId : userId // ignore: cast_nullable_to_non_nullable
@@ -569,16 +574,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Membership&&(identical(other.id, id) || other.id == id)&&(identical(other.teamId, teamId) || other.teamId == teamId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userDisplayName, userDisplayName) || other.userDisplayName == userDisplayName)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Membership&&(identical(other.id, id) || other.id == id)&&(identical(other.teamId, teamId) || other.teamId == teamId)&&(identical(other.userId, userId) || other.userId == userId)&&(identical(other.userDisplayName, userDisplayName) || other.userDisplayName == userDisplayName)&&(identical(other.userPhotoUrl, userPhotoUrl) || other.userPhotoUrl == userPhotoUrl)&&(identical(other.role, role) || other.role == role)&&(identical(other.status, status) || other.status == status)&&(identical(other.joinedAt, joinedAt) || other.joinedAt == joinedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,teamId,userId,userDisplayName,userPhotoUrl,role,status,joinedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,teamId,userId,userDisplayName,userPhotoUrl,role,status,joinedAt);
+}
 
 @override
 String toString() {
-  return 'Membership(id: $id, teamId: $teamId, userId: $userId, userDisplayName: $userDisplayName, userPhotoUrl: $userPhotoUrl, role: $role, status: $status, joinedAt: $joinedAt)';
+    return 'Membership(id: $id, teamId: $teamId, userId: $userId, userDisplayName: $userDisplayName, userPhotoUrl: $userPhotoUrl, role: $role, status: $status, joinedAt: $joinedAt)';
 }
 
 

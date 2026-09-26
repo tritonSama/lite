@@ -10,11 +10,11 @@ part of 'team_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(SelectedTeam)
-const selectedTeamProvider = SelectedTeamProvider._();
+final selectedTeamProvider = SelectedTeamProvider._();
 
 final class SelectedTeamProvider
     extends $NotifierProvider<SelectedTeam, String?> {
-  const SelectedTeamProvider._()
+  SelectedTeamProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,8 +47,7 @@ abstract class _$SelectedTeam extends $Notifier<String?> {
   String? build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<String?, String?>;
     final element =
         ref.element
@@ -58,12 +57,12 @@ abstract class _$SelectedTeam extends $Notifier<String?> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(teams)
-const teamsProvider = TeamsProvider._();
+final teamsProvider = TeamsProvider._();
 
 final class TeamsProvider
     extends
@@ -73,7 +72,7 @@ final class TeamsProvider
           FutureOr<List<Team>>
         >
     with $FutureModifier<List<Team>>, $FutureProvider<List<Team>> {
-  const TeamsProvider._()
+  TeamsProvider._()
     : super(
         from: null,
         argument: null,
@@ -105,7 +104,7 @@ String _$teamsHash() => r'b3bc43f0057ce5d986a8f92bec81fb0be5476e0c';
 /// in the parent organizations as well.
 
 @ProviderFor(hasTeamPermission)
-const hasTeamPermissionProvider = HasTeamPermissionFamily._();
+final hasTeamPermissionProvider = HasTeamPermissionFamily._();
 
 /// Helper provider to get permissions for a user in a team.
 /// Resolves dynamically: if user is member of a child, they have permissions
@@ -117,7 +116,7 @@ final class HasTeamPermissionProvider
   /// Helper provider to get permissions for a user in a team.
   /// Resolves dynamically: if user is member of a child, they have permissions
   /// in the parent organizations as well.
-  const HasTeamPermissionProvider._({
+  HasTeamPermissionProvider._({
     required HasTeamPermissionFamily super.from,
     required ({String userId, String targetTeamId}) super.argument,
   }) : super(
@@ -176,7 +175,7 @@ final class HasTeamPermissionFamily extends $Family
           FutureOr<bool>,
           ({String userId, String targetTeamId})
         > {
-  const HasTeamPermissionFamily._()
+  HasTeamPermissionFamily._()
     : super(
         retry: null,
         name: r'hasTeamPermissionProvider',

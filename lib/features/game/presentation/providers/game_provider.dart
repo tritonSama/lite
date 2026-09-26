@@ -2,9 +2,11 @@ import 'dart:math';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'game_state.dart';
 
-class GameNotifier extends StateNotifier<GameState> {
-  GameNotifier() : super(_initialState()) {
-    _initializeDeckAndPlayers();
+class GameNotifier extends Notifier<GameState> {
+  @override
+  GameState build() {
+    final initial = _initialState();
+    return _initializeDeckAndPlayers(initial);
   }
 
   static GameState _initialState() {
@@ -16,7 +18,7 @@ class GameNotifier extends StateNotifier<GameState> {
     );
   }
 
-  void _initializeDeckAndPlayers() {
+  GameState _initializeDeckAndPlayers(GameState current) {
     List<Card> deck = [];
     for (int i = 1; i <= 12; i++) {
       for (int j = 0; j < 4; j++) {
@@ -28,10 +30,10 @@ class GameNotifier extends StateNotifier<GameState> {
     final p1Traps = deck.take(7).toList();
     final p2Traps = deck.skip(7).take(7).toList();
 
-    state = state.copyWith(
+    return current.copyWith(
       players: {
-        PlayerId.p1: state.players[PlayerId.p1]!.copyWith(unplacedTraps: p1Traps),
-        PlayerId.p2: state.players[PlayerId.p2]!.copyWith(unplacedTraps: p2Traps),
+        PlayerId.p1: current.players[PlayerId.p1]!.copyWith(unplacedTraps: p1Traps),
+        PlayerId.p2: current.players[PlayerId.p2]!.copyWith(unplacedTraps: p2Traps),
       },
     );
   }
@@ -285,6 +287,4 @@ class GameNotifier extends StateNotifier<GameState> {
   }
 }
 
-final gameProvider = StateNotifierProvider<GameNotifier, GameState>((ref) {
-  return GameNotifier();
-});
+final gameProvider = NotifierProvider<GameNotifier, GameState>(GameNotifier.new);

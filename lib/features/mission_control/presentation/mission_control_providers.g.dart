@@ -10,13 +10,13 @@ part of 'mission_control_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(userLocation)
-const userLocationProvider = UserLocationProvider._();
+final userLocationProvider = UserLocationProvider._();
 
 final class UserLocationProvider
     extends
         $FunctionalProvider<AsyncValue<Position>, Position, Stream<Position>>
     with $FutureModifier<Position>, $StreamProvider<Position> {
-  const UserLocationProvider._()
+  UserLocationProvider._()
     : super(
         from: null,
         argument: null,
@@ -44,7 +44,7 @@ final class UserLocationProvider
 String _$userLocationHash() => r'280da4f4ee8bcea65ae66b165db12fab55ca895f';
 
 @ProviderFor(friendLocations)
-const friendLocationsProvider = FriendLocationsProvider._();
+final friendLocationsProvider = FriendLocationsProvider._();
 
 final class FriendLocationsProvider
     extends
@@ -56,7 +56,7 @@ final class FriendLocationsProvider
     with
         $FutureModifier<List<FriendLocation>>,
         $FutureProvider<List<FriendLocation>> {
-  const FriendLocationsProvider._()
+  FriendLocationsProvider._()
     : super(
         from: null,
         argument: null,

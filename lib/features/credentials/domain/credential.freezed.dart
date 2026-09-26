@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'credential.dart';
@@ -9,6 +9,7 @@ part of 'credential.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $CredentialCopyWith<Credential> get copyWith => _$CredentialCopyWithImpl<Credent
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Credential&&(identical(other.id, id) || other.id == id)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.label, label) || other.label == label)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.downloadUrl, downloadUrl) || other.downloadUrl == downloadUrl)&&(identical(other.status, status) || other.status == status)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt)&&(identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt)&&(identical(other.verifiedBy, verifiedBy) || other.verifiedBy == verifiedBy)&&(identical(other.mimeType, mimeType) || other.mimeType == mimeType)&&(identical(other.fileSizeBytes, fileSizeBytes) || other.fileSizeBytes == fileSizeBytes));
+  final _this = this as Credential;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Credential&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.ownerId, _this.ownerId) || other.ownerId == _this.ownerId)&&(identical(other.credentialType, _this.credentialType) || other.credentialType == _this.credentialType)&&(identical(other.label, _this.label) || other.label == _this.label)&&(identical(other.storagePath, _this.storagePath) || other.storagePath == _this.storagePath)&&(identical(other.downloadUrl, _this.downloadUrl) || other.downloadUrl == _this.downloadUrl)&&(identical(other.status, _this.status) || other.status == _this.status)&&(identical(other.expiresAt, _this.expiresAt) || other.expiresAt == _this.expiresAt)&&(identical(other.uploadedAt, _this.uploadedAt) || other.uploadedAt == _this.uploadedAt)&&(identical(other.verifiedAt, _this.verifiedAt) || other.verifiedAt == _this.verifiedAt)&&(identical(other.verifiedBy, _this.verifiedBy) || other.verifiedBy == _this.verifiedBy)&&(identical(other.mimeType, _this.mimeType) || other.mimeType == _this.mimeType)&&(identical(other.fileSizeBytes, _this.fileSizeBytes) || other.fileSizeBytes == _this.fileSizeBytes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ownerId,credentialType,label,storagePath,downloadUrl,status,expiresAt,uploadedAt,verifiedAt,verifiedBy,mimeType,fileSizeBytes);
+int get hashCode {
+  final _this = this as Credential;
+  return Object.hash(runtimeType,_this.id,_this.ownerId,_this.credentialType,_this.label,_this.storagePath,_this.downloadUrl,_this.status,_this.expiresAt,_this.uploadedAt,_this.verifiedAt,_this.verifiedBy,_this.mimeType,_this.fileSizeBytes);
+}
 
 @override
 String toString() {
-  return 'Credential(id: $id, ownerId: $ownerId, credentialType: $credentialType, label: $label, storagePath: $storagePath, downloadUrl: $downloadUrl, status: $status, expiresAt: $expiresAt, uploadedAt: $uploadedAt, verifiedAt: $verifiedAt, verifiedBy: $verifiedBy, mimeType: $mimeType, fileSizeBytes: $fileSizeBytes)';
+  final _this = this as Credential;
+  return 'Credential(id: ${_this.id}, ownerId: ${_this.ownerId}, credentialType: ${_this.credentialType}, label: ${_this.label}, storagePath: ${_this.storagePath}, downloadUrl: ${_this.downloadUrl}, status: ${_this.status}, expiresAt: ${_this.expiresAt}, uploadedAt: ${_this.uploadedAt}, verifiedAt: ${_this.verifiedAt}, verifiedBy: ${_this.verifiedBy}, mimeType: ${_this.mimeType}, fileSizeBytes: ${_this.fileSizeBytes})';
 }
 
 
@@ -66,7 +72,7 @@ class _$CredentialCopyWithImpl<$Res>
 /// Create a copy of Credential
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? ownerId = null,Object? credentialType = null,Object? label = null,Object? storagePath = null,Object? downloadUrl = freezed,Object? status = null,Object? expiresAt = freezed,Object? uploadedAt = null,Object? verifiedAt = freezed,Object? verifiedBy = freezed,Object? mimeType = null,Object? fileSizeBytes = null,}) {
-  return _then(_self.copyWith(
+  return _then(Credential(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,ownerId: null == ownerId ? _self.ownerId : ownerId // ignore: cast_nullable_to_non_nullable
 as String,credentialType: null == credentialType ? _self.credentialType : credentialType // ignore: cast_nullable_to_non_nullable
@@ -251,16 +257,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Credential&&(identical(other.id, id) || other.id == id)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.label, label) || other.label == label)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.downloadUrl, downloadUrl) || other.downloadUrl == downloadUrl)&&(identical(other.status, status) || other.status == status)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt)&&(identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt)&&(identical(other.verifiedBy, verifiedBy) || other.verifiedBy == verifiedBy)&&(identical(other.mimeType, mimeType) || other.mimeType == mimeType)&&(identical(other.fileSizeBytes, fileSizeBytes) || other.fileSizeBytes == fileSizeBytes));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Credential&&(identical(other.id, id) || other.id == id)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.credentialType, credentialType) || other.credentialType == credentialType)&&(identical(other.label, label) || other.label == label)&&(identical(other.storagePath, storagePath) || other.storagePath == storagePath)&&(identical(other.downloadUrl, downloadUrl) || other.downloadUrl == downloadUrl)&&(identical(other.status, status) || other.status == status)&&(identical(other.expiresAt, expiresAt) || other.expiresAt == expiresAt)&&(identical(other.uploadedAt, uploadedAt) || other.uploadedAt == uploadedAt)&&(identical(other.verifiedAt, verifiedAt) || other.verifiedAt == verifiedAt)&&(identical(other.verifiedBy, verifiedBy) || other.verifiedBy == verifiedBy)&&(identical(other.mimeType, mimeType) || other.mimeType == mimeType)&&(identical(other.fileSizeBytes, fileSizeBytes) || other.fileSizeBytes == fileSizeBytes));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,ownerId,credentialType,label,storagePath,downloadUrl,status,expiresAt,uploadedAt,verifiedAt,verifiedBy,mimeType,fileSizeBytes);
+int get hashCode {
+    return Object.hash(runtimeType,id,ownerId,credentialType,label,storagePath,downloadUrl,status,expiresAt,uploadedAt,verifiedAt,verifiedBy,mimeType,fileSizeBytes);
+}
 
 @override
 String toString() {
-  return 'Credential(id: $id, ownerId: $ownerId, credentialType: $credentialType, label: $label, storagePath: $storagePath, downloadUrl: $downloadUrl, status: $status, expiresAt: $expiresAt, uploadedAt: $uploadedAt, verifiedAt: $verifiedAt, verifiedBy: $verifiedBy, mimeType: $mimeType, fileSizeBytes: $fileSizeBytes)';
+    return 'Credential(id: $id, ownerId: $ownerId, credentialType: $credentialType, label: $label, storagePath: $storagePath, downloadUrl: $downloadUrl, status: $status, expiresAt: $expiresAt, uploadedAt: $uploadedAt, verifiedAt: $verifiedAt, verifiedBy: $verifiedBy, mimeType: $mimeType, fileSizeBytes: $fileSizeBytes)';
 }
 
 

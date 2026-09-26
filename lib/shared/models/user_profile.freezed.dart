@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'user_profile.dart';
@@ -9,6 +9,7 @@ part of 'user_profile.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -28,16 +29,21 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.activeJobCount, activeJobCount) || other.activeJobCount == activeJobCount)&&const DeepCollectionEquality().equals(other.skills, skills)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.stripeAccountId, stripeAccountId) || other.stripeAccountId == stripeAccountId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+  final _this = this as UserProfile;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, _this.uid) || other.uid == _this.uid)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.photoUrl, _this.photoUrl) || other.photoUrl == _this.photoUrl)&&(identical(other.bio, _this.bio) || other.bio == _this.bio)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.activeJobCount, _this.activeJobCount) || other.activeJobCount == _this.activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&(identical(other.fcmToken, _this.fcmToken) || other.fcmToken == _this.fcmToken)&&(identical(other.stripeAccountId, _this.stripeAccountId) || other.stripeAccountId == _this.stripeAccountId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,uid,displayName,photoUrl,bio,rating,completedJobCount,activeJobCount,const DeepCollectionEquality().hash(skills),fcmToken,stripeAccountId,createdAt);
+int get hashCode {
+  final _this = this as UserProfile;
+  return Object.hash(runtimeType,_this.uid,_this.displayName,_this.photoUrl,_this.bio,_this.rating,_this.completedJobCount,_this.activeJobCount,const DeepCollectionEquality().hash(_this.skills),_this.fcmToken,_this.stripeAccountId,_this.createdAt);
+}
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, rating: $rating, completedJobCount: $completedJobCount, activeJobCount: $activeJobCount, skills: $skills, fcmToken: $fcmToken, stripeAccountId: $stripeAccountId, createdAt: $createdAt)';
+  final _this = this as UserProfile;
+  return 'UserProfile(uid: ${_this.uid}, displayName: ${_this.displayName}, photoUrl: ${_this.photoUrl}, bio: ${_this.bio}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, activeJobCount: ${_this.activeJobCount}, skills: ${_this.skills}, fcmToken: ${_this.fcmToken}, stripeAccountId: ${_this.stripeAccountId}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -66,7 +72,7 @@ class _$UserProfileCopyWithImpl<$Res>
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? rating = null,Object? completedJobCount = null,Object? activeJobCount = null,Object? skills = null,Object? fcmToken = freezed,Object? stripeAccountId = freezed,Object? createdAt = null,}) {
-  return _then(_self.copyWith(
+  return _then(UserProfile(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,photoUrl: freezed == photoUrl ? _self.photoUrl : photoUrl // ignore: cast_nullable_to_non_nullable
@@ -219,7 +225,7 @@ return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.ratin
 @JsonSerializable()
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.uid, required this.displayName, this.photoUrl, this.bio, this.rating = 0.0, this.completedJobCount = 0, this.activeJobCount = 0, final  List<String> skills = const [], this.fcmToken, this.stripeAccountId, @TimestampConverter() required this.createdAt}): _skills = skills;
+  const _UserProfile({required this.uid, required this.displayName, this.photoUrl, this.bio, this.rating = 0.0, this.completedJobCount = 0, this.activeJobCount = 0,  List<String> skills = const [], this.fcmToken, this.stripeAccountId, @TimestampConverter() required this.createdAt}): _skills = skills;
   factory _UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
 
 @override final  String uid;
@@ -253,16 +259,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.activeJobCount, activeJobCount) || other.activeJobCount == activeJobCount)&&const DeepCollectionEquality().equals(other._skills, _skills)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.stripeAccountId, stripeAccountId) || other.stripeAccountId == stripeAccountId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.activeJobCount, activeJobCount) || other.activeJobCount == activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _skills)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.stripeAccountId, stripeAccountId) || other.stripeAccountId == stripeAccountId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,uid,displayName,photoUrl,bio,rating,completedJobCount,activeJobCount,const DeepCollectionEquality().hash(_skills),fcmToken,stripeAccountId,createdAt);
+int get hashCode {
+    return Object.hash(runtimeType,uid,displayName,photoUrl,bio,rating,completedJobCount,activeJobCount,const DeepCollectionEquality().hash(_skills),fcmToken,stripeAccountId,createdAt);
+}
 
 @override
 String toString() {
-  return 'UserProfile(uid: $uid, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, rating: $rating, completedJobCount: $completedJobCount, activeJobCount: $activeJobCount, skills: $skills, fcmToken: $fcmToken, stripeAccountId: $stripeAccountId, createdAt: $createdAt)';
+    return 'UserProfile(uid: $uid, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, rating: $rating, completedJobCount: $completedJobCount, activeJobCount: $activeJobCount, skills: $skills, fcmToken: $fcmToken, stripeAccountId: $stripeAccountId, createdAt: $createdAt)';
 }
 
 

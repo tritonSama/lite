@@ -10,11 +10,11 @@ part of 'comms_providers.dart';
 // ignore_for_file: type=lint, type=warning
 
 @ProviderFor(CommsMessages)
-const commsMessagesProvider = CommsMessagesProvider._();
+final commsMessagesProvider = CommsMessagesProvider._();
 
 final class CommsMessagesProvider
     extends $NotifierProvider<CommsMessages, List<CommsMessage>> {
-  const CommsMessagesProvider._()
+  CommsMessagesProvider._()
     : super(
         from: null,
         argument: null,
@@ -47,8 +47,7 @@ abstract class _$CommsMessages extends $Notifier<List<CommsMessage>> {
   List<CommsMessage> build();
   @$mustCallSuper
   @override
-  void runBuild() {
-    final created = build();
+  WhenComplete runBuild() {
     final ref = this.ref as $Ref<List<CommsMessage>, List<CommsMessage>>;
     final element =
         ref.element
@@ -58,12 +57,12 @@ abstract class _$CommsMessages extends $Notifier<List<CommsMessage>> {
               Object?,
               Object?
             >;
-    element.handleValue(ref, created);
+    return element.handleCreate(ref, build);
   }
 }
 
 @ProviderFor(filteredMessages)
-const filteredMessagesProvider = FilteredMessagesFamily._();
+final filteredMessagesProvider = FilteredMessagesFamily._();
 
 final class FilteredMessagesProvider
     extends
@@ -73,7 +72,7 @@ final class FilteredMessagesProvider
           List<CommsMessage>
         >
     with $Provider<List<CommsMessage>> {
-  const FilteredMessagesProvider._({
+  FilteredMessagesProvider._({
     required FilteredMessagesFamily super.from,
     required CommsChannel super.argument,
   }) : super(
@@ -129,7 +128,7 @@ String _$filteredMessagesHash() => r'9da4f086c91f14d1c9bac7257bcc3be8321beea5';
 
 final class FilteredMessagesFamily extends $Family
     with $FunctionalFamilyOverride<List<CommsMessage>, CommsChannel> {
-  const FilteredMessagesFamily._()
+  FilteredMessagesFamily._()
     : super(
         retry: null,
         name: r'filteredMessagesProvider',
