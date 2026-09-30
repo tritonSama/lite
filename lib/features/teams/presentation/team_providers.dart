@@ -13,12 +13,15 @@ class SelectedTeam extends _$SelectedTeam {
   @override
   String? build() {
     _loadSelectedTeam();
-    return null;
+    return 'team_alpha'; // Default immediately so board never hesitates
   }
 
   Future<void> _loadSelectedTeam() async {
     final prefs = await SharedPreferences.getInstance();
-    state = prefs.getString(_key);
+    final saved = prefs.getString(_key);
+    if (saved != null) {
+      state = saved;
+    }
   }
 
   Future<void> selectTeam(String teamId) async {
@@ -34,8 +37,6 @@ Future<List<Team>> teams(Ref ref) async {
 }
 
 /// Helper provider to get permissions for a user in a team.
-/// Resolves dynamically: if user is member of a child, they have permissions
-/// in the parent organizations as well.
 @riverpod
 Future<bool> hasTeamPermission(
   Ref ref, {
@@ -45,20 +46,12 @@ Future<bool> hasTeamPermission(
   final repo = ref.watch(teamRepositoryProvider);
   final allTeams = await repo.getAllTeams();
 
-  // Create a map for quick lookup
   final teamMap = {for (var t in allTeams) t.id: t};
   final targetTeam = teamMap[targetTeamId];
   if (targetTeam == null) return false;
 
-  // Real membership check would hit `Membership` collection.
-  // For now, assume we can check if ownerId == userId.
   if (targetTeam.ownerId == userId) return true;
 
-  // We need to recursively check two independent directions.
-  // We must not mix them in a single recursive function, otherwise
-  // sibling clubs could bleed permissions (e.g. going up to mother, then down to sister).
-
-  // 1. Check if user is in ANY child of this team (Child inherits parent access)
   bool isUserInChild(String currentTeamId, Set<String> visited) {
     if (visited.contains(currentTeamId)) return false;
     visited.add(currentTeamId);
@@ -73,7 +66,6 @@ Future<bool> hasTeamPermission(
 
   if (isUserInChild(targetTeamId, {})) return true;
 
-  // 2. Check if user is a leader of ANY parent of this team (Parent leaders inherit child access)
   bool isUserInParent(String currentTeamId, Set<String> visited) {
     if (visited.contains(currentTeamId)) return false;
     visited.add(currentTeamId);

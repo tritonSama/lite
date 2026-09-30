@@ -41,7 +41,7 @@ final class SelectedTeamProvider
   }
 }
 
-String _$selectedTeamHash() => r'd25f47120c128d7ca958003646e85b487bccd727';
+String _$selectedTeamHash() => r'd122b0ede04e746987aad40e46e0d721d88bdbe8';
 
 abstract class _$SelectedTeam extends $Notifier<String?> {
   String? build();
@@ -100,22 +100,16 @@ final class TeamsProvider
 String _$teamsHash() => r'b3bc43f0057ce5d986a8f92bec81fb0be5476e0c';
 
 /// Helper provider to get permissions for a user in a team.
-/// Resolves dynamically: if user is member of a child, they have permissions
-/// in the parent organizations as well.
 
 @ProviderFor(hasTeamPermission)
 final hasTeamPermissionProvider = HasTeamPermissionFamily._();
 
 /// Helper provider to get permissions for a user in a team.
-/// Resolves dynamically: if user is member of a child, they have permissions
-/// in the parent organizations as well.
 
 final class HasTeamPermissionProvider
     extends $FunctionalProvider<AsyncValue<bool>, bool, FutureOr<bool>>
     with $FutureModifier<bool>, $FutureProvider<bool> {
   /// Helper provider to get permissions for a user in a team.
-  /// Resolves dynamically: if user is member of a child, they have permissions
-  /// in the parent organizations as well.
   HasTeamPermissionProvider._({
     required HasTeamPermissionFamily super.from,
     required ({String userId, String targetTeamId}) super.argument,
@@ -166,8 +160,6 @@ final class HasTeamPermissionProvider
 String _$hasTeamPermissionHash() => r'feef61e5be16078b3a77a3d4739aebed32625288';
 
 /// Helper provider to get permissions for a user in a team.
-/// Resolves dynamically: if user is member of a child, they have permissions
-/// in the parent organizations as well.
 
 final class HasTeamPermissionFamily extends $Family
     with
@@ -185,8 +177,6 @@ final class HasTeamPermissionFamily extends $Family
       );
 
   /// Helper provider to get permissions for a user in a team.
-  /// Resolves dynamically: if user is member of a child, they have permissions
-  /// in the parent organizations as well.
 
   HasTeamPermissionProvider call({
     required String userId,

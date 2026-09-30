@@ -41,7 +41,7 @@ final class UserLocationProvider
   }
 }
 
-String _$userLocationHash() => r'280da4f4ee8bcea65ae66b165db12fab55ca895f';
+String _$userLocationHash() => r'17614ca5b5eb6183461fdd502ea1cc536eb76dbe';
 
 @ProviderFor(friendLocations)
 final friendLocationsProvider = FriendLocationsProvider._();
@@ -82,4 +82,4 @@ final class FriendLocationsProvider
   }
 }
 
-String _$friendLocationsHash() => r'6728b7f299044fa57ec9d05c5215618781dfd56d';
+String _$friendLocationsHash() => r'df9cd922c26e6447279e3dd1921f537de6305243';

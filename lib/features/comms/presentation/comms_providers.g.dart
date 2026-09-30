@@ -13,7 +13,7 @@ part of 'comms_providers.dart';
 final commsMessagesProvider = CommsMessagesProvider._();
 
 final class CommsMessagesProvider
-    extends $NotifierProvider<CommsMessages, List<CommsMessage>> {
+    extends $AsyncNotifierProvider<CommsMessages, List<CommsMessage>> {
   CommsMessagesProvider._()
     : super(
         from: null,
@@ -31,29 +31,75 @@ final class CommsMessagesProvider
   @$internal
   @override
   CommsMessages create() => CommsMessages();
+}
+
+String _$commsMessagesHash() => r'6118bb050f35b987f10d10f6f0b7c5961f78d803';
+
+abstract class _$CommsMessages extends $AsyncNotifier<List<CommsMessage>> {
+  FutureOr<List<CommsMessage>> build();
+  @$mustCallSuper
+  @override
+  WhenComplete runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<List<CommsMessage>>, List<CommsMessage>>;
+    final element =
+        ref.element
+            as $ClassProviderElement<
+              AnyNotifier<AsyncValue<List<CommsMessage>>, List<CommsMessage>>,
+              AsyncValue<List<CommsMessage>>,
+              Object?,
+              Object?
+            >;
+    return element.handleCreate(ref, build);
+  }
+}
+
+@ProviderFor(SelectedCommsTarget)
+final selectedCommsTargetProvider = SelectedCommsTargetProvider._();
+
+final class SelectedCommsTargetProvider
+    extends $NotifierProvider<SelectedCommsTarget, String?> {
+  SelectedCommsTargetProvider._()
+    : super(
+        from: null,
+        argument: null,
+        retry: null,
+        name: r'selectedCommsTargetProvider',
+        isAutoDispose: true,
+        dependencies: null,
+        $allTransitiveDependencies: null,
+      );
+
+  @override
+  String debugGetCreateSourceHash() => _$selectedCommsTargetHash();
+
+  @$internal
+  @override
+  SelectedCommsTarget create() => SelectedCommsTarget();
 
   /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(List<CommsMessage> value) {
+  Override overrideWithValue(String? value) {
     return $ProviderOverride(
       origin: this,
-      providerOverride: $SyncValueProvider<List<CommsMessage>>(value),
+      providerOverride: $SyncValueProvider<String?>(value),
     );
   }
 }
 
-String _$commsMessagesHash() => r'aad7c9000615b5893c3784c07cd5abeaec3921c7';
+String _$selectedCommsTargetHash() =>
+    r'a7ed7db748b6b0e1f558c8f26afabdb0ebb08b67';
 
-abstract class _$CommsMessages extends $Notifier<List<CommsMessage>> {
-  List<CommsMessage> build();
+abstract class _$SelectedCommsTarget extends $Notifier<String?> {
+  String? build();
   @$mustCallSuper
   @override
   WhenComplete runBuild() {
-    final ref = this.ref as $Ref<List<CommsMessage>, List<CommsMessage>>;
+    final ref = this.ref as $Ref<String?, String?>;
     final element =
         ref.element
             as $ClassProviderElement<
-              AnyNotifier<List<CommsMessage>, List<CommsMessage>>,
-              List<CommsMessage>,
+              AnyNotifier<String?, String?>,
+              String?,
               Object?,
               Object?
             >;
@@ -124,7 +170,7 @@ final class FilteredMessagesProvider
   }
 }
 
-String _$filteredMessagesHash() => r'9da4f086c91f14d1c9bac7257bcc3be8321beea5';
+String _$filteredMessagesHash() => r'e22cafa01a1ba5990a1cc5eb88453a425f8495fd';
 
 final class FilteredMessagesFamily extends $Family
     with $FunctionalFamilyOverride<List<CommsMessage>, CommsChannel> {

@@ -21,7 +21,7 @@ class LocalDatabaseService {
 
     return await openDatabase(
       path,
-      version: 2,
+      version: 3,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
     );
@@ -74,17 +74,28 @@ class LocalDatabaseService {
         declaredAt INTEGER NOT NULL
       )
     ''');
+
+    // ── Comms Messages Table
+    await db.execute('''
+      CREATE TABLE comms_messages (
+        id TEXT PRIMARY KEY,
+        senderId TEXT NOT NULL,
+        senderName TEXT NOT NULL,
+        content TEXT NOT NULL,
+        channel TEXT NOT NULL,
+        targetId TEXT,
+        timestamp INTEGER NOT NULL
+      )
+    ''');
   }
 
   Future _upgradeDB(Database db, int oldVersion, int newVersion) async {
     if (oldVersion < 2) {
-      // Add new columns to tasks table
       await db.execute(
         "ALTER TABLE tasks ADD COLUMN listingType TEXT NOT NULL DEFAULT 'forSale'",
       );
       await db.execute('ALTER TABLE tasks ADD COLUMN rentalDuration TEXT');
 
-      // Create wars table
       await db.execute('''
         CREATE TABLE IF NOT EXISTS wars (
           id TEXT PRIMARY KEY,
@@ -95,6 +106,19 @@ class LocalDatabaseService {
           defenderScore INTEGER NOT NULL DEFAULT 0,
           message TEXT,
           declaredAt INTEGER NOT NULL
+        )
+      ''');
+    }
+    if (oldVersion < 3) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS comms_messages (
+          id TEXT PRIMARY KEY,
+          senderId TEXT NOT NULL,
+          senderName TEXT NOT NULL,
+          content TEXT NOT NULL,
+          channel TEXT NOT NULL,
+          targetId TEXT,
+          timestamp INTEGER NOT NULL
         )
       ''');
     }

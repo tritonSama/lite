@@ -70,7 +70,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
     );
 
     if (mounted) {
-      ref.refresh(localOfferingsProvider.future);
+      ref.invalidate(localOfferingsProvider);
       Navigator.of(context).pop();
     }
   }

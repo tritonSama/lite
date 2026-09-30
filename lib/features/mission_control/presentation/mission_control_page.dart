@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:geolocator/geolocator.dart';
 
 import '../../../app/theme.dart';
 import '../data/weather_service.dart';
@@ -19,14 +20,57 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   final WeatherService _weatherService = WeatherService();
   late Future<WeatherData?> _weatherFuture;
   
-  // Default to San Francisco
-  final double lat = 37.7749;
-  final double lng = -122.4194;
+  // Real GPS coordinates with fallback to San Francisco
+  double lat = 37.7749;
+  double lng = -122.4194;
+  bool _isLoadingLocation = true;
 
   @override
   void initState() {
     super.initState();
-    _fetchWeather();
+    _determinePositionAndWeather();
+  }
+
+  Future<void> _determinePositionAndWeather() async {
+    try {
+      bool serviceEnabled = await Geolocator.isLocationServiceEnabled();
+      if (serviceEnabled) {
+        LocationPermission permission = await Geolocator.checkPermission();
+        if (permission == LocationPermission.denied) {
+          permission = await Geolocator.requestPermission();
+        }
+        if (permission == LocationPermission.always || permission == LocationPermission.whileInUse) {
+          Position position = await Geolocator.getCurrentPosition(
+            locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium),
+          ).timeout(const Duration(seconds: 3), onTimeout: () => Geolocator.getLastKnownPosition().then((p) => p ?? Position(
+            latitude: 37.7749,
+            longitude: -122.4194,
+            timestamp: DateTime.now(),
+            accuracy: 100,
+            altitude: 0,
+            altitudeAccuracy: 1,
+            heading: 0,
+            headingAccuracy: 1,
+            speed: 0,
+            speedAccuracy: 1,
+          )));
+          
+          if (mounted) {
+            setState(() {
+              lat = position.latitude;
+              lng = position.longitude;
+            });
+          }
+        }
+      }
+    } catch (e) {
+      debugPrint('Error getting GPS location for Mission Control: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _isLoadingLocation = false);
+        _fetchWeather();
+      }
+    }
   }
   
   void _fetchWeather() {
@@ -48,7 +92,7 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Mission Control'),
+        title: Text(_isLoadingNavigatorTitle()),
       ),
       body: Column(
         children: [
@@ -57,7 +101,7 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
             child: FutureBuilder<WeatherData?>(
               future: _weatherFuture,
               builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
+                if (snapshot.connectionState == ConnectionState.waiting || _isLoadingLocation) {
                   return Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(HBRadius.md),
@@ -151,7 +195,7 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
               children: [
                 _QuickActionTile(
                   icon: Icons.gps_fixed,
-                  label: 'GPS',
+                  label: 'GPS (${lat.toStringAsFixed(2)}, ${lng.toStringAsFixed(2)})',
                   onTap: () {},
                 ),
                 _QuickActionTile(
@@ -197,6 +241,11 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
         ],
       ),
     );
+  }
+
+  String _isLoadingNavigatorTitle() {
+    if (_isLoadingLocation) return 'Mission Control (Locating...)';
+    return 'Mission Control';
   }
 }
 
