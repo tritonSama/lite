@@ -3,9 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'dart:typed_data';
+import '../../../core/fluoderpod/fluoderpod_bridge.dart';
+import '../../../core/fluoderpod/fluoderpod_view.dart';
 import '../../../../app/theme.dart';
 import '../team_providers.dart';
-import 'constellation_game.dart';
 
 class ConstellationMapPage extends ConsumerWidget {
   const ConstellationMapPage({super.key});
@@ -23,14 +25,12 @@ class ConstellationMapPage extends ConsumerWidget {
       backgroundColor: HBColors.neutral,
       body: teamsAsync.when(
         data: (teams) {
-          return GameWidget(
-            game: ConstellationGame(
-              teams: teams,
-              onTeamTapped: (team) {
-                // Navigate to team details
-                context.push('/teams/${team.id}');
-              },
-            ),
+          return FluoderpodView(
+            onInitialized: () {
+              final bridge = ref.read(fluoderpodBridgeProvider);
+              final bytes = Uint8List(teams.length * 64);
+              bridge.ingestBatch(bytes);
+            },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
