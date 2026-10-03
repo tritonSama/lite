@@ -37,7 +37,11 @@ import {
   Play,
   Pause,
   ArrowUpRight,
-  Calendar
+  Calendar,
+  Clock,
+  Sliders,
+  MessageSquare,
+  RotateCw
 } from 'lucide-react';
 
 interface FluoriteGlobeMapProps {
@@ -46,6 +50,7 @@ interface FluoriteGlobeMapProps {
   onOpenWars?: () => void;
   onOpenObd?: () => void;
   searchRadiusMiles?: number;
+  onRadiusChange?: (miles: number) => void;
 }
 
 // Austin Sector 7 Origin (Central Command reference point)
@@ -92,13 +97,30 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
   onOpenWars,
   onOpenObd,
   searchRadiusMiles,
+  onRadiusChange,
 }) => {
-  const { teams, selectedTeamId, wars, obdState, declareWar, inspectEnvelope, events, toggleRsvp, isDarkMode } = useApp();
+  const { 
+    teams, 
+    friends, 
+    selectedTeamId, 
+    wars, 
+    obdState, 
+    declareWar, 
+    inspectEnvelope, 
+    events, 
+    toggleRsvp, 
+    isDarkMode, 
+    openComms 
+  } = useApp();
 
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   // Active search radius state: initialized from searchRadiusMiles prop or default 25
   const [activeRadius, setActiveRadius] = useState<number>(searchRadiusMiles ?? 25);
+  const [filterAllByRadius, setFilterAllByRadius] = useState<boolean>(true);
+
+  // 15-second countdown timer for rotation after last touch
+  const [secondsRemaining, setSecondsRemaining] = useState<number>(0);
 
   useEffect(() => {
     if (searchRadiusMiles !== undefined) {
@@ -127,6 +149,15 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
   const IDLE_ROTATION_DELAY_MS = 15000;
   const lastTouchTimeRef = useRef<number>(Date.now());
   const idleResumeTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const elapsed = Date.now() - lastTouchTimeRef.current;
+      const rem = Math.max(0, Math.ceil((IDLE_ROTATION_DELAY_MS - elapsed) / 1000));
+      setSecondsRemaining(rem);
+    }, 200);
+    return () => clearInterval(timer);
+  }, []);
 
   // Recenter visual pulse timestamp for targeting reticle on My Club
   const [recenterPulseTime, setRecenterPulseTime] = useState<number>(0);
@@ -281,96 +312,23 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
     });
 
     // 3. FRIENDS / SQUAD UNITS (Real-time locations on the ground & in flight)
-    const friendsData = [
-      {
-        id: 'friend-titan-1',
-        name: 'Titan-1 (Patrol Unit)',
-        lat: 30.2695,
-        lng: -97.7415,
-        alt: 0.05,
-        street: '800 Congress Ave (Moving North)',
-        callsign: 'TITAN-1',
-        velocity: 28,
-        battery: 84,
-        health: 98,
-        freq: '144.390 MHz',
-        color: '#00FFFF',
-      },
-      {
-        id: 'friend-raven-7',
-        name: 'Raven-7 (Foot Scout)',
-        lat: 30.2678,
-        lng: -97.7380,
-        alt: 0.02,
-        street: '500 E 6th St (Historic District)',
-        callsign: 'RAVEN-7',
-        velocity: 4,
-        battery: 92,
-        health: 100,
-        freq: '146.520 MHz',
-        color: '#4DBBDF',
-      },
-      {
-        id: 'friend-echo-4',
-        name: 'Echo-4 (Tactical Relay)',
-        lat: 30.2520,
-        lng: -97.7510,
-        alt: 0.03,
-        street: '1200 S Congress Ave (SoCo Hub)',
-        callsign: 'ECHO-4',
-        velocity: 0,
-        battery: 76,
-        health: 95,
-        freq: '446.000 MHz',
-        color: '#00FF88',
-      },
-      {
-        id: 'friend-ghost-2',
-        name: 'Ghost-2 (Sky Recon Drone)',
-        lat: 30.2630,
-        lng: -97.7470,
-        alt: 0.25, // 250m AGL
-        street: 'Airspace over Lady Bird Lake',
-        callsign: 'GHOST-2',
-        velocity: 44,
-        battery: 68,
-        health: 100,
-        freq: '2.4 GHz Telemetry',
-        color: '#D4AF37',
-      },
-      {
-        id: 'friend-cipher-9',
-        name: 'Cipher-9 (Mobile Node)',
-        lat: 30.2760,
-        lng: -97.7350,
-        alt: 0.04,
-        street: '15th & Red River (Medical District)',
-        callsign: 'CIPHER-9',
-        velocity: 32,
-        battery: 88,
-        health: 96,
-        freq: '433.920 MHz',
-        color: '#5300FF',
-      },
-    ];
-
-    friendsData.forEach(fr => {
+    friends.forEach(fr => {
       list.push({
         id: fr.id,
         name: fr.name,
         type: 'friend',
         lat: fr.lat,
         lng: fr.lng,
-        altitudeKm: fr.alt,
+        altitudeKm: fr.callsign === 'GHOST-2' ? 0.25 : 0.04,
         color: fr.color,
         streetAddress: fr.street,
         sectorId: 'Sector 7 Friendly Force',
         friendCallsign: fr.callsign,
-        velocityMph: fr.velocity,
+        velocityMph: fr.callsign === 'TITAN-1' ? 28 : fr.callsign === 'GHOST-2' ? 44 : 4,
         batteryPercent: fr.battery,
         healthPercent: fr.health,
         radioFrequency: fr.freq,
-        statusText: `Allied Squad • Callsign ${fr.callsign} • Speed ${fr.velocity} mph`,
+        statusText: `Allied Squad • Callsign ${fr.callsign} • Radio ${fr.freq}`,
         did: `did:nexus:user:${fr.callsign.toLowerCase()}:8f2a`,
         ed25519Key: `ed25519:${fr.callsign.toLowerCase()}_secp_vault`,
       });
@@ -537,7 +495,7 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
     });
 
     return list;
-  }, [teams, myClubData, obdState, events]);
+  }, [teams, friends, myClubData, obdState, events]);
 
   // Compute Relative Comparisons between My Club and Every Marker
   const comparisonList = useMemo(() => {
@@ -559,6 +517,15 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
       })
       .sort((a, b) => a.distKm - b.distKm);
   }, [allMarkers]);
+
+  // Count of markers strictly inside the active search radius perimeter
+  const inPerimeterCount = useMemo(() => {
+    return allMarkers.filter(m => {
+      if (m.type === 'satellite' || m.type === 'my_club') return false;
+      const d = getDistanceKm(BASE_LAT, BASE_LNG, m.lat, m.lng) * 0.621371;
+      return d <= activeRadius;
+    }).length;
+  }, [allMarkers, activeRadius]);
 
   // Continuous animation loop for satellites, pulsing beacons, and idle rotation
   useEffect(() => {
@@ -914,10 +881,16 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
         if (m.type === 'task' && !showTasks) return null;
         if (m.type === 'event' && !showEvents) return null;
 
-        // Search Radius filter: ground tasks and events outside activeRadius are filtered out
+        // Search Radius filter: accurately filter ground entities outside activeRadius
         const distMi = getDistanceKm(BASE_LAT, BASE_LNG, m.lat, m.lng) * 0.621371;
-        if ((m.type === 'task' || m.type === 'event' || m.type === 'obd_vehicle') && distMi > activeRadius) {
-          return null;
+        if (filterAllByRadius) {
+          if (m.type !== 'satellite' && m.type !== 'my_club' && distMi > activeRadius) {
+            return null;
+          }
+        } else {
+          if ((m.type === 'task' || m.type === 'event' || m.type === 'obd_vehicle') && distMi > activeRadius) {
+            return null;
+          }
         }
 
         // Dynamic satellite orbital motion
@@ -1428,22 +1401,27 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
   const handleRadiusChange = (newRadius: number) => {
     setActiveRadius(newRadius);
     registerInteraction();
+    if (onRadiusChange) onRadiusChange(newRadius);
   };
 
   return (
-    <div className="relative rounded-2xl bg-[#080B15] border border-[#0096C7]/60 shadow-[0_0_35px_rgba(0,150,199,0.2)] overflow-hidden">
+    <div className={`relative rounded-2xl border shadow-xl overflow-hidden transition-colors ${
+      isDarkMode ? 'bg-[#080B15] border-[#0096C7]/60 shadow-[0_0_35px_rgba(0,150,199,0.2)]' : 'bg-white border-slate-200 shadow-md'
+    }`}>
       {/* 1. Fluorite Tactical Top Telemetry HUD */}
-      <div className="p-3.5 bg-[#121629]/95 border-b border-[#2C324A] flex flex-wrap items-center justify-between gap-3">
+      <div className={`p-3.5 border-b flex flex-wrap items-center justify-between gap-3 transition-colors ${
+        isDarkMode ? 'bg-[#121629]/95 border-[#2C324A]' : 'bg-slate-100 border-slate-200'
+      }`}>
         <div className="flex items-center gap-2.5">
           <div className="w-8 h-8 rounded-lg bg-[#0096C7]/20 border border-[#0096C7] flex items-center justify-center text-[#00FFFF] shadow-[0_0_12px_rgba(0,255,255,0.4)]">
             <Compass className="w-4 h-4 animate-spin-slow" />
           </div>
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display font-bold text-white text-xs tracking-wider uppercase">
+              <span className={`font-display font-bold text-xs tracking-wider uppercase ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 FLUORITE GLOBAL MISSION DECK // 3D GLOBE & STREET RADAR
               </span>
-              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00FFFF]/10 border border-[#00FFFF]/30 text-[#00FFFF]">
+              <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#00FFFF]/10 border border-[#00FFFF]/30 text-[#0096C7] font-semibold">
                 {zoom < 1.5
                   ? 'ORBITAL SPACE'
                   : zoom < 6.0
@@ -1453,12 +1431,12 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
                   : 'STREET LEVEL'}
               </span>
             </div>
-            <div className="text-[10px] font-mono text-white/50 flex items-center gap-3 mt-0.5">
-              <span>MY CLUB: <strong className="text-white">{myClubData.name}</strong></span>
+            <div className={`text-[10px] font-mono flex items-center gap-3 mt-0.5 ${isDarkMode ? 'text-white/50' : 'text-slate-500'}`}>
+              <span>MY CLUB: <strong className={isDarkMode ? 'text-white' : 'text-slate-800'}>{myClubData.name}</strong></span>
               <span>•</span>
               <span>ZOOM: {(zoom).toFixed(1)}x</span>
               <span>•</span>
-              <span className="text-[#00FF88] flex items-center gap-1">
+              <span className="text-green-500 font-semibold flex items-center gap-1">
                 <Shield className="w-2.5 h-2.5" /> 100% SENSOR COVERAGE
               </span>
             </div>
@@ -1472,7 +1450,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
             className={`px-3 py-1.5 rounded-xl border text-xs font-mono font-bold flex items-center gap-1.5 transition ${
               showComparisonDrawer
                 ? 'bg-[#D4AF37]/20 border-[#D4AF37] text-[#D4AF37]'
-                : 'bg-[#16192B] border-[#2C324A] text-white/70 hover:text-white hover:border-[#0096C7]'
+                : isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] text-white/70 hover:text-white hover:border-[#0096C7]'
+                : 'bg-white border-slate-200 text-slate-700 hover:bg-slate-50'
             }`}
           >
             <Layers className="w-3.5 h-3.5" />
@@ -1484,7 +1464,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
             className={`p-1.5 rounded-xl border text-xs font-mono transition ${
               isAutoOrbit
                 ? 'bg-[#00FFFF]/20 border-[#00FFFF] text-[#00FFFF]'
-                : 'bg-[#16192B] border-[#2C324A] text-white/50 hover:text-white'
+                : isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] text-white/50 hover:text-white'
+                : 'bg-white border-slate-200 text-slate-500 hover:text-slate-800'
             }`}
             title={isAutoOrbit ? 'Pause Orbit' : 'Auto-Orbit Globe'}
           >
@@ -1493,13 +1475,88 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
         </div>
       </div>
 
+      {/* 1.5. Search Radius & 15-Second Idle Rotation HUD Control Bar */}
+      <div className={`px-3.5 py-2 border-b flex flex-wrap items-center justify-between gap-3 text-xs transition-colors ${
+        isDarkMode ? 'bg-[#0E1326] border-[#2C324A]' : 'bg-slate-50 border-slate-200'
+      }`}>
+        <div className="flex flex-wrap items-center gap-3">
+          <div className="flex items-center gap-2">
+            <Sliders className="w-4 h-4 text-[#0096C7]" />
+            <span className={`font-mono font-bold text-xs ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
+              RADAR RADIUS:
+            </span>
+            <span className="px-2 py-0.5 rounded bg-[#0096C7] text-white font-mono font-bold text-xs shadow-sm">
+              {activeRadius} MILES
+            </span>
+          </div>
+
+          <div className="flex items-center gap-1.5">
+            {[1, 5, 15, 25, 50, 100].map(mi => (
+              <button
+                key={mi}
+                onClick={() => handleRadiusChange(mi)}
+                className={`px-2 py-0.5 rounded text-[10px] font-mono font-bold transition ${
+                  activeRadius === mi
+                    ? 'bg-[#0096C7] text-white shadow-sm'
+                    : isDarkMode
+                    ? 'bg-[#16192B] border border-[#2C324A] text-white/60 hover:text-white'
+                    : 'bg-white border border-slate-200 text-slate-700 hover:bg-slate-100'
+                }`}
+                title={`Set search radius to ${mi} miles`}
+              >
+                {mi}m
+              </button>
+            ))}
+            <input
+              type="range"
+              min="1"
+              max="100"
+              value={activeRadius}
+              onChange={e => handleRadiusChange(parseInt(e.target.value))}
+              className="w-20 sm:w-28 h-1.5 rounded-lg appearance-none cursor-pointer accent-[#0096C7] bg-[#2C324A]"
+            />
+          </div>
+
+          <label className={`flex items-center gap-1.5 text-[11px] font-mono cursor-pointer select-none ${
+            isDarkMode ? 'text-white/70' : 'text-slate-600'
+          }`}>
+            <input
+              type="checkbox"
+              checked={filterAllByRadius}
+              onChange={e => setFilterAllByRadius(e.target.checked)}
+              className="rounded accent-[#0096C7]"
+            />
+            <span>Perimeter Filter ({inPerimeterCount} in range)</span>
+          </label>
+        </div>
+
+        {/* 15-Second Idle Rotation Timer Indicator Badge */}
+        <div className="flex items-center gap-2">
+          {secondsRemaining > 0 ? (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-amber-500/15 border border-amber-500/30 text-amber-400 font-mono text-[10px] font-bold shadow-sm">
+              <Clock className="w-3.5 h-3.5 animate-spin" />
+              <span>ROTATION PAUSED ({secondsRemaining}s REMAINING)</span>
+            </div>
+          ) : (
+            <div className="flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-[#00FF88]/15 border border-[#00FF88]/30 text-[#00FF88] font-mono text-[10px] font-bold shadow-sm">
+              <RotateCw className="w-3.5 h-3.5" />
+              <span>AUTO-ORBIT ENGAGED</span>
+            </div>
+          )}
+        </div>
+      </div>
+
       {/* 2. Interactive Canvas Container */}
       <div
-        className="cursor-grab active:cursor-grabbing relative h-[440px] sm:h-[520px] w-full flex items-center justify-center overflow-hidden"
+        className="cursor-grab active:cursor-grabbing relative h-[440px] sm:h-[520px] w-full flex items-center justify-center overflow-hidden touch-none"
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
-        onMouseLeave={() => setIsDragging(false)}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+        onTouchCancel={handleTouchEnd}
       >
         <canvas
           ref={canvasRef}
@@ -1702,17 +1759,19 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
 
       {/* 3. Relative Comparison Drawer (Comparing other clubs & friends to Mine) */}
       {showComparisonDrawer && (
-        <div className="p-4 bg-[#0E1326] border-t border-[#2C324A] animate-in slide-in-from-bottom duration-200">
+        <div className={`p-4 border-t transition-colors ${
+          isDarkMode ? 'bg-[#0E1326] border-[#2C324A]' : 'bg-slate-50 border-slate-200'
+        } animate-in slide-in-from-bottom duration-200`}>
           <div className="flex items-center justify-between mb-3">
             <div className="flex items-center gap-2">
               <Layers className="w-4 h-4 text-[#D4AF37]" />
-              <h4 className="text-xs font-mono font-bold text-white uppercase tracking-wider">
+              <h4 className={`text-xs font-mono font-bold uppercase tracking-wider ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                 TACTICAL COMPARISON RELATIVE TO MY CLUB [{myClubData.name.toUpperCase()}]
               </h4>
             </div>
             <button
               onClick={() => setShowComparisonDrawer(false)}
-              className="p-1 rounded text-white/40 hover:text-white"
+              className={isDarkMode ? 'p-1 rounded text-white/40 hover:text-white' : 'p-1 rounded text-slate-400 hover:text-slate-700'}
             >
               <X className="w-4 h-4" />
             </button>
@@ -1721,14 +1780,20 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 max-h-[220px] overflow-y-auto pr-1">
             {comparisonList.map(({ marker, distKm, distMi, bearing, cardinal }) => {
               const isSelected = selectedMarker?.id === marker.id;
+              const isChattable = marker.type === 'friend' || marker.type === 'other_club';
+
               return (
                 <div
                   key={marker.id}
                   onClick={() => focusOnMarker(marker)}
                   className={`p-2.5 rounded-xl border transition cursor-pointer flex flex-col justify-between ${
                     isSelected
-                      ? 'bg-[#16192B] border-[#00FFFF] shadow-[0_0_12px_rgba(0,255,255,0.2)]'
-                      : 'bg-[#121629] border-[#2C324A] hover:border-white/50'
+                      ? isDarkMode
+                        ? 'bg-[#16192B] border-[#00FFFF] shadow-[0_0_12px_rgba(0,255,255,0.2)]'
+                        : 'bg-blue-50 border-[#0096C7] shadow-sm'
+                      : isDarkMode
+                      ? 'bg-[#121629] border-[#2C324A] hover:border-white/50'
+                      : 'bg-white border-slate-200 hover:border-slate-400 shadow-sm'
                   }`}
                 >
                   <div className="flex items-start justify-between gap-2">
@@ -1737,23 +1802,52 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
                         className="w-2.5 h-2.5 rounded-full shrink-0" 
                         style={{ backgroundColor: marker.color }} 
                       />
-                      <span className="text-xs font-bold text-white truncate">
+                      <span className={`text-xs font-bold truncate ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                         {marker.name}
                       </span>
                     </div>
-                    <span className="text-[9px] font-mono uppercase px-1.5 py-0.5 rounded bg-white/5 text-white/60 shrink-0">
-                      {marker.type.replace('_', ' ')}
-                    </span>
+
+                    <div className="flex items-center gap-1.5 shrink-0">
+                      {isChattable && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            if (marker.type === 'friend') {
+                              openComms('direct', { id: marker.id, name: marker.friendCallsign || marker.name, type: 'friend', color: marker.color });
+                            } else {
+                              openComms('team', { id: marker.clubId || marker.id, name: marker.name, type: 'team', color: marker.color });
+                            }
+                            if (onOpenComms) onOpenComms();
+                          }}
+                          className={`p-1 rounded-md border text-[10px] font-mono font-bold flex items-center gap-1 transition ${
+                            marker.type === 'friend'
+                              ? 'bg-[#00FF88]/20 border-[#00FF88] text-[#00FF88] hover:bg-[#00FF88]/30'
+                              : 'bg-[#0096C7]/20 border-[#0096C7] text-[#4DBBDF] hover:bg-[#0096C7]/30'
+                          }`}
+                          title={`Chat with ${marker.name}`}
+                        >
+                          <MessageSquare className="w-3 h-3" />
+                          <span>Chat</span>
+                        </button>
+                      )}
+                      <span className={`text-[9px] font-mono uppercase px-1.5 py-0.5 rounded ${
+                        isDarkMode ? 'bg-white/5 text-white/60' : 'bg-slate-100 text-slate-600'
+                      }`}>
+                        {marker.type.replace('_', ' ')}
+                      </span>
+                    </div>
                   </div>
 
-                  <div className="mt-2 pt-2 border-t border-[#2C324A] grid grid-cols-2 gap-2 text-[10px] font-mono">
+                  <div className={`mt-2 pt-2 border-t grid grid-cols-2 gap-2 text-[10px] font-mono ${
+                    isDarkMode ? 'border-[#2C324A]' : 'border-slate-100'
+                  }`}>
                     <div>
-                      <span className="text-white/40 block">DISTANCE:</span>
-                      <strong className="text-[#00FFFF]">{distKm.toFixed(1)} km</strong>
-                      <span className="text-white/50 text-[9px] ml-1">({distMi.toFixed(1)} mi)</span>
+                      <span className={isDarkMode ? 'text-white/40 block' : 'text-slate-400 block'}>DISTANCE:</span>
+                      <strong className="text-[#0096C7]">{distKm.toFixed(1)} km</strong>
+                      <span className={`text-[9px] ml-1 ${isDarkMode ? 'text-white/50' : 'text-slate-500'}`}>({distMi.toFixed(1)} mi)</span>
                     </div>
                     <div>
-                      <span className="text-white/40 block">BEARING:</span>
+                      <span className={isDarkMode ? 'text-white/40 block' : 'text-slate-400 block'}>BEARING:</span>
                       <strong className="text-[#D4AF37]">{bearing.toFixed(0)}° {cardinal}</strong>
                     </div>
                   </div>
@@ -1766,7 +1860,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
 
       {/* 4. Complete Information Dossier Panel for Selected Marker */}
       {selectedMarker && (
-        <div className="p-4 sm:p-5 bg-[#121629] border-t border-[#00FFFF]/50 animate-in slide-in-from-bottom duration-200">
+        <div className={`p-4 sm:p-5 border-t transition-colors ${
+          isDarkMode ? 'bg-[#121629] border-[#00FFFF]/50' : 'bg-white border-slate-200 shadow-xl'
+        } animate-in slide-in-from-bottom duration-200`}>
           <div className="flex items-start justify-between gap-4">
             <div className="flex items-center gap-3">
               <div
@@ -1791,7 +1887,7 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
 
               <div>
                 <div className="flex items-center gap-2">
-                  <h3 className="text-base font-display font-bold text-white">
+                  <h3 className={`text-base font-display font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                     {selectedMarker.name}
                   </h3>
                   <span className="text-[10px] font-mono px-2 py-0.5 rounded uppercase font-semibold border"
@@ -1804,7 +1900,7 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
                     {selectedMarker.type.replace('_', ' ')}
                   </span>
                 </div>
-                <div className="text-xs font-mono text-white/60 mt-0.5">
+                <div className={`text-xs font-mono mt-0.5 ${isDarkMode ? 'text-white/60' : 'text-slate-500'}`}>
                   {selectedMarker.streetAddress}
                 </div>
               </div>
@@ -1813,7 +1909,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
             <div className="flex items-center gap-2">
               <button
                 onClick={() => focusOnMarker(selectedMarker)}
-                className="p-1.5 rounded-lg bg-[#16192B] text-[#00FFFF] hover:border-[#00FFFF] border border-[#2C324A] transition text-xs font-mono flex items-center gap-1"
+                className={`p-1.5 rounded-lg border transition text-xs font-mono flex items-center gap-1 ${
+                  isDarkMode ? 'bg-[#16192B] text-[#00FFFF] hover:border-[#00FFFF] border-[#2C324A]' : 'bg-slate-100 text-blue-600 hover:border-blue-400 border-slate-300'
+                }`}
                 title="Target & Focus"
               >
                 <ArrowUpRight className="w-4 h-4" />
@@ -1821,7 +1919,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
               </button>
               <button
                 onClick={() => setSelectedMarker(null)}
-                className="p-1.5 rounded-lg bg-[#16192B] text-white/50 hover:text-white border border-[#2C324A] transition"
+                className={`p-1.5 rounded-lg border transition ${
+                  isDarkMode ? 'bg-[#16192B] text-white/50 hover:text-white border-[#2C324A]' : 'bg-slate-100 text-slate-500 hover:text-slate-800 border-slate-300'
+                }`}
               >
                 <X className="w-4 h-4" />
               </button>
@@ -2021,13 +2121,39 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
 
           {/* Context Actions */}
           <div className="flex flex-wrap items-center gap-2 mt-3.5">
-            {selectedMarker.type === 'friend' && onOpenComms && (
+            {selectedMarker.type === 'friend' && (
               <button
-                onClick={onOpenComms}
-                className="px-3.5 py-2 rounded-xl bg-[#00FFFF]/20 border border-[#00FFFF] text-[#00FFFF] hover:bg-[#00FFFF]/30 text-xs font-mono font-bold flex items-center gap-1.5 transition"
+                onClick={() => {
+                  openComms('direct', {
+                    id: selectedMarker.id,
+                    name: selectedMarker.friendCallsign || selectedMarker.name,
+                    type: 'friend',
+                    color: selectedMarker.color,
+                  });
+                  if (onOpenComms) onOpenComms();
+                }}
+                className="px-3.5 py-2 rounded-xl bg-[#00FF88]/20 border border-[#00FF88] text-[#00FF88] hover:bg-[#00FF88]/30 text-xs font-mono font-bold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(0,255,136,0.35)]"
               >
-                <Radio className="w-3.5 h-3.5" />
-                <span>DIRECT RADIO COMMS</span>
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>CHAT WITH {selectedMarker.friendCallsign || selectedMarker.name}</span>
+              </button>
+            )}
+
+            {(selectedMarker.type === 'other_club' || selectedMarker.type === 'my_club') && (
+              <button
+                onClick={() => {
+                  openComms('team', {
+                    id: selectedMarker.clubId || selectedMarker.id,
+                    name: selectedMarker.name,
+                    type: 'team',
+                    color: selectedMarker.color,
+                  });
+                  if (onOpenComms) onOpenComms();
+                }}
+                className="px-3.5 py-2 rounded-xl bg-[#0096C7]/20 border border-[#0096C7] text-[#4DBBDF] hover:bg-[#0096C7]/30 text-xs font-mono font-bold flex items-center gap-1.5 transition shadow-[0_0_15px_rgba(0,150,199,0.35)]"
+              >
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>OPEN GUILD CHAT</span>
               </button>
             )}
 
@@ -2047,7 +2173,9 @@ export const FluoriteGlobeMap: React.FC<FluoriteGlobeMapProps> = ({
                 {onOpenTeams && (
                   <button
                     onClick={onOpenTeams}
-                    className="px-3.5 py-2 rounded-xl bg-[#16192B] border border-[#2C324A] text-white/80 hover:text-white text-xs font-mono font-bold flex items-center gap-1.5 transition"
+                    className={`px-3.5 py-2 rounded-xl border text-xs font-mono font-bold flex items-center gap-1.5 transition ${
+                      isDarkMode ? 'bg-[#16192B] border-[#2C324A] text-white/80 hover:text-white' : 'bg-slate-100 border-slate-300 text-slate-700 hover:bg-slate-200'
+                    }`}
                   >
                     <Users className="w-3.5 h-3.5" />
                     <span>VIEW GUILD DOSSIER</span>

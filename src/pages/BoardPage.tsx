@@ -526,7 +526,10 @@ export const BoardPage: React.FC<BoardPageProps> = ({
             </div>
 
             {/* Fluorite 3D Globe Feature for Local Radar with Search Radius Connected! */}
-            <FluoriteGlobeMap searchRadiusMiles={searchRadius} />
+            <FluoriteGlobeMap 
+              searchRadiusMiles={searchRadius} 
+              onRadiusChange={setSearchRadius} 
+            />
 
             {/* List of Nearby Tasks in Radius */}
             <div className="space-y-3">

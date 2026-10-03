@@ -217,6 +217,16 @@ export const CommsDrawer: React.FC<CommsDrawerProps> = ({ isOpen, onClose }) => 
     showNotice(`SQUELCH SET TO ${level === 1 ? 'OPEN (HIGH NOISE)' : level === 2 ? 'BALANCED' : 'TIGHT (FILTERED)'}`);
   };
 
+  // Quick test of audio synthesizer sounds (chirp + roger beep)
+  const handleTestRadioSound = () => {
+    showNotice('TESTING SYNTHESIZER: PTT CHIRP -> ROGER BEEP');
+    radioAudio.playPttKeyDown(radioVolume);
+    setTimeout(() => {
+      radioAudio.playRogerBeep(radioVolume);
+      showNotice('TACTICAL AUDIO SYSTEM 100% OPERATIONAL');
+    }, 400);
+  };
+
   // Simulated Radio Check from Squad
   const handleRadioCheck = () => {
     showNotice('TRANSMITTING: "RADIO CHECK SECTOR 7..."');
@@ -681,14 +691,23 @@ export const CommsDrawer: React.FC<CommsDrawerProps> = ({ isOpen, onClose }) => 
                   ))}
                 </div>
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    onClick={handleTestRadioSound}
+                    className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#00FF88]/15 border border-[#00FF88] text-[#00FF88] hover:bg-[#00FF88]/25 text-[11px] font-mono font-bold transition shadow-sm"
+                    title="Synthesize PTT Chirp and Roger Beep sounds"
+                  >
+                    <Volume2 className="w-3 h-3" />
+                    <span>Sound Check</span>
+                  </button>
+
                   <button
                     onClick={handleRadioCheck}
                     className="flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37] text-[#D4AF37] hover:bg-[#D4AF37]/25 text-[11px] font-mono font-bold transition shadow-sm"
                     title="Send a radio check to squad members"
                   >
                     <Sparkles className="w-3 h-3" />
-                    <span>Test Radio Check</span>
+                    <span>Squad Check</span>
                   </button>
 
                   <button

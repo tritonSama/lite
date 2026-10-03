@@ -31,10 +31,10 @@ This project is part of a 3-pillar ecosystem. Agents working on this repository 
 
 | Agent Name / ID | Role / Specialization | Current Task | Status | Target Scope | Notes |
 | :--- | :--- | :--- | :--- | :--- | :--- |
-| **Agent Alpha** | UI / Frontend | Task Creation Wizard (Sprint 2) | In Progress | Android & Web | Building `CreateTaskPage` 5-step wizard scaffold |
+| **Agent Alpha** | UI / Frontend | Task Creation Wizard (Sprint 2) | Completed | Android & Web | `CreateTaskPage` scaffold, marketplace listings & contracts ready |
 | **Agent Beta** | Backend / Firebase | Security Rules & Cloud Functions | Completed | Android & Web | Rules authored, awaiting verification hooks |
-| **Jules** | UI / Local DB & Blockchain | Sprint 3 & 4: Bids, Offers & Verification | In Progress | Android & Web | SQLite persistence + Fluoridian P2P relay event envelopes |
-| **Agent Gamma** | UI / Engine Integration | Game Page & Fluoderpod Bridge | In Progress | Android & Web | Riverpod 3.0 migration + Fluoderpod texture bridge |
+| **Jules** | UI / Local DB & Blockchain | Sprint 3 & 4: Bids, Offers & Verification | Completed | Android & Web | SQLite persistence, Fluoridian escrow & verification flow |
+| **Agent Gamma** | UI / Engine Integration | Mission Control & Tactical Comms | Completed | Android & Web | 3D Fluorite Globe, 15s auto-orbit, radar geofence & tactical radio |
 
 ---
 

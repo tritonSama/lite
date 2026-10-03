@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useApp } from '../context/AppContext';
 import { WeatherData } from '../types';
 import { 
   Compass, 
@@ -13,7 +14,8 @@ import {
   Gauge, 
   MapPin, 
   RotateCw,
-  Sparkles
+  Sparkles,
+  CheckCircle2
 } from 'lucide-react';
 import { FluoriteGlobeMap } from '../components/FluoriteGlobeMap';
 
@@ -30,12 +32,20 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
   onOpenWars,
   onOpenObd,
 }) => {
+  const { isDarkMode } = useApp();
+
   // Weather State
   const [weather, setWeather] = useState<WeatherData | null>(null);
   const [loadingWeather, setLoadingWeather] = useState(true);
 
   // GPS Coordinates (Central Command Default)
   const [coords, setCoords] = useState<{ lat: number; lng: number }>({ lat: 30.2672, lng: -97.7431 });
+
+  // Search Radius State
+  const [searchRadius, setSearchRadius] = useState<number>(25);
+
+  // GPS Status notification toast
+  const [gpsToast, setGpsToast] = useState<string | null>(null);
 
   // Fetch real weather using Open-Meteo
   const fetchWeather = async (latitude: number, longitude: number) => {
@@ -97,14 +107,19 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
     }
   }, []);
 
+  const handleGpsClick = () => {
+    setGpsToast(`GPS POSITION VERIFIED: ${coords.lat.toFixed(4)}° N, ${coords.lng.toFixed(4)}° W // AUSTIN HQ`);
+    setTimeout(() => setGpsToast(null), 3500);
+  };
+
   return (
-    <div className="pb-24 pt-2">
+    <div className={`pb-24 pt-2 transition-colors ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
       <div className="max-w-4xl mx-auto px-4 space-y-4">
         {/* Header / Title */}
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Compass className="w-5 h-5 text-[#0096C7]" />
-            <h2 className="font-display font-bold text-white text-base tracking-wide">
+            <h2 className="font-display font-bold text-base tracking-wide">
               MISSION CONTROL // OPERATIONS DECK
             </h2>
           </div>
@@ -113,8 +128,20 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
           </span>
         </div>
 
+        {/* GPS Toast feedback */}
+        {gpsToast && (
+          <div className="bg-[#00FF88]/20 border border-[#00FF88] text-[#00FF88] px-4 py-2 rounded-xl text-xs font-mono font-bold flex items-center gap-2 shadow-[0_0_20px_rgba(0,255,136,0.3)] animate-fade-in">
+            <CheckCircle2 className="w-4 h-4" />
+            <span>{gpsToast}</span>
+          </div>
+        )}
+
         {/* Live Weather Card */}
-        <div className="p-4 sm:p-5 rounded-2xl bg-[#16192B] border border-[#0096C7]/60 shadow-[0_0_20px_rgba(0,150,199,0.15)]">
+        <div className={`p-4 sm:p-5 rounded-2xl border transition-colors ${
+          isDarkMode
+            ? 'bg-[#16192B] border-[#0096C7]/60 shadow-[0_0_20px_rgba(0,150,199,0.15)]'
+            : 'bg-white border-slate-200 shadow-md'
+        }`}>
           {loadingWeather ? (
             <div className="py-6 flex items-center justify-center gap-2 text-xs font-mono text-[#0096C7]">
               <RotateCw className="w-4 h-4 animate-spin" />
@@ -127,12 +154,12 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
                   {weather.description.toLowerCase().includes('rain') ? (
                     <CloudRain className="w-10 h-10 text-[#0096C7]" />
                   ) : weather.description.toLowerCase().includes('cloud') ? (
-                    <Cloud className="w-10 h-10 text-white/70" />
+                    <Cloud className={`w-10 h-10 ${isDarkMode ? 'text-white/70' : 'text-slate-400'}`} />
                   ) : (
                     <Sun className="w-10 h-10 text-[#D4AF37]" />
                   )}
                   <div>
-                    <div className="text-3xl font-mono font-bold text-white">
+                    <div className={`text-3xl font-mono font-bold ${isDarkMode ? 'text-white' : 'text-slate-900'}`}>
                       {weather.temperature.toFixed(1)}°F
                     </div>
                     <div className="text-xs font-semibold text-[#0096C7]">
@@ -147,7 +174,9 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
                   </span>
                   <button
                     onClick={() => fetchWeather(coords.lat, coords.lng)}
-                    className="text-[10px] font-mono text-white/40 hover:text-white flex items-center gap-1 ml-auto mt-2"
+                    className={`text-[10px] font-mono flex items-center gap-1 ml-auto mt-2 transition ${
+                      isDarkMode ? 'text-white/40 hover:text-white' : 'text-slate-400 hover:text-slate-700'
+                    }`}
                   >
                     <RotateCw className="w-3 h-3" />
                     <span>Sync</span>
@@ -155,14 +184,16 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-[#2C324A] text-xs font-mono text-white/70">
+              <div className={`grid grid-cols-2 gap-3 mt-4 pt-3 border-t text-xs font-mono ${
+                isDarkMode ? 'border-[#2C324A] text-white/70' : 'border-slate-100 text-slate-600'
+              }`}>
                 <div className="flex items-center gap-2">
                   <Droplets className="w-4 h-4 text-[#0096C7]" />
-                  <span>Humidity: <strong className="text-white">{weather.humidity}%</strong></span>
+                  <span>Humidity: <strong className={isDarkMode ? 'text-white' : 'text-slate-900'}>{weather.humidity}%</strong></span>
                 </div>
                 <div className="flex items-center gap-2">
                   <Wind className="w-4 h-4 text-[#0096C7]" />
-                  <span>Wind: <strong className="text-white">{weather.windSpeed} mph</strong></span>
+                  <span>Wind: <strong className={isDarkMode ? 'text-white' : 'text-slate-900'}>{weather.windSpeed} mph</strong></span>
                 </div>
               </div>
             </div>
@@ -175,13 +206,19 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
           onOpenTeams={onOpenTeams}
           onOpenWars={onOpenWars}
           onOpenObd={onOpenObd}
+          searchRadiusMiles={searchRadius}
+          onRadiusChange={setSearchRadius}
         />
 
         {/* Quick Tactical Action Tiles */}
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
           <button
-            onClick={() => alert(`GPS Telemetry coordinates: ${coords.lat}, ${coords.lng}`)}
-            className="p-3.5 rounded-xl bg-[#16192B] border border-[#2C324A] hover:border-[#0096C7] flex items-center justify-center gap-2.5 transition text-white group"
+            onClick={handleGpsClick}
+            className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 transition group ${
+              isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] hover:border-[#0096C7] text-white'
+                : 'bg-white border-slate-200 hover:border-[#0096C7] text-slate-800 shadow-sm'
+            }`}
           >
             <MapPin className="w-4 h-4 text-[#0096C7] group-hover:scale-110 transition" />
             <span className="text-xs font-mono font-bold">GPS LOCK</span>
@@ -189,7 +226,11 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
 
           <button
             onClick={onOpenComms}
-            className="p-3.5 rounded-xl bg-[#16192B] border border-[#2C324A] hover:border-[#D4AF37] flex items-center justify-center gap-2.5 transition text-white group"
+            className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 transition group ${
+              isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] hover:border-[#D4AF37] text-white'
+                : 'bg-white border-slate-200 hover:border-[#D4AF37] text-slate-800 shadow-sm'
+            }`}
           >
             <Radio className="w-4 h-4 text-[#D4AF37] group-hover:scale-110 transition" />
             <span className="text-xs font-mono font-bold">COMMS TERMINAL</span>
@@ -197,7 +238,11 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
 
           <button
             onClick={onOpenWars}
-            className="p-3.5 rounded-xl bg-[#16192B] border border-[#2C324A] hover:border-[#E74C3C] flex items-center justify-center gap-2.5 transition text-white group"
+            className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 transition group ${
+              isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] hover:border-[#E74C3C] text-white'
+                : 'bg-white border-slate-200 hover:border-[#E74C3C] text-slate-800 shadow-sm'
+            }`}
           >
             <Swords className="w-4 h-4 text-[#E74C3C] group-hover:scale-110 transition" />
             <span className="text-xs font-mono font-bold">WAR THEATER</span>
@@ -205,7 +250,11 @@ export const MissionControlPage: React.FC<MissionControlPageProps> = ({
 
           <button
             onClick={onOpenObd}
-            className="p-3.5 rounded-xl bg-[#16192B] border border-[#2C324A] hover:border-[#0096C7] flex items-center justify-center gap-2.5 transition text-white group"
+            className={`p-3.5 rounded-xl border flex items-center justify-center gap-2.5 transition group ${
+              isDarkMode
+                ? 'bg-[#16192B] border-[#2C324A] hover:border-[#0096C7] text-white'
+                : 'bg-white border-slate-200 hover:border-[#0096C7] text-slate-800 shadow-sm'
+            }`}
           >
             <Gauge className="w-4 h-4 text-[#0096C7] group-hover:scale-110 transition" />
             <span className="text-xs font-mono font-bold">OBD2 TELEMETRY</span>
