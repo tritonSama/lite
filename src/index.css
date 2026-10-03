@@ -1,0 +1,76 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --hb-primary: #0096C7;
+    --hb-primary-light: #4DBBDF;
+    --hb-primary-dark: #006A8C;
+    --hb-secondary: #D4AF37;
+    --hb-secondary-light: #E2C86F;
+    --hb-tertiary: #5300FF;
+    --hb-neutral: #0C0F1D;
+    --hb-neutral-light: #16192B;
+    --hb-neutral-lighter: #1E2336;
+    --hb-divider: #2C324A;
+  }
+
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    background-color: #0C0F1D;
+    color: #E9EDF2;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, .font-display {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+  }
+
+  code, pre, .font-mono, .terminal-text {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+/* Custom Tactical Cyberpunk Glows */
+.neon-glow-cyan {
+  box-shadow: 0 0 15px rgba(0, 150, 199, 0.4), 0 0 30px rgba(0, 150, 199, 0.2);
+}
+
+.neon-glow-gold {
+  box-shadow: 0 0 15px rgba(212, 175, 55, 0.4), 0 0 30px rgba(212, 175, 55, 0.2);
+}
+
+.neon-glow-purple {
+  box-shadow: 0 0 15px rgba(83, 0, 255, 0.4), 0 0 30px rgba(83, 0, 255, 0.2);
+}
+
+.neon-border-cyan {
+  border-color: rgba(0, 150, 199, 0.7);
+  box-shadow: 0 0 10px rgba(0, 150, 199, 0.3) inset;
+}
+
+/* Radar scanline animation */
+@keyframes radar-sweep {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.animate-radar-sweep {
+  animation: radar-sweep 6s linear infinite;
+  transform-origin: center;
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0C0F1D;
+}
+::-webkit-scrollbar-thumb {
+  background: #2C324A;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #0096C7;
+}

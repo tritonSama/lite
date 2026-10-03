@@ -1,0 +1,7 @@
+{
+  "name": "Game Maps IRL - HeavenlyBond Lite",
+  "description": "Tactical community task marketplace, guild constellation, and mission control operations platform with turn-based tactical command and Fluoridian ledger escrow.",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
