@@ -2,8 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
+import 'dart:typed_data';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
+import '../../../core/fluoderpod/fluoderpod_bridge.dart';
+import '../../../core/fluoderpod/fluoderpod_view.dart';
 import '../../../app/theme.dart';
 import 'mission_control_providers.dart';
 
@@ -54,14 +56,39 @@ class _GameMapOverlayState extends ConsumerState<GameMapOverlay> {
   @override
   Widget build(BuildContext context) {
     final friendsAsync = ref.watch(friendLocationsProvider);
+<<<<<<< Updated upstream
+=======
+
+    ref.listen(friendLocationsProvider, (previous, next) {
+      if (next.value != null) {
+        final bridge = ref.read(fluoderpodBridgeProvider);
+        if (bridge.isInitialized) {
+          final bytes = Uint8List(next.value!.length * 64);
+          bridge.ingestBatch(bytes);
+        }
+      }
+    });
+>>>>>>> Stashed changes
 
     return Stack(
       children: [
         // High-Performance Interactive Holographic Globe / Radar View
+<<<<<<< Updated upstream
         _HolographicGlobeView(
           mode: currentMode,
           lastPosition: _lastPosition,
           friends: friendsAsync.value ?? [],
+=======
+        FluoderpodView(
+          overlay: Container(),
+          onInitialized: () {
+            // Push initial state to GPU buffer
+            final bridge = ref.read(fluoderpodBridgeProvider);
+            final friends = friendsAsync.value ?? [];
+            final bytes = Uint8List(friends.length * 64);
+            bridge.ingestBatch(bytes);
+          },
+>>>>>>> Stashed changes
         ),
 
         // Mode Switcher Overlay Bar
@@ -125,6 +152,10 @@ class _HolographicGlobeViewState extends State<_HolographicGlobeView>
   late final AnimationController _controller;
   Offset _panOffset = Offset.zero;
   double _zoomScale = 1.0;
+<<<<<<< Updated upstream
+=======
+  double _previousScale = 1.0;
+>>>>>>> Stashed changes
 
   @override
   void initState() {
@@ -144,12 +175,24 @@ class _HolographicGlobeViewState extends State<_HolographicGlobeView>
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
+<<<<<<< Updated upstream
       onScaleUpdate: (details) {
         setState(() {
           _zoomScale = (_zoomScale * details.scale).clamp(0.5, 3.0);
           _panOffset += details.focalPointDelta;
         });
       },
+=======
+      onScaleStart: (details) {
+        _previousScale = _zoomScale;
+      },
+      onScaleUpdate: (details) {
+        setState(() {
+          _zoomScale = (_previousScale * details.scale).clamp(0.5, 4.0);
+          _panOffset += details.focalPointDelta;
+        });
+      },
+>>>>>>> Stashed changes
       child: Container(
         decoration: const BoxDecoration(
           gradient: RadialGradient(

@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../app/theme.dart';
 import '../../notifications/presentation/notifications_button.dart';
+import '../../../core/fluoderpod/fluoderpod_view.dart';
 import 'board_search_delegate.dart';
 import 'local_offerings_provider.dart';
 import '../../teams/presentation/team_providers.dart';
@@ -102,12 +103,24 @@ class _MainOfferingsTab extends ConsumerWidget {
       );
     }
 
+<<<<<<< Updated upstream
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemCount: offerings.length,
       itemBuilder: (context, index) {
         return OfferingCard(offering: offerings[index]);
       },
+=======
+    return RefreshIndicator(
+      onRefresh: () async => ref.invalidate(localOfferingsProvider),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: offerings.length,
+        itemBuilder: (context, index) {
+          return OfferingCard(offering: offerings[index]);
+        },
+      ),
+>>>>>>> Stashed changes
     );
   }
 }
@@ -142,12 +155,24 @@ class _MyClubOfferingsTab extends ConsumerWidget {
       );
     }
 
+<<<<<<< Updated upstream
     return ListView.builder(
       padding: const EdgeInsets.all(16.0),
       itemCount: clubOfferings.length,
       itemBuilder: (context, index) {
         return OfferingCard(offering: clubOfferings[index]);
       },
+=======
+    return RefreshIndicator(
+      onRefresh: () async => ref.invalidate(localOfferingsProvider),
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16.0),
+        itemCount: clubOfferings.length,
+        itemBuilder: (context, index) {
+          return OfferingCard(offering: clubOfferings[index]);
+        },
+      ),
+>>>>>>> Stashed changes
     );
   }
 }
@@ -254,16 +279,21 @@ class _InteractingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.gavel, size: 72, color: HBColors.primary),
-          const SizedBox(height: HBSpacing.md),
+          Icon(Icons.gavel, size: 72, color: HBColors.primary),
+          SizedBox(height: HBSpacing.md),
           Text('Offers & Contracts',
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
+<<<<<<< Updated upstream
           const SizedBox(height: HBSpacing.sm),
           const Text('Negotiate and manage bids here.',
+=======
+          SizedBox(height: HBSpacing.sm),
+          Text('Negotiate and manage bids here.',
+>>>>>>> Stashed changes
               style: TextStyle(color: Colors.white70)),
         ],
       ),
@@ -308,10 +338,11 @@ class _LocalTabState extends State<_LocalTab> {
             ],
           ),
         ),
-        const Expanded(
-          child: _PlaceholderTab(
-            label: 'Local offerings will appear here',
-            icon: Icons.location_on_outlined,
+        Expanded(
+          child: FluoderpodView(
+            onInitialized: () {
+              // Not pushing anything specific here initially
+            },
           ),
         ),
       ],
