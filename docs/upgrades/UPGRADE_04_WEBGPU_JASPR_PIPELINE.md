@@ -25,8 +25,9 @@
 ### Step 1: Compile Rust Engine to WebAssembly (WebGPU)
 Inside `third_party/fluorescent/fluoderpod_render`:
 ```bash
-cargo build --target wasm32-unknown-unknown --release --features webgpu
+cargo build --target wasm32-unknown-unknown --release
 ```
+> The crate currently defines no `webgpu` feature; wgpu targets WebGPU on wasm32 by default. A canvas-bound `wasm-bindgen` entry point still has to be added (see `DEPENDENCY_TEAM_BREAKDOWN.md`, F5).
 
 ### Step 2: Build Jaspr Web Client
 Inside `third_party/tithX/fluoridian_jaspr_client`:
