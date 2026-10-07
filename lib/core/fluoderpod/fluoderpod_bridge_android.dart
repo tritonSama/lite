@@ -1,3 +1,5 @@
+// lib/core/fluoderpod/fluoderpod_bridge_android.dart
+
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
@@ -61,11 +63,7 @@ class FluoderpodBridge {
   static const MethodChannel _channel =
       MethodChannel('com.fluorescent.vulkan/texture');
 
-  /// Initializes the hardware graphics context for Android (Vulkan) or Web (WebGPU).
-  ///
-  /// On Android this only reports `true` when the native renderer has claimed
-  /// a Flutter texture; otherwise it returns `false` and the view keeps its
-  /// fallback viewport.
+  /// Platform-specific initialization. Web uses a virtual canvas ID; Android uses a native MethodChannel.
   Future<bool> initialize({required int width, required int height}) async {
     // Platform-specific initialization. Web uses a virtual canvas ID; Android uses a native MethodChannel.
     if (kIsWeb) {
@@ -108,7 +106,6 @@ class FluoderpodBridge {
     debugPrint('[FluoderpodBridge] Resized viewport to ${width}x$height');
   }
 
-
   /// High-throughput batch ingestion directly from Riverpod state into GPU buffers.
   /// Bypasses CPU widget tree overhead and feeds directly to compute frustum culling.
   void ingestBatch(Uint8List rawEntityData) {
@@ -122,7 +119,6 @@ class FluoderpodBridge {
     if (!_isInitialized) return;
     // Dispatches GPU compute shaders
   }
-
 
   void dispose() {
     if (_isInitialized && !kIsWeb && defaultTargetPlatform == TargetPlatform.android) {

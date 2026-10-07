@@ -24,10 +24,10 @@ EntityPacket taskToPacket(Task t) {
 /// Declared as a plain [Provider] (no codegen) so a generator failure in a
 /// model file can never block this cross-cutting path.
 final fluoderpodEntityStreamProvider = Provider<int>((ref) {
-  final bridge = ref.watch(fluoderpodBridgeProvider);
+  final ingest = ref.read(fluoderpodIngestProvider);
   final tasks = ref.watch(publicTasksProvider).value ?? const <Task>[];
 
   final packets = tasks.map(taskToPacket).toList(growable: false);
-  bridge.ingestBatch(EntityPacketEncoder.encodeBatch(packets));
+  ingest.ingestEntities(packets);
   return packets.length;
 });
