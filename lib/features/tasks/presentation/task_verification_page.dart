@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:crypto/crypto.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -45,6 +47,17 @@ class _TaskVerificationPageState extends ConsumerState<TaskVerificationPage> {
   Future<void> _submitVerification() async {
     setState(() => _isSubmitting = true);
     final fluoridian = ref.read(fluoridianServiceProvider);
+    
+    final List<String> photoHashes = [];
+    for (final path in _proofPhotos) {
+      try {
+        final bytes = await File(path).readAsBytes();
+        final digest = sha256.convert(bytes);
+        photoHashes.add(digest.toString());
+      } catch (e) {
+        photoHashes.add('hash_error');
+      }
+    }
 
     await fluoridian.signAndBroadcast(
       eventType: NetworkEventType.taskVerified,
@@ -52,6 +65,7 @@ class _TaskVerificationPageState extends ConsumerState<TaskVerificationPage> {
         'taskId': widget.taskId,
         'action': 'SUBMITTED_FOR_VERIFICATION',
         'proofPhotos': _proofPhotos,
+        'photoHashes': photoHashes,
         'notes': _notesCtrl.text.trim(),
         'submittedAt': DateTime.now().toIso8601String(),
       },

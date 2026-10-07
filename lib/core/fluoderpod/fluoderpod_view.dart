@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'fluoderpod_bridge.dart';
 
@@ -20,16 +21,22 @@ class FluoderpodView extends ConsumerStatefulWidget {
 }
 
 class _FluoderpodViewState extends ConsumerState<FluoderpodView>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin, WidgetsBindingObserver {
   late AnimationController _pulseCtrl;
+  late final Ticker _renderTicker;
+  DateTime _lastFrameTime = DateTime.now();
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
+    
     _pulseCtrl = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
+
+    _renderTicker = createTicker(_onRenderTick);
 
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final bridge = ref.read(fluoderpodBridgeProvider);
@@ -42,12 +49,42 @@ class _FluoderpodViewState extends ConsumerState<FluoderpodView>
       if (mounted) {
         widget.onInitialized?.call();
         setState(() {});
+        _renderTicker.start();
       }
     });
   }
 
+  void _onRenderTick(Duration elapsed) {
+    final bridge = ref.read(fluoderpodBridgeProvider);
+    final now = DateTime.now();
+    final waitDuration = bridge.tick(now);
+    
+    if (waitDuration != null) {
+      if (now.difference(_lastFrameTime) >= waitDuration) {
+        bridge.executeFrame();
+        _lastFrameTime = now;
+      }
+    }
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    final bridge = ref.read(fluoderpodBridgeProvider);
+    if (state == AppLifecycleState.paused || state == AppLifecycleState.hidden) {
+      bridge.setPaused(true);
+      _renderTicker.stop();
+    } else if (state == AppLifecycleState.resumed) {
+      bridge.setPaused(false);
+      if (!_renderTicker.isActive && bridge.isInitialized) {
+        _renderTicker.start();
+      }
+    }
+  }
+
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _renderTicker.dispose();
     _pulseCtrl.dispose();
     super.dispose();
   }

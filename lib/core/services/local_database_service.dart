@@ -21,7 +21,7 @@ class LocalDatabaseService {
 
     return await openDatabase(
       path,
-      version: 3,
+      version: 4,
       onCreate: _createDB,
       onUpgrade: _upgradeDB,
     );
@@ -57,6 +57,16 @@ class LocalDatabaseService {
         data TEXT NOT NULL,
         listingType TEXT NOT NULL DEFAULT 'forSale',
         rentalDuration TEXT,
+        createdAt INTEGER NOT NULL
+      )
+    ''');
+
+    // ── Offline Queue Table
+    await db.execute('''
+      CREATE TABLE offline_queue (
+        id TEXT PRIMARY KEY,
+        eventType TEXT NOT NULL,
+        payload TEXT NOT NULL,
         createdAt INTEGER NOT NULL
       )
     ''');
@@ -119,6 +129,16 @@ class LocalDatabaseService {
           channel TEXT NOT NULL,
           targetId TEXT,
           timestamp INTEGER NOT NULL
+        )
+      ''');
+    }
+    if (oldVersion < 4) {
+      await db.execute('''
+        CREATE TABLE IF NOT EXISTS offline_queue (
+          id TEXT PRIMARY KEY,
+          eventType TEXT NOT NULL,
+          payload TEXT NOT NULL,
+          createdAt INTEGER NOT NULL
         )
       ''');
     }
