@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'dart:typed_data';
-import '../../../core/fluoderpod/fluoderpod_bridge.dart';
-import '../../../core/fluoderpod/fluoderpod_view.dart';
+import '../../../../core/fluoderpod/fluoderpod_bridge.dart';
+import '../../../../core/fluoderpod/fluoderpod_view.dart';
 import '../../../../app/theme.dart';
 import '../team_providers.dart';
 

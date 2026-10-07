@@ -68,8 +68,30 @@ dependencies:
   google_fonts: ^8.2.1
   shared_preferences: ^2.5.5
   package_info_plus: ^10.2.1
+  fluoderpod:
+    path: third_party/fluoderpod/fluoderpod
   maplibre_gl: ^0.27.1
   http: ^1.6.0
+
+dependency_overrides:
+  fluorescent_core:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_core
+  fluorescent_ecs:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_ecs
+  fluorescent_fluorite:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_fluorite
+  fluorescent_vulkan:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_vulkan
+  fluorescent_flame:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_flame
+  fluorescent_webgpu:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_webgpu
+  fluorescent_metal:
+    path: third_party/fluorescent/fluorescent/packages/fluorescent_metal
+  fluoridian_jaspr_client:
+    path: third_party/tithX/fluoridian_jaspr_client
+  flutter_riverpod: ^3.0.0
+  riverpod_annotation: ^4.0.7
 
 dev_dependencies:
   flutter_test:

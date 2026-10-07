@@ -14,6 +14,7 @@ class MainActivity : FlutterActivity() {
 
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine)
+        com.fluorescent.vulkan.FluorescentVulkanPlugin.register(flutterEngine)
 
         MethodChannel(flutterEngine.dartExecutor.binaryMessenger, OBD_METHOD_CHANNEL).setMethodCallHandler { call, result ->
             when (call.method) {

@@ -20,14 +20,9 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
   final WeatherService _weatherService = WeatherService();
   late Future<WeatherData?> _weatherFuture;
   
-<<<<<<< Updated upstream
   // Real GPS coordinates with fallback to San Francisco
   double lat = 37.7749;
   double lng = -122.4194;
-=======
-  double lat = 29.6549; // Default Houston / user area
-  double lng = -95.2285;
->>>>>>> Stashed changes
   bool _isLoadingLocation = true;
 
   @override
@@ -48,13 +43,8 @@ class _MissionControlPageState extends ConsumerState<MissionControlPage> {
           Position position = await Geolocator.getCurrentPosition(
             locationSettings: const LocationSettings(accuracy: LocationAccuracy.medium),
           ).timeout(const Duration(seconds: 3), onTimeout: () => Geolocator.getLastKnownPosition().then((p) => p ?? Position(
-<<<<<<< Updated upstream
             latitude: 37.7749,
             longitude: -122.4194,
-=======
-            latitude: 29.6549,
-            longitude: -95.2285,
->>>>>>> Stashed changes
             timestamp: DateTime.now(),
             accuracy: 100,
             altitude: 0,

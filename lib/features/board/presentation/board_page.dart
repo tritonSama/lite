@@ -9,6 +9,9 @@ import '../../teams/presentation/team_providers.dart';
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'edit_offering_dialog.dart';
+import '../../../core/fluoderpod/fluoderpod_bridge.dart';
+import '../../../core/fluoderpod/fluoderpod_providers.dart';
+import '../../../core/fluoderpod/fluoderpod_view.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -272,72 +275,66 @@ class _InteractingTab extends StatelessWidget {
 }
 
 // ── Local Tab (Radius Selection Mockup) ───────────────────────────────────────
-class _LocalTab extends StatefulWidget {
+class _LocalTab extends ConsumerStatefulWidget {
   const _LocalTab();
 
   @override
-  State<_LocalTab> createState() => _LocalTabState();
+  ConsumerState<_LocalTab> createState() => _LocalTabState();
 }
 
-class _LocalTabState extends State<_LocalTab> {
+class _LocalTabState extends ConsumerState<_LocalTab> {
   double _radius = 10.0;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    // Keeps the GPU scene fed with live task entities.
+    final entityCount = ref.watch(fluoderpodEntityStreamProvider);
+    final bridge = ref.watch(fluoderpodBridgeProvider);
+
+    return Stack(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Search Radius: ${_radius.toInt()} miles',
-                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-              Slider(
-                value: _radius,
-                min: 1.0,
-                max: 100.0,
-                divisions: 99,
-                label: '${_radius.toInt()} mi',
-                activeColor: HBColors.primary,
-                inactiveColor: Colors.white24,
-                onChanged: (val) {
-                  setState(() => _radius = val);
-                },
-              ),
-            ],
+        Positioned.fill(
+          child: Listener(
+            onPointerDown: (_) => bridge.notifyUserInteraction(),
+            onPointerMove: (_) => bridge.notifyUserInteraction(),
+            child: const FluoderpodView(),
           ),
         ),
-        const Expanded(
-          child: _PlaceholderTab(
-            label: 'Local offerings will appear here',
-            icon: Icons.location_on_outlined,
+        Positioned(
+          top: 12,
+          left: 12,
+          right: 12,
+          child: Card(
+            color: Colors.black.withValues(alpha: 0.6),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Search Radius: ${_radius.toInt()} miles • $entityCount tasks',
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                  Slider(
+                    value: _radius,
+                    min: 1.0,
+                    max: 100.0,
+                    divisions: 99,
+                    label: '${_radius.toInt()} mi',
+                    activeColor: HBColors.primary,
+                    inactiveColor: Colors.white24,
+                    onChanged: (val) {
+                      bridge.notifyUserInteraction();
+                      setState(() => _radius = val);
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class _PlaceholderTab extends StatelessWidget {
-  final String label;
-  final IconData icon;
-  const _PlaceholderTab({required this.label, required this.icon});
-
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(icon, size: 64, color: Colors.grey),
-          const SizedBox(height: 16.0),
-          Text(
-            label,
-            style: const TextStyle(color: Colors.white70, fontSize: 16),
-          ),
-        ],
-      ),
     );
   }
 }
