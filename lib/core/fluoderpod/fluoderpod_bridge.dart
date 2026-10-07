@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluoderpod/fluoderpod.dart';
 
 final fluoderpodBridgeProvider = Provider<FluoderpodBridge>((ref) {
   return FluoderpodBridge();
@@ -30,11 +31,18 @@ class FluoderpodBridge {
   double _currentFps = interactiveFps;
   DateTime _lastInteraction = DateTime.now();
 
+  late final CyanNativeBindings _nativeBindings;
+  CyanNativeBindings get nativeBindings => _nativeBindings;
+
   bool get isInitialized => _isInitialized;
   int get textureId => _textureId;
   int get activeClusters => _activeClusters;
   double get currentFps => _currentFps;
   bool get isPaused => _paused;
+
+  FluoderpodBridge() {
+    _nativeBindings = CyanNativeBindings();
+  }
 
   /// Call on any touch/camera gesture to ramp back to full frame rate.
   void notifyUserInteraction() {
@@ -74,6 +82,13 @@ class FluoderpodBridge {
       _textureId = 1001; // Virtual canvas placeholder ID for Web.
       _isInitialized = true;
     } else if (defaultTargetPlatform == TargetPlatform.android) {
+      // Attempt to initialize FFI layers if available
+      try {
+        _nativeBindings.initGameController();
+      } catch (e) {
+        debugPrint('[FluoderpodBridge] Game controller native bindings failed: $e');
+      }
+
       try {
         final res = await _channel.invokeMapMethod<String, Object?>(
           'start',
@@ -127,6 +142,11 @@ class FluoderpodBridge {
   void dispose() {
     if (_isInitialized && !kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
       _channel.invokeMethod<void>('dispose');
+      try {
+        _nativeBindings.shutdownGameController();
+      } catch (e) {
+        debugPrint('[FluoderpodBridge] Game controller shutdown failed: $e');
+      }
     }
     _isInitialized = false;
   }
