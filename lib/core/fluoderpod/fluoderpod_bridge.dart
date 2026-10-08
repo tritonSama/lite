@@ -128,8 +128,16 @@ class FluoderpodBridge {
   /// Bypasses CPU widget tree overhead and feeds directly to compute frustum culling.
   void ingestBatch(Uint8List rawEntityData) {
     if (!_isInitialized) return;
-    // In production: passes byte buffer to `fluoderpod_render::FluoderpodRenderer::ingest_fluoderpod_batch`
-    _activeClusters = (rawEntityData.length / 64).round();
+    
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      _channel.invokeMethod<int>('ingestBatch', {'buffer': rawEntityData}).then((clusters) {
+        if (clusters != null) {
+          _activeClusters = clusters;
+        }
+      });
+    } else {
+      _activeClusters = (rawEntityData.length / 64).round();
+    }
   }
 
   /// Dispatches the frame execution cycle: Culling -> Virtual Geometry LOD -> Indirect Draw
@@ -138,6 +146,32 @@ class FluoderpodBridge {
     // Dispatches GPU compute shaders
   }
 
+  void pan(double dx, double dy) {
+    if (!_isInitialized) return;
+    notifyUserInteraction();
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      _channel.invokeMethod<void>('pan', {'dx': dx, 'dy': dy});
+    }
+  }
+
+  void zoom(double scale) {
+    if (!_isInitialized) return;
+    notifyUserInteraction();
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      _channel.invokeMethod<void>('zoom', {'scale': scale});
+    }
+  }
+
+  /// Raycasts into the 3D scene. Returns the ID of the tapped entity, if any.
+  Future<String?> raycast(double x, double y) async {
+    if (!_isInitialized) return null;
+    notifyUserInteraction();
+    if (!kIsWeb && defaultTargetPlatform == TargetPlatform.android) {
+      final id = await _channel.invokeMethod<String>('raycast', {'x': x, 'y': y});
+      return id;
+    }
+    return null;
+  }
 
   void dispose() {
     if (_isInitialized && !kIsWeb && defaultTargetPlatform == TargetPlatform.android) {

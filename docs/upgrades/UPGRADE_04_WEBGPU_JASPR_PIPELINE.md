@@ -13,7 +13,7 @@
 * **Zero JS/TS Mandate:** All interaction scripts, models, and UI bindings are authored strictly in Dart.
 
 ### 1.2 Target Source Files
-* `third_party/tithX/fluoridian_jaspr_client/`
+* `third_party/fluoderpod/cyan_sdk_jaspr/`
 * `third_party/fluorescent/fluoderpod_render/Cargo.toml`
 * `web/index.html` (mount `<canvas id="fluoderpod-canvas">`)
 * `lib/core/fluoderpod/fluoderpod_bridge.dart` (Web branch)
@@ -30,7 +30,7 @@ cargo build --target wasm32-unknown-unknown --release
 > The crate currently defines no `webgpu` feature; wgpu targets WebGPU on wasm32 by default. A canvas-bound `wasm-bindgen` entry point still has to be added (see `DEPENDENCY_TEAM_BREAKDOWN.md`, F5).
 
 ### Step 2: Build Jaspr Web Client
-Inside `third_party/tithX/fluoridian_jaspr_client`:
+Inside `third_party/fluoderpod/cyan_sdk_jaspr`:
 ```powershell
 jaspr clean
 jaspr build --release
@@ -48,7 +48,7 @@ flutter build web --wasm
 
 ```powershell
 # 1. Test compilation of pure Dart Jaspr client
-cd third_party/tithX/fluoridian_jaspr_client
+cd third_party/fluoderpod/cyan_sdk_jaspr
 jaspr build
 cd ../../..
 

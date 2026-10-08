@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Team {
 
- String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; List<String> get parentIds; List<String> get sisterClubIds; List<String> get treatyIds; double get rating; int get completedJobCount;@TimestampConverter() DateTime get createdAt;
+ String get id; String get name; String? get description; String get ownerId; int get memberCount; List<String> get credentialIds; List<String> get parentIds; List<String> get sisterClubIds; List<String> get treatyIds; double get rating; int get completedJobCount;@GeoPointConverter() GeoPoint? get hubLocation; String? get hubGeohash;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $TeamCopyWith<Team> get copyWith => _$TeamCopyWithImpl<Team>(this as Team, _$ide
 @override
 bool operator ==(Object other) {
   final _this = this as Team;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.ownerId, _this.ownerId) || other.ownerId == _this.ownerId)&&(identical(other.memberCount, _this.memberCount) || other.memberCount == _this.memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _this.credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _this.parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _this.sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _this.treatyIds)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Team&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.name, _this.name) || other.name == _this.name)&&(identical(other.description, _this.description) || other.description == _this.description)&&(identical(other.ownerId, _this.ownerId) || other.ownerId == _this.ownerId)&&(identical(other.memberCount, _this.memberCount) || other.memberCount == _this.memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _this.credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _this.parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _this.sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _this.treatyIds)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.hubLocation, _this.hubLocation) || other.hubLocation == _this.hubLocation)&&(identical(other.hubGeohash, _this.hubGeohash) || other.hubGeohash == _this.hubGeohash)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Team;
-  return Object.hash(runtimeType,_this.id,_this.name,_this.description,_this.ownerId,_this.memberCount,const DeepCollectionEquality().hash(_this.credentialIds),const DeepCollectionEquality().hash(_this.parentIds),const DeepCollectionEquality().hash(_this.sisterClubIds),const DeepCollectionEquality().hash(_this.treatyIds),_this.rating,_this.completedJobCount,_this.createdAt);
+  return Object.hash(runtimeType,_this.id,_this.name,_this.description,_this.ownerId,_this.memberCount,const DeepCollectionEquality().hash(_this.credentialIds),const DeepCollectionEquality().hash(_this.parentIds),const DeepCollectionEquality().hash(_this.sisterClubIds),const DeepCollectionEquality().hash(_this.treatyIds),_this.rating,_this.completedJobCount,_this.hubLocation,_this.hubGeohash,_this.createdAt);
 }
 
 @override
 String toString() {
   final _this = this as Team;
-  return 'Team(id: ${_this.id}, name: ${_this.name}, description: ${_this.description}, ownerId: ${_this.ownerId}, memberCount: ${_this.memberCount}, credentialIds: ${_this.credentialIds}, parentIds: ${_this.parentIds}, sisterClubIds: ${_this.sisterClubIds}, treatyIds: ${_this.treatyIds}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, createdAt: ${_this.createdAt})';
+  return 'Team(id: ${_this.id}, name: ${_this.name}, description: ${_this.description}, ownerId: ${_this.ownerId}, memberCount: ${_this.memberCount}, credentialIds: ${_this.credentialIds}, parentIds: ${_this.parentIds}, sisterClubIds: ${_this.sisterClubIds}, treatyIds: ${_this.treatyIds}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, hubLocation: ${_this.hubLocation}, hubGeohash: ${_this.hubGeohash}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $TeamCopyWith<$Res>  {
   factory $TeamCopyWith(Team value, $Res Function(Team) _then) = _$TeamCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
+ String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@GeoPointConverter() GeoPoint? hubLocation, String? hubGeohash,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -71,7 +71,7 @@ class _$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? hubLocation = freezed,Object? hubGeohash = freezed,Object? createdAt = null,}) {
   return _then(Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -84,7 +84,9 @@ as List<String>,sisterClubIds: null == sisterClubIds ? _self.sisterClubIds : sis
 as List<String>,treatyIds: null == treatyIds ? _self.treatyIds : treatyIds // ignore: cast_nullable_to_non_nullable
 as List<String>,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,completedJobCount: null == completedJobCount ? _self.completedJobCount : completedJobCount // ignore: cast_nullable_to_non_nullable
-as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,hubLocation: freezed == hubLocation ? _self.hubLocation : hubLocation // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,hubGeohash: freezed == hubGeohash ? _self.hubGeohash : hubGeohash // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }
@@ -170,10 +172,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @GeoPointConverter()  GeoPoint? hubLocation,  String? hubGeohash, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.hubLocation,_that.hubGeohash,_that.createdAt);case _:
   return orElse();
 
 }
@@ -191,10 +193,10 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @GeoPointConverter()  GeoPoint? hubLocation,  String? hubGeohash, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _Team():
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.hubLocation,_that.hubGeohash,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -211,10 +213,10 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String? description,  String ownerId,  int memberCount,  List<String> credentialIds,  List<String> parentIds,  List<String> sisterClubIds,  List<String> treatyIds,  double rating,  int completedJobCount, @GeoPointConverter()  GeoPoint? hubLocation,  String? hubGeohash, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Team() when $default != null:
-return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.createdAt);case _:
+return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.memberCount,_that.credentialIds,_that.parentIds,_that.sisterClubIds,_that.treatyIds,_that.rating,_that.completedJobCount,_that.hubLocation,_that.hubGeohash,_that.createdAt);case _:
   return null;
 
 }
@@ -226,7 +228,7 @@ return $default(_that.id,_that.name,_that.description,_that.ownerId,_that.member
 @JsonSerializable()
 
 class _Team implements Team {
-  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0,  List<String> credentialIds = const [],  List<String> parentIds = const [],  List<String> sisterClubIds = const [],  List<String> treatyIds = const [], this.rating = 0.0, this.completedJobCount = 0, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds,_parentIds = parentIds,_sisterClubIds = sisterClubIds,_treatyIds = treatyIds;
+  const _Team({required this.id, required this.name, this.description, required this.ownerId, this.memberCount = 0,  List<String> credentialIds = const [],  List<String> parentIds = const [],  List<String> sisterClubIds = const [],  List<String> treatyIds = const [], this.rating = 0.0, this.completedJobCount = 0, @GeoPointConverter() this.hubLocation, this.hubGeohash, @TimestampConverter() required this.createdAt}): _credentialIds = credentialIds,_parentIds = parentIds,_sisterClubIds = sisterClubIds,_treatyIds = treatyIds;
   factory _Team.fromJson(Map<String, dynamic> json) => _$TeamFromJson(json);
 
 @override final  String id;
@@ -264,6 +266,8 @@ class _Team implements Team {
 
 @override@JsonKey() final  double rating;
 @override@JsonKey() final  int completedJobCount;
+@override@GeoPointConverter() final  GeoPoint? hubLocation;
+@override final  String? hubGeohash;
 @override@TimestampConverter() final  DateTime createdAt;
 
 /// Create a copy of Team
@@ -279,18 +283,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Team&&(identical(other.id, id) || other.id == id)&&(identical(other.name, name) || other.name == name)&&(identical(other.description, description) || other.description == description)&&(identical(other.ownerId, ownerId) || other.ownerId == ownerId)&&(identical(other.memberCount, memberCount) || other.memberCount == memberCount)&&const DeepCollectionEquality().equals(other.credentialIds, _credentialIds)&&const DeepCollectionEquality().equals(other.parentIds, _parentIds)&&const DeepCollectionEquality().equals(other.sisterClubIds, _sisterClubIds)&&const DeepCollectionEquality().equals(other.treatyIds, _treatyIds)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.hubLocation, hubLocation) || other.hubLocation == hubLocation)&&(identical(other.hubGeohash, hubGeohash) || other.hubGeohash == hubGeohash)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),const DeepCollectionEquality().hash(_parentIds),const DeepCollectionEquality().hash(_sisterClubIds),const DeepCollectionEquality().hash(_treatyIds),rating,completedJobCount,createdAt);
+    return Object.hash(runtimeType,id,name,description,ownerId,memberCount,const DeepCollectionEquality().hash(_credentialIds),const DeepCollectionEquality().hash(_parentIds),const DeepCollectionEquality().hash(_sisterClubIds),const DeepCollectionEquality().hash(_treatyIds),rating,completedJobCount,hubLocation,hubGeohash,createdAt);
 }
 
 @override
 String toString() {
-    return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, createdAt: $createdAt)';
+    return 'Team(id: $id, name: $name, description: $description, ownerId: $ownerId, memberCount: $memberCount, credentialIds: $credentialIds, parentIds: $parentIds, sisterClubIds: $sisterClubIds, treatyIds: $treatyIds, rating: $rating, completedJobCount: $completedJobCount, hubLocation: $hubLocation, hubGeohash: $hubGeohash, createdAt: $createdAt)';
 }
 
 
@@ -301,7 +305,7 @@ abstract mixin class _$TeamCopyWith<$Res> implements $TeamCopyWith<$Res> {
   factory _$TeamCopyWith(_Team value, $Res Function(_Team) _then) = __$TeamCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@TimestampConverter() DateTime createdAt
+ String id, String name, String? description, String ownerId, int memberCount, List<String> credentialIds, List<String> parentIds, List<String> sisterClubIds, List<String> treatyIds, double rating, int completedJobCount,@GeoPointConverter() GeoPoint? hubLocation, String? hubGeohash,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -318,7 +322,7 @@ class __$TeamCopyWithImpl<$Res>
 
 /// Create a copy of Team
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? name = null,Object? description = freezed,Object? ownerId = null,Object? memberCount = null,Object? credentialIds = null,Object? parentIds = null,Object? sisterClubIds = null,Object? treatyIds = null,Object? rating = null,Object? completedJobCount = null,Object? hubLocation = freezed,Object? hubGeohash = freezed,Object? createdAt = null,}) {
   return _then(_Team(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
@@ -331,7 +335,9 @@ as List<String>,sisterClubIds: null == sisterClubIds ? _self._sisterClubIds : si
 as List<String>,treatyIds: null == treatyIds ? _self._treatyIds : treatyIds // ignore: cast_nullable_to_non_nullable
 as List<String>,rating: null == rating ? _self.rating : rating // ignore: cast_nullable_to_non_nullable
 as double,completedJobCount: null == completedJobCount ? _self.completedJobCount : completedJobCount // ignore: cast_nullable_to_non_nullable
-as int,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as int,hubLocation: freezed == hubLocation ? _self.hubLocation : hubLocation // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,hubGeohash: freezed == hubGeohash ? _self.hubGeohash : hubGeohash // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
 }

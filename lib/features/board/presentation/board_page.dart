@@ -297,7 +297,13 @@ class _LocalTabState extends ConsumerState<_LocalTab> {
           child: Listener(
             onPointerDown: (_) => bridge.notifyUserInteraction(),
             onPointerMove: (_) => bridge.notifyUserInteraction(),
-            child: const FluoderpodView(),
+            child: FluoderpodView(
+              onEntityTapped: (id) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Tapped entity: $id')),
+                );
+              },
+            ),
           ),
         ),
         Positioned(

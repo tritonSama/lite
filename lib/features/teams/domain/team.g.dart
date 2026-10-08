@@ -30,6 +30,11 @@ _Team _$TeamFromJson(Map<String, dynamic> json) => _Team(
       const [],
   rating: (json['rating'] as num?)?.toDouble() ?? 0.0,
   completedJobCount: (json['completedJobCount'] as num?)?.toInt() ?? 0,
+  hubLocation: _$JsonConverterFromJson<Map<String, dynamic>, GeoPoint>(
+    json['hubLocation'],
+    const GeoPointConverter().fromJson,
+  ),
+  hubGeohash: json['hubGeohash'] as String?,
   createdAt: const TimestampConverter().fromJson(
     json['createdAt'] as Timestamp,
   ),
@@ -47,8 +52,23 @@ Map<String, dynamic> _$TeamToJson(_Team instance) => <String, dynamic>{
   'treatyIds': instance.treatyIds,
   'rating': instance.rating,
   'completedJobCount': instance.completedJobCount,
+  'hubLocation': _$JsonConverterToJson<Map<String, dynamic>, GeoPoint>(
+    instance.hubLocation,
+    const GeoPointConverter().toJson,
+  ),
+  'hubGeohash': instance.hubGeohash,
   'createdAt': const TimestampConverter().toJson(instance.createdAt),
 };
+
+Value? _$JsonConverterFromJson<Json, Value>(
+  Object? json,
+  Value? Function(Json json) fromJson,
+) => json == null ? null : fromJson(json as Json);
+
+Json? _$JsonConverterToJson<Json, Value>(
+  Value? value,
+  Json? Function(Value value) toJson,
+) => value == null ? null : toJson(value);
 
 _Membership _$MembershipFromJson(Map<String, dynamic> json) => _Membership(
   id: json['id'] as String,

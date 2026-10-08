@@ -31,6 +31,11 @@ class ConstellationMapPage extends ConsumerWidget {
               final bytes = Uint8List(teams.length * 64);
               bridge.ingestBatch(bytes);
             },
+            onEntityTapped: (id) {
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Tapped entity: $id')),
+              );
+            },
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),

@@ -37,11 +37,13 @@ object FluorescentVulkanPlugin {
 
     @JvmStatic external fun stopRenderer(window: Long)
 
+    @JvmStatic external fun ingestBatch(window: Long, buffer: ByteArray): Int
+
     private fun loadNative(): Boolean = try {
         System.loadLibrary("fluoderpod_render")
         true
     } catch (e: UnsatisfiedLinkError) {
-        Log.w(TAG, "libfluoderpod_render.so not bundled: ${e.message}")
+        Log.w(TAG, "libfluoderpod_render.so not bundled: \${e.message}")
         false
     }
 
@@ -59,6 +61,15 @@ object FluorescentVulkanPlugin {
                     val h = call.argument<Int>("height") ?: 0
                     producer?.setSize(w, h)
                     result.success(null)
+                }
+                "ingestBatch" -> {
+                    val buffer = call.argument<ByteArray>("buffer")
+                    if (buffer != null && nativeWindow != 0L) {
+                        val clusters = ingestBatch(nativeWindow, buffer)
+                        result.success(clusters)
+                    } else {
+                        result.success(0)
+                    }
                 }
                 "dispose" -> {
                     release()

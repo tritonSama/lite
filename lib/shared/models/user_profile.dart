@@ -19,6 +19,8 @@ abstract class UserProfile with _$UserProfile {
     @Default([]) List<String> skills,
     String? fcmToken,
     String? stripeAccountId,
+    @GeoPointConverter() GeoPoint? lastKnownLocation,
+    String? geohash,
     @TimestampConverter() required DateTime createdAt,
   }) = _UserProfile;
 

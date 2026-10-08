@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserProfile {
 
- String get uid; String get displayName; String? get photoUrl; String? get bio; double get rating; int get completedJobCount; int get activeJobCount; List<String> get skills; String? get fcmToken; String? get stripeAccountId;@TimestampConverter() DateTime get createdAt;
+ String get uid; String get displayName; String? get photoUrl; String? get bio; double get rating; int get completedJobCount; int get activeJobCount; List<String> get skills; String? get fcmToken; String? get stripeAccountId;@GeoPointConverter() GeoPoint? get lastKnownLocation; String? get geohash;@TimestampConverter() DateTime get createdAt;
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -30,20 +30,20 @@ $UserProfileCopyWith<UserProfile> get copyWith => _$UserProfileCopyWithImpl<User
 @override
 bool operator ==(Object other) {
   final _this = this as UserProfile;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, _this.uid) || other.uid == _this.uid)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.photoUrl, _this.photoUrl) || other.photoUrl == _this.photoUrl)&&(identical(other.bio, _this.bio) || other.bio == _this.bio)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.activeJobCount, _this.activeJobCount) || other.activeJobCount == _this.activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&(identical(other.fcmToken, _this.fcmToken) || other.fcmToken == _this.fcmToken)&&(identical(other.stripeAccountId, _this.stripeAccountId) || other.stripeAccountId == _this.stripeAccountId)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is UserProfile&&(identical(other.uid, _this.uid) || other.uid == _this.uid)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.photoUrl, _this.photoUrl) || other.photoUrl == _this.photoUrl)&&(identical(other.bio, _this.bio) || other.bio == _this.bio)&&(identical(other.rating, _this.rating) || other.rating == _this.rating)&&(identical(other.completedJobCount, _this.completedJobCount) || other.completedJobCount == _this.completedJobCount)&&(identical(other.activeJobCount, _this.activeJobCount) || other.activeJobCount == _this.activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _this.skills)&&(identical(other.fcmToken, _this.fcmToken) || other.fcmToken == _this.fcmToken)&&(identical(other.stripeAccountId, _this.stripeAccountId) || other.stripeAccountId == _this.stripeAccountId)&&(identical(other.lastKnownLocation, _this.lastKnownLocation) || other.lastKnownLocation == _this.lastKnownLocation)&&(identical(other.geohash, _this.geohash) || other.geohash == _this.geohash)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as UserProfile;
-  return Object.hash(runtimeType,_this.uid,_this.displayName,_this.photoUrl,_this.bio,_this.rating,_this.completedJobCount,_this.activeJobCount,const DeepCollectionEquality().hash(_this.skills),_this.fcmToken,_this.stripeAccountId,_this.createdAt);
+  return Object.hash(runtimeType,_this.uid,_this.displayName,_this.photoUrl,_this.bio,_this.rating,_this.completedJobCount,_this.activeJobCount,const DeepCollectionEquality().hash(_this.skills),_this.fcmToken,_this.stripeAccountId,_this.lastKnownLocation,_this.geohash,_this.createdAt);
 }
 
 @override
 String toString() {
   final _this = this as UserProfile;
-  return 'UserProfile(uid: ${_this.uid}, displayName: ${_this.displayName}, photoUrl: ${_this.photoUrl}, bio: ${_this.bio}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, activeJobCount: ${_this.activeJobCount}, skills: ${_this.skills}, fcmToken: ${_this.fcmToken}, stripeAccountId: ${_this.stripeAccountId}, createdAt: ${_this.createdAt})';
+  return 'UserProfile(uid: ${_this.uid}, displayName: ${_this.displayName}, photoUrl: ${_this.photoUrl}, bio: ${_this.bio}, rating: ${_this.rating}, completedJobCount: ${_this.completedJobCount}, activeJobCount: ${_this.activeJobCount}, skills: ${_this.skills}, fcmToken: ${_this.fcmToken}, stripeAccountId: ${_this.stripeAccountId}, lastKnownLocation: ${_this.lastKnownLocation}, geohash: ${_this.geohash}, createdAt: ${_this.createdAt})';
 }
 
 
@@ -54,7 +54,7 @@ abstract mixin class $UserProfileCopyWith<$Res>  {
   factory $UserProfileCopyWith(UserProfile value, $Res Function(UserProfile) _then) = _$UserProfileCopyWithImpl;
 @useResult
 $Res call({
- String uid, String displayName, String? photoUrl, String? bio, double rating, int completedJobCount, int activeJobCount, List<String> skills, String? fcmToken, String? stripeAccountId,@TimestampConverter() DateTime createdAt
+ String uid, String displayName, String? photoUrl, String? bio, double rating, int completedJobCount, int activeJobCount, List<String> skills, String? fcmToken, String? stripeAccountId,@GeoPointConverter() GeoPoint? lastKnownLocation, String? geohash,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -71,7 +71,7 @@ class _$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? rating = null,Object? completedJobCount = null,Object? activeJobCount = null,Object? skills = null,Object? fcmToken = freezed,Object? stripeAccountId = freezed,Object? createdAt = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? uid = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? rating = null,Object? completedJobCount = null,Object? activeJobCount = null,Object? skills = null,Object? fcmToken = freezed,Object? stripeAccountId = freezed,Object? lastKnownLocation = freezed,Object? geohash = freezed,Object? createdAt = null,}) {
   return _then(UserProfile(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
@@ -83,6 +83,8 @@ as int,activeJobCount: null == activeJobCount ? _self.activeJobCount : activeJob
 as int,skills: null == skills ? _self.skills : skills // ignore: cast_nullable_to_non_nullable
 as List<String>,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
 as String?,stripeAccountId: freezed == stripeAccountId ? _self.stripeAccountId : stripeAccountId // ignore: cast_nullable_to_non_nullable
+as String?,lastKnownLocation: freezed == lastKnownLocation ? _self.lastKnownLocation : lastKnownLocation // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,geohash: freezed == geohash ? _self.geohash : geohash // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));
@@ -169,10 +171,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @GeoPointConverter()  GeoPoint? lastKnownLocation,  String? geohash, @TimestampConverter()  DateTime createdAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.createdAt);case _:
+return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.lastKnownLocation,_that.geohash,_that.createdAt);case _:
   return orElse();
 
 }
@@ -190,10 +192,10 @@ return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.ratin
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @GeoPointConverter()  GeoPoint? lastKnownLocation,  String? geohash, @TimestampConverter()  DateTime createdAt)  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile():
-return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.createdAt);case _:
+return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.lastKnownLocation,_that.geohash,_that.createdAt);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -210,10 +212,10 @@ return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.ratin
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String uid,  String displayName,  String? photoUrl,  String? bio,  double rating,  int completedJobCount,  int activeJobCount,  List<String> skills,  String? fcmToken,  String? stripeAccountId, @GeoPointConverter()  GeoPoint? lastKnownLocation,  String? geohash, @TimestampConverter()  DateTime createdAt)?  $default,) {final _that = this;
 switch (_that) {
 case _UserProfile() when $default != null:
-return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.createdAt);case _:
+return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.rating,_that.completedJobCount,_that.activeJobCount,_that.skills,_that.fcmToken,_that.stripeAccountId,_that.lastKnownLocation,_that.geohash,_that.createdAt);case _:
   return null;
 
 }
@@ -225,7 +227,7 @@ return $default(_that.uid,_that.displayName,_that.photoUrl,_that.bio,_that.ratin
 @JsonSerializable()
 
 class _UserProfile implements UserProfile {
-  const _UserProfile({required this.uid, required this.displayName, this.photoUrl, this.bio, this.rating = 0.0, this.completedJobCount = 0, this.activeJobCount = 0,  List<String> skills = const [], this.fcmToken, this.stripeAccountId, @TimestampConverter() required this.createdAt}): _skills = skills;
+  const _UserProfile({required this.uid, required this.displayName, this.photoUrl, this.bio, this.rating = 0.0, this.completedJobCount = 0, this.activeJobCount = 0,  List<String> skills = const [], this.fcmToken, this.stripeAccountId, @GeoPointConverter() this.lastKnownLocation, this.geohash, @TimestampConverter() required this.createdAt}): _skills = skills;
   factory _UserProfile.fromJson(Map<String, dynamic> json) => _$UserProfileFromJson(json);
 
 @override final  String uid;
@@ -244,6 +246,8 @@ class _UserProfile implements UserProfile {
 
 @override final  String? fcmToken;
 @override final  String? stripeAccountId;
+@override@GeoPointConverter() final  GeoPoint? lastKnownLocation;
+@override final  String? geohash;
 @override@TimestampConverter() final  DateTime createdAt;
 
 /// Create a copy of UserProfile
@@ -259,18 +263,18 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.activeJobCount, activeJobCount) || other.activeJobCount == activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _skills)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.stripeAccountId, stripeAccountId) || other.stripeAccountId == stripeAccountId)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _UserProfile&&(identical(other.uid, uid) || other.uid == uid)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.photoUrl, photoUrl) || other.photoUrl == photoUrl)&&(identical(other.bio, bio) || other.bio == bio)&&(identical(other.rating, rating) || other.rating == rating)&&(identical(other.completedJobCount, completedJobCount) || other.completedJobCount == completedJobCount)&&(identical(other.activeJobCount, activeJobCount) || other.activeJobCount == activeJobCount)&&const DeepCollectionEquality().equals(other.skills, _skills)&&(identical(other.fcmToken, fcmToken) || other.fcmToken == fcmToken)&&(identical(other.stripeAccountId, stripeAccountId) || other.stripeAccountId == stripeAccountId)&&(identical(other.lastKnownLocation, lastKnownLocation) || other.lastKnownLocation == lastKnownLocation)&&(identical(other.geohash, geohash) || other.geohash == geohash)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,uid,displayName,photoUrl,bio,rating,completedJobCount,activeJobCount,const DeepCollectionEquality().hash(_skills),fcmToken,stripeAccountId,createdAt);
+    return Object.hash(runtimeType,uid,displayName,photoUrl,bio,rating,completedJobCount,activeJobCount,const DeepCollectionEquality().hash(_skills),fcmToken,stripeAccountId,lastKnownLocation,geohash,createdAt);
 }
 
 @override
 String toString() {
-    return 'UserProfile(uid: $uid, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, rating: $rating, completedJobCount: $completedJobCount, activeJobCount: $activeJobCount, skills: $skills, fcmToken: $fcmToken, stripeAccountId: $stripeAccountId, createdAt: $createdAt)';
+    return 'UserProfile(uid: $uid, displayName: $displayName, photoUrl: $photoUrl, bio: $bio, rating: $rating, completedJobCount: $completedJobCount, activeJobCount: $activeJobCount, skills: $skills, fcmToken: $fcmToken, stripeAccountId: $stripeAccountId, lastKnownLocation: $lastKnownLocation, geohash: $geohash, createdAt: $createdAt)';
 }
 
 
@@ -281,7 +285,7 @@ abstract mixin class _$UserProfileCopyWith<$Res> implements $UserProfileCopyWith
   factory _$UserProfileCopyWith(_UserProfile value, $Res Function(_UserProfile) _then) = __$UserProfileCopyWithImpl;
 @override @useResult
 $Res call({
- String uid, String displayName, String? photoUrl, String? bio, double rating, int completedJobCount, int activeJobCount, List<String> skills, String? fcmToken, String? stripeAccountId,@TimestampConverter() DateTime createdAt
+ String uid, String displayName, String? photoUrl, String? bio, double rating, int completedJobCount, int activeJobCount, List<String> skills, String? fcmToken, String? stripeAccountId,@GeoPointConverter() GeoPoint? lastKnownLocation, String? geohash,@TimestampConverter() DateTime createdAt
 });
 
 
@@ -298,7 +302,7 @@ class __$UserProfileCopyWithImpl<$Res>
 
 /// Create a copy of UserProfile
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? rating = null,Object? completedJobCount = null,Object? activeJobCount = null,Object? skills = null,Object? fcmToken = freezed,Object? stripeAccountId = freezed,Object? createdAt = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? uid = null,Object? displayName = null,Object? photoUrl = freezed,Object? bio = freezed,Object? rating = null,Object? completedJobCount = null,Object? activeJobCount = null,Object? skills = null,Object? fcmToken = freezed,Object? stripeAccountId = freezed,Object? lastKnownLocation = freezed,Object? geohash = freezed,Object? createdAt = null,}) {
   return _then(_UserProfile(
 uid: null == uid ? _self.uid : uid // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
@@ -310,6 +314,8 @@ as int,activeJobCount: null == activeJobCount ? _self.activeJobCount : activeJob
 as int,skills: null == skills ? _self._skills : skills // ignore: cast_nullable_to_non_nullable
 as List<String>,fcmToken: freezed == fcmToken ? _self.fcmToken : fcmToken // ignore: cast_nullable_to_non_nullable
 as String?,stripeAccountId: freezed == stripeAccountId ? _self.stripeAccountId : stripeAccountId // ignore: cast_nullable_to_non_nullable
+as String?,lastKnownLocation: freezed == lastKnownLocation ? _self.lastKnownLocation : lastKnownLocation // ignore: cast_nullable_to_non_nullable
+as GeoPoint?,geohash: freezed == geohash ? _self.geohash : geohash // ignore: cast_nullable_to_non_nullable
 as String?,createdAt: null == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime,
   ));

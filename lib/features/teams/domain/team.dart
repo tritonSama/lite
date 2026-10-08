@@ -23,6 +23,8 @@ abstract class Team with _$Team {
     @Default([]) List<String> treatyIds, // Treaties with other teams
     @Default(0.0) double rating,
     @Default(0) int completedJobCount,
+    @GeoPointConverter() GeoPoint? hubLocation,
+    String? hubGeohash,
     @TimestampConverter() required DateTime createdAt,
   }) = _Team;
 
