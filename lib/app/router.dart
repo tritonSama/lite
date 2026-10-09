@@ -40,8 +40,6 @@ final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
 // ── Router provider ───────────────────────────────────────────────────────────
 @riverpod
 GoRouter appRouter(Ref ref) {
-  final authState = ref.watch(authStateProvider);
-
   return GoRouter(
     navigatorKey: _rootKey,
     initialLocation: '/board',

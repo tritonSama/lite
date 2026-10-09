@@ -48,4 +48,4 @@ final class UserNotificationsProvider
   }
 }
 
-String _$userNotificationsHash() => r'e054085649f813903121904702764a446e259839';
+String _$userNotificationsHash() => r'4f12fd625324c891d803dbd20759304521c43986';

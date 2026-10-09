@@ -8,7 +8,28 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+  } catch (e) {
+    debugPrint('Firebase init note: $e');
+  }
 
-  runApp(const ProviderScope(child: HeavenlyBondApp()));
+  runApp(
+    const ProviderScope(
+      child: HeavenlyBondApp(),
+    ),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const ProviderScope(
+      child: HeavenlyBondApp(),
+    );
+  }
 }

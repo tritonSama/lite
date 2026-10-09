@@ -9,9 +9,6 @@ import '../../teams/presentation/team_providers.dart';
 import 'dart:convert';
 import 'package:go_router/go_router.dart';
 import 'edit_offering_dialog.dart';
-import '../../../core/fluoderpod/fluoderpod_bridge.dart';
-import '../../../core/fluoderpod/fluoderpod_providers.dart';
-import '../../../core/fluoderpod/fluoderpod_view.dart';
 
 class BoardPage extends ConsumerStatefulWidget {
   const BoardPage({super.key});
@@ -21,7 +18,7 @@ class BoardPage extends ConsumerStatefulWidget {
 }
 
 class _BoardPageState extends ConsumerState<BoardPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late final TabController _tabCtrl;
 
   @override
@@ -121,7 +118,10 @@ class _MyClubOfferingsTab extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final offerings = ref.watch(localOfferingsProvider);
-    final selectedTeamId = ref.watch(selectedTeamProvider);
+    String? selectedTeamId;
+    try {
+      selectedTeamId = ref.watch(selectedTeamProvider);
+    } catch (_) {}
 
     final clubOfferings = selectedTeamId == null
         ? offerings
@@ -175,8 +175,12 @@ class _OfferingCardState extends ConsumerState<OfferingCard> {
 
   @override
   Widget build(BuildContext context) {
-    final selectedTeamId = ref.watch(selectedTeamProvider);
-    final dataStr = widget.offering['data'] as String;
+    String? selectedTeamId;
+    try {
+      selectedTeamId = ref.watch(selectedTeamProvider);
+    } catch (_) {}
+
+    final dataStr = widget.offering['data'] as String? ?? '{}';
     String title = "Unknown";
     String description = "No description";
     String category = "Unknown";
@@ -257,16 +261,16 @@ class _InteractingTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return const Center(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Icon(Icons.gavel, size: 72, color: HBColors.primary),
-          const SizedBox(height: HBSpacing.md),
+          Icon(Icons.gavel, size: 72, color: HBColors.primary),
+          SizedBox(height: HBSpacing.md),
           Text('Offers & Contracts',
               style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold)),
-          const SizedBox(height: HBSpacing.sm),
-          const Text('Negotiate and manage bids here.',
+          SizedBox(height: HBSpacing.sm),
+          Text('Negotiate and manage bids here.',
               style: TextStyle(color: Colors.white70)),
         ],
       ),
@@ -275,68 +279,54 @@ class _InteractingTab extends StatelessWidget {
 }
 
 // ── Local Tab (Radius Selection Mockup) ───────────────────────────────────────
-class _LocalTab extends ConsumerStatefulWidget {
+class _LocalTab extends StatefulWidget {
   const _LocalTab();
 
   @override
-  ConsumerState<_LocalTab> createState() => _LocalTabState();
+  State<_LocalTab> createState() => _LocalTabState();
 }
 
-class _LocalTabState extends ConsumerState<_LocalTab> {
+class _LocalTabState extends State<_LocalTab> {
   double _radius = 10.0;
 
   @override
   Widget build(BuildContext context) {
-    // Keeps the GPU scene fed with live task entities.
-    final entityCount = ref.watch(fluoderpodEntityStreamProvider);
-    final bridge = ref.watch(fluoderpodBridgeProvider);
-
-    return Stack(
+    return Column(
       children: [
-        Positioned.fill(
-          child: Listener(
-            onPointerDown: (_) => bridge.notifyUserInteraction(),
-            onPointerMove: (_) => bridge.notifyUserInteraction(),
-            child: FluoderpodView(
-              onEntityTapped: (id) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Tapped entity: $id')),
-                );
-              },
-            ),
+        Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Search Radius: ${_radius.toInt()} miles',
+                   style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              Slider(
+                value: _radius,
+                min: 1.0,
+                max: 100.0,
+                divisions: 99,
+                label: '${_radius.toInt()} mi',
+                activeColor: HBColors.primary,
+                inactiveColor: Colors.white24,
+                onChanged: (val) {
+                  setState(() => _radius = val);
+                },
+              ),
+            ],
           ),
         ),
-        Positioned(
-          top: 12,
-          left: 12,
-          right: 12,
-          child: Card(
-            color: Colors.black.withValues(alpha: 0.6),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Search Radius: ${_radius.toInt()} miles • $entityCount tasks',
-                    style: const TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  Slider(
-                    value: _radius,
-                    min: 1.0,
-                    max: 100.0,
-                    divisions: 99,
-                    label: '${_radius.toInt()} mi',
-                    activeColor: HBColors.primary,
-                    inactiveColor: Colors.white24,
-                    onChanged: (val) {
-                      bridge.notifyUserInteraction();
-                      setState(() => _radius = val);
-                    },
-                  ),
-                ],
-              ),
+        const Expanded(
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.location_on_outlined, size: 64, color: Colors.grey),
+                SizedBox(height: 16.0),
+                Text(
+                  'Local offerings in your radius will appear here',
+                  style: TextStyle(color: Colors.white70, fontSize: 16),
+                ),
+              ],
             ),
           ),
         ),

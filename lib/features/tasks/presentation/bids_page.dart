@@ -14,7 +14,7 @@ class BidsPage extends ConsumerStatefulWidget {
 }
 
 class _BidsPageState extends ConsumerState<BidsPage>
-    with SingleTickerProviderStateMixin {
+    with TickerProviderStateMixin {
   late TabController _tabCtrl;
 
   @override
