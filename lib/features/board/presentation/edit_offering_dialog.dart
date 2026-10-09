@@ -17,6 +17,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
   late TextEditingController _titleCtrl;
   late TextEditingController _descCtrl;
   late TextEditingController _bountyCtrl;
+  late TextEditingController _zipCtrl;
 
   @override
   void initState() {
@@ -36,6 +37,9 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
     _bountyCtrl = TextEditingController(
       text: decoded['bounty']?.toString() ?? '0',
     );
+    _zipCtrl = TextEditingController(
+      text: decoded['zipCode']?.toString() ?? '78701',
+    );
   }
 
   @override
@@ -43,6 +47,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
     _titleCtrl.dispose();
     _descCtrl.dispose();
     _bountyCtrl.dispose();
+    _zipCtrl.dispose();
     super.dispose();
   }
 
@@ -61,6 +66,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
     decoded['title'] = _titleCtrl.text;
     decoded['description'] = _descCtrl.text;
     decoded['bounty'] = int.tryParse(_bountyCtrl.text) ?? 0;
+    decoded['zipCode'] = _zipCtrl.text.trim();
 
     await db.update(
       'tasks',
@@ -70,7 +76,7 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
     );
 
     if (mounted) {
-      ref.invalidate(localOfferingsProvider);
+      ref.read(localOfferingsNotifierProvider.notifier).refresh();
       Navigator.of(context).pop();
     }
   }
@@ -101,6 +107,12 @@ class _EditOfferingDialogState extends ConsumerState<EditOfferingDialog> {
               TextFormField(
                 controller: _bountyCtrl,
                 decoration: const InputDecoration(labelText: 'Bounty'),
+                keyboardType: TextInputType.number,
+              ),
+              const SizedBox(height: 16),
+              TextFormField(
+                controller: _zipCtrl,
+                decoration: const InputDecoration(labelText: 'ZIP Code / Location'),
                 keyboardType: TextInputType.number,
               ),
             ],

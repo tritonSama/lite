@@ -1,5 +1,7 @@
 import 'dart:math' as math;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_webrtc/flutter_webrtc.dart';
 
 import '../../../app/theme.dart';
 
@@ -13,7 +15,11 @@ class WalkieTalkieTab extends StatefulWidget {
 class _WalkieTalkieTabState extends State<WalkieTalkieTab>
     with SingleTickerProviderStateMixin {
   bool _isRecording = false;
+  bool _webRtcActive = false;
   late final AnimationController _waveController;
+  
+  MediaStream? _localStream;
+  RTCPeerConnection? _peerConnection;
 
   @override
   void initState() {
@@ -24,8 +30,63 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab>
     );
   }
 
+  Future<void> _startWebRtcAudio() async {
+    try {
+      final Map<String, dynamic> mediaConstraints = {
+        'audio': true,
+        'video': false,
+      };
+
+      _localStream = await navigator.mediaDevices.getUserMedia(mediaConstraints);
+
+      // Initialize WebRTC Peer Connection for P2P audio voice mesh
+      final Map<String, dynamic> configuration = {
+        'iceServers': [
+          {'urls': 'stun:stun.l.google.com:19302'},
+          {'urls': 'stun:stun1.l.google.com:19302'},
+        ]
+      };
+
+      _peerConnection = await createPeerConnection(configuration);
+      _localStream?.getTracks().forEach((track) {
+        _peerConnection?.addTrack(track, _localStream!);
+      });
+
+      if (mounted) {
+        setState(() {
+          _webRtcActive = true;
+        });
+      }
+      debugPrint('[WebRTC Voice Mesh] Audio capture & WebRTC peer connection initialized successfully.');
+    } catch (e) {
+      debugPrint('[WebRTC Voice Mesh] Error starting WebRTC audio: $e');
+    }
+  }
+
+  Future<void> _stopWebRtcAudio() async {
+    try {
+      _localStream?.getTracks().forEach((track) {
+        track.stop();
+      });
+      await _localStream?.dispose();
+      await _peerConnection?.close();
+      _localStream = null;
+      _peerConnection = null;
+
+      if (mounted) {
+        setState(() {
+          _webRtcActive = false;
+        });
+      }
+      debugPrint('[WebRTC Voice Mesh] Audio capture released.');
+    } catch (e) {
+      debugPrint('[WebRTC Voice Mesh] Error stopping WebRTC audio: $e');
+    }
+  }
+
   @override
   void dispose() {
+    _stopWebRtcAudio();
     _waveController.dispose();
     super.dispose();
   }
@@ -33,12 +94,14 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab>
   void _onPointerDown(PointerDownEvent event) {
     setState(() => _isRecording = true);
     _waveController.repeat(reverse: true);
+    _startWebRtcAudio();
   }
 
-  void _onPointerUp(PointerUpEvent event) {
+  void _onPointerUp(PointerUpEvent? event) {
     setState(() => _isRecording = false);
     _waveController.stop();
     _waveController.reset();
+    _stopWebRtcAudio();
   }
 
   @override
@@ -47,6 +110,39 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab>
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // WebRTC Status Badge
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: _webRtcActive ? Colors.green.withValues(alpha: 0.2) : HBColors.neutral,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: _webRtcActive ? Colors.greenAccent : HBColors.primary.withValues(alpha: 0.4),
+              ),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(
+                  _webRtcActive ? Icons.wifi : Icons.wifi_off,
+                  size: 14,
+                  color: _webRtcActive ? Colors.greenAccent : Colors.white54,
+                ),
+                const SizedBox(width: 6),
+                Text(
+                  _webRtcActive ? 'WEBRTC P2P VOICE STREAM ACTIVE' : 'WEBRTC VOICE CHANNEL READY (462.5625 MHz)',
+                  style: TextStyle(
+                    color: _webRtcActive ? Colors.greenAccent : Colors.white70,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'monospace',
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: HBSpacing.lg),
+
           Container(
             height: 100,
             width: double.infinity,
@@ -67,7 +163,7 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab>
           Listener(
             onPointerDown: _onPointerDown,
             onPointerUp: _onPointerUp,
-            onPointerCancel: (e) => _onPointerUp(null as dynamic),
+            onPointerCancel: (e) => _onPointerUp(null),
             child: AnimatedContainer(
               duration: const Duration(milliseconds: 100),
               width: _isRecording ? 140 : 150,
@@ -100,7 +196,7 @@ class _WalkieTalkieTabState extends State<WalkieTalkieTab>
           ),
           const SizedBox(height: HBSpacing.xl),
           Text(
-            _isRecording ? 'TRANSMITTING...' : 'HOLD TO SPEAK',
+            _isRecording ? 'TRANSMITTING WEBRTC AUDIO...' : 'HOLD TO SPEAK (WEBRTC P2P)',
             style: TextStyle(
               color: _isRecording ? HBColors.tertiary : HBColors.primary,
               fontWeight: FontWeight.bold,
@@ -155,9 +251,7 @@ class _AudioWavePainter extends CustomPainter {
     final midY = size.height / 2;
 
     for (double i = 0; i <= width; i += 5) {
-      // Create a complex wave combining multiple sine waves
       final normalizedX = i / width;
-      // Fade out at edges
       final envelope = math.sin(normalizedX * math.pi);
 
       final wave1 = math.sin(

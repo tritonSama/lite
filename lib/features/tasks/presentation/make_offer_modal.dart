@@ -5,6 +5,7 @@ import '../../../app/theme.dart';
 import '../domain/offer.dart';
 import '../data/offer_repository.dart';
 import '../../teams/presentation/team_providers.dart';
+import '../../board/presentation/local_offerings_provider.dart';
 
 class MakeOfferModal extends ConsumerStatefulWidget {
   final String taskId;
@@ -45,7 +46,7 @@ class _MakeOfferModalState extends ConsumerState<MakeOfferModal> {
       final offer = Offer(
         id: const Uuid().v4(),
         taskId: widget.taskId,
-        providerId: currentTeamId ?? 'unknown_provider', // Fallback if no team selected
+        providerId: currentTeamId ?? 'water', // Default team provider
         amount: amount,
         message: _messageController.text.trim(),
         createdAt: DateTime.now(),
@@ -53,10 +54,13 @@ class _MakeOfferModalState extends ConsumerState<MakeOfferModal> {
 
       await ref.read(offerRepositoryProvider).placeOffer(offer);
 
+      // Refresh bids in Riverpod so _InteractingTab updates immediately
+      ref.read(userBidsNotifierProvider.notifier).refresh();
+
       if (mounted) {
         Navigator.of(context).pop();
         ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text('Offer placed successfully!')),
+          const SnackBar(content: Text('Offer / Bid placed successfully!')),
         );
       }
     } catch (e) {
@@ -92,21 +96,23 @@ class _MakeOfferModalState extends ConsumerState<MakeOfferModal> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text('Make an Offer', style: Theme.of(context).textTheme.headlineSmall),
+          Text('Make an Offer', style: Theme.of(context).textTheme.headlineSmall?.copyWith(color: Colors.white)),
           const SizedBox(height: HBSpacing.md),
           TextField(
             controller: _amountController,
+            style: const TextStyle(color: Colors.white),
             keyboardType: const TextInputType.numberWithOptions(decimal: true),
             decoration: const InputDecoration(
               labelText: 'Bid Amount (\$)',
               border: OutlineInputBorder(),
-              prefixIcon: Icon(Icons.attach_money),
+              prefixIcon: Icon(Icons.attach_money, color: HBColors.primary),
             ),
           ),
           const SizedBox(height: HBSpacing.md),
           TextField(
             controller: _messageController,
             maxLines: 3,
+            style: const TextStyle(color: Colors.white),
             decoration: const InputDecoration(
               labelText: 'Message / Note (Optional)',
               border: OutlineInputBorder(),
@@ -116,6 +122,7 @@ class _MakeOfferModalState extends ConsumerState<MakeOfferModal> {
           SizedBox(
             width: double.infinity,
             child: FilledButton(
+              style: FilledButton.styleFrom(backgroundColor: HBColors.primary),
               onPressed: _isSubmitting ? null : _submitOffer,
               child: _isSubmitting
                   ? const SizedBox(

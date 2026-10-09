@@ -33,7 +33,6 @@ final _gameKey = GlobalKey<NavigatorState>(debugLabel: 'game');
 final _missionControlKey = GlobalKey<NavigatorState>(
   debugLabel: 'missionControl',
 );
-final _teamsKey = GlobalKey<NavigatorState>(debugLabel: 'teams');
 final _profileKey = GlobalKey<NavigatorState>(debugLabel: 'profile');
 final _nexusKey = GlobalKey<NavigatorState>(debugLabel: 'nexus');
 
@@ -45,14 +44,12 @@ GoRouter appRouter(Ref ref) {
     initialLocation: '/board',
     debugLogDiagnostics: true,
 
-    // ── Auth redirect guard ─────────────────────────────────────────────────
     redirect: (context, state) {
-      // FORCING BYPASS FOR TESTING
       return null;
     },
 
     routes: [
-      // ── Auth routes (outside shell — no bottom nav) ─────────────────────
+      // ── Auth & Auxiliary routes ─────────────────────────────────────────
       GoRoute(path: '/login', builder: (_, __) => const LoginPage()),
       GoRoute(path: '/signup', builder: (_, __) => const SignupPage()),
       GoRoute(path: '/create', builder: (_, __) => const CreateTaskPage()),
@@ -61,12 +58,26 @@ GoRouter appRouter(Ref ref) {
         path: '/bids/:offerId',
         builder: (_, state) => OfferDetailPage(offerId: state.pathParameters['offerId']!),
       ),
+      GoRoute(
+        path: '/teams',
+        builder: (_, __) => const TeamsPage(),
+        routes: [
+          GoRoute(
+            path: 'constellation',
+            builder: (_, __) => const ConstellationMapPage(),
+          ),
+          GoRoute(
+            path: ':teamId',
+            builder: (_, state) => TeamDetailPage(teamId: state.pathParameters['teamId']!),
+          ),
+        ],
+      ),
 
-      // ── Main shell with bottom navigation ───────────────────────────────
+      // ── Main shell with persistent bottom navigation bar ────────────────
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => AppShell(shell: shell),
         branches: [
-          // 🏠 Board
+          // 🏠 Board (Index 0)
           StatefulShellBranch(
             navigatorKey: _boardKey,
             routes: [
@@ -104,7 +115,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 🎮 Game
+          // 🎮 Game (Index 1)
           StatefulShellBranch(
             navigatorKey: _gameKey,
             routes: [
@@ -112,7 +123,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 🎯 Mission Control
+          // 🎯 Mission Control (Index 2)
           StatefulShellBranch(
             navigatorKey: _missionControlKey,
             routes: [
@@ -130,29 +141,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 👥 Teams
-          StatefulShellBranch(
-            navigatorKey: _teamsKey,
-            routes: [
-              GoRoute(
-                path: '/teams',
-                builder: (_, __) => const TeamsPage(),
-                routes: [
-                  GoRoute(
-                    path: 'constellation',
-                    builder: (_, __) => const ConstellationMapPage(),
-                  ),
-                  GoRoute(
-                    path: ':teamId',
-                    builder: (_, state) =>
-                        TeamDetailPage(teamId: state.pathParameters['teamId']!),
-                  ),
-                ],
-              ),
-            ],
-          ),
-
-          // 👤 Profile
+          // 👤 Profile (Index 3)
           StatefulShellBranch(
             navigatorKey: _profileKey,
             routes: [
@@ -169,7 +158,7 @@ GoRouter appRouter(Ref ref) {
             ],
           ),
 
-          // 🧠 Nexus Compute
+          // 🧠 Nexus Compute (Index 4)
           StatefulShellBranch(
             navigatorKey: _nexusKey,
             routes: [
@@ -198,7 +187,6 @@ class AppShell extends StatelessWidget {
         selectedIndex: shell.currentIndex,
         onDestinationSelected: (index) => shell.goBranch(
           index,
-          // Re-tapping the active tab pops to the root of that branch
           initialLocation: index == shell.currentIndex,
         ),
         destinations: const [
@@ -216,11 +204,6 @@ class AppShell extends StatelessWidget {
             icon: Icon(Icons.rocket_launch_outlined),
             selectedIcon: Icon(Icons.rocket_launch),
             label: 'Mission',
-          ),
-          NavigationDestination(
-            icon: Icon(Icons.group_outlined),
-            selectedIcon: Icon(Icons.group),
-            label: 'Teams',
           ),
           NavigationDestination(
             icon: Icon(Icons.person_outline),

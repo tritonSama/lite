@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:uuid/uuid.dart';
 import '../../../app/theme.dart';
+import '../../board/presentation/local_offerings_provider.dart';
 import '../../../core/services/local_database_service.dart';
 import '../domain/team_war.dart';
 import 'team_providers.dart';
@@ -189,6 +190,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
                 teamId,
                 listingType,
                 rentalDuration,
+                zipCode,
               ) async {
                 final db = await dbService.database;
                 final now = DateTime.now().millisecondsSinceEpoch;
@@ -197,12 +199,13 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
                   'id': id,
                   'creatorId': teamId,
                   'data':
-                      '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty}',
+                      '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty, "zipCode": "$zipCode"}',
                   'listingType': listingType,
                   'rentalDuration': rentalDuration,
                   'createdAt': now,
                 });
                 if (!context.mounted) return;
+                ref.read(localOfferingsNotifierProvider.notifier).refresh();
                 Navigator.pop(context);
                 _loadOfferings();
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -647,6 +650,7 @@ class CreateOfferingForm extends StatefulWidget {
     String teamId,
     String listingType,
     String? rentalDuration,
+    String zipCode,
   )
   onSaved;
 
@@ -662,6 +666,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
   String _description = '';
   String _category = 'Service';
   int _bounty = 100;
+  String _zipCode = '78701';
   String _selectedTeamId = 'water';
   String _listingType = 'forSale';
   String? _rentalDuration;
@@ -744,6 +749,13 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                 initialValue: '100',
                 onSaved: (v) => _bounty = int.tryParse(v ?? '0') ?? 0,
               ),
+              const SizedBox(height: 16),
+              TextFormField(
+                decoration: const InputDecoration(labelText: 'ZIP Code / Location Filter'),
+                keyboardType: TextInputType.number,
+                initialValue: '78701',
+                onSaved: (v) => _zipCode = v ?? '78701',
+              ),
 
               // Rental duration (only when forRent)
               if (_listingType == 'forRent') ...[
@@ -791,6 +803,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                       _listingType == 'forRent'
                           ? (_rentalDuration ?? 'daily')
                           : null,
+                      _zipCode,
                     );
                   }
                 },

@@ -5,6 +5,7 @@ import 'package:uuid/uuid.dart';
 import '../../../app/theme.dart';
 import '../../../core/blockchain/fluoridian_service.dart';
 import '../../../core/blockchain/models/network_event.dart';
+import '../../board/presentation/local_offerings_provider.dart';
 
 /// Sprint 2: Multi-step Task Creation Wizard
 /// Target Platforms: Android and Web.
@@ -25,6 +26,7 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
 
   // Step 2: Logistics
   final _locationCtrl = TextEditingController(text: 'Austin, TX (Local Area)');
+  final _zipCtrl = TextEditingController(text: '78701');
   DateTime _desiredDate = DateTime.now().add(const Duration(days: 3));
   int _workerCount = 1;
 
@@ -51,6 +53,7 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
     _titleCtrl.dispose();
     _descCtrl.dispose();
     _locationCtrl.dispose();
+    _zipCtrl.dispose();
     _skillInputCtrl.dispose();
     _bountyCtrl.dispose();
     super.dispose();
@@ -80,12 +83,14 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
       'description': _descCtrl.text.trim(),
       'category': _selectedCategory,
       'locationLabel': _locationCtrl.text.trim(),
+      'zipCode': _zipCtrl.text.trim().isEmpty ? '78701' : _zipCtrl.text.trim(),
       'desiredCompletionDate': _desiredDate.toIso8601String(),
       'workerCount': _workerCount,
       'requiredSkills': _skills,
       'requireId': _requireId,
       'requireInsurance': _requireInsurance,
       'budgetAmount': bounty,
+      'bounty': '\$$bounty',
       'status': 'PUBLISHED',
       'createdAt': DateTime.now().toUtc().toIso8601String(),
     };
@@ -97,10 +102,13 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
       payload: taskPayload,
     );
 
+    // Refresh local board provider so the new task appears immediately in all tabs
+    ref.read(localOfferingsNotifierProvider.notifier).refresh();
+
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('Task published successfully to Fluoridian network!'),
+          content: Text('Task published successfully!'),
           backgroundColor: Colors.green,
         ),
       );
@@ -191,6 +199,16 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
                   decoration: const InputDecoration(
                     labelText: 'Location / Area',
                     prefixIcon: Icon(Icons.location_on),
+                  ),
+                ),
+                const SizedBox(height: 16),
+                TextField(
+                  controller: _zipCtrl,
+                  keyboardType: TextInputType.number,
+                  decoration: const InputDecoration(
+                    labelText: 'ZIP Code / Location Filter',
+                    hintText: 'e.g., 78701',
+                    prefixIcon: Icon(Icons.map),
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -333,7 +351,7 @@ class _CreateTaskPageState extends ConsumerState<CreateTaskPage> {
                 Text('Title: ${_titleCtrl.text.isEmpty ? "Community Task" : _titleCtrl.text}', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
                 const SizedBox(height: 8),
                 Text('Category: $_selectedCategory'),
-                Text('Location: ${_locationCtrl.text}'),
+                Text('Location: ${_locationCtrl.text} (ZIP: ${_zipCtrl.text})'),
                 Text('Desired Date: ${_desiredDate.toLocal()}'.split(' ')[0]),
                 Text('Bounty: \$${_bountyCtrl.text}'),
                 const SizedBox(height: 12),
