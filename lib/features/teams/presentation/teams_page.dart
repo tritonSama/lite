@@ -57,7 +57,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
   List<Map<String, dynamic>> _teamOfferings = [];
   List<TeamWar> _wars = [];
   bool _isLoading = false;
-  String _listingFilter = 'all'; // 'all', 'forSale', 'wantedToBuy', 'forRent'
+  String _listingFilter = 'all'; // 'all', 'forSale', 'wantedToBuy', 'forBook'
 
   @override
   void initState() {
@@ -189,8 +189,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
                 bounty,
                 teamId,
                 listingType,
-                rentalDuration,
+                bookingDuration,
                 zipCode,
+                conversationType,
               ) async {
                 final db = await dbService.database;
                 final now = DateTime.now().millisecondsSinceEpoch;
@@ -199,9 +200,9 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
                   'id': id,
                   'creatorId': teamId,
                   'data':
-                      '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty, "zipCode": "$zipCode"}',
+                      '{"title": "$title", "description": "$description", "category": "$category", "bounty": $bounty, "zipCode": "$zipCode", "conversationType": "$conversationType"}',
                   'listingType': listingType,
-                  'rentalDuration': rentalDuration,
+                  'bookingDuration': bookingDuration,
                   'createdAt': now,
                 });
                 if (!context.mounted) return;
@@ -367,7 +368,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
                 const SizedBox(width: 8),
                 _filterChip('🛒 Wanted', 'wantedToBuy'),
                 const SizedBox(width: 8),
-                _filterChip('🔑 For Rent', 'forRent'),
+                _filterChip('📅 Book Service', 'forBook'),
               ],
             ),
           ),
@@ -405,7 +406,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
   Widget _buildMarketplaceCard(Map<String, dynamic> item) {
     final dataStr = item['data'] as String;
     final listingType = item['listingType'] as String? ?? 'forSale';
-    final rentalDuration = item['rentalDuration'] as String?;
+    final bookingDuration = item['bookingDuration'] as String?;
     String title = 'Unknown';
     String category = 'Unknown';
     String bounty = '0';
@@ -423,7 +424,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
     final (badgeText, badgeColor) = switch (listingType) {
       'forSale' => ('FOR SALE', Colors.green),
       'wantedToBuy' => ('WANTED', Colors.orange),
-      'forRent' => ('FOR RENT', Colors.blue),
+      'forBook' => ('FOR BOOKING', Colors.blue),
       _ => ('LISTING', Colors.grey),
     };
 
@@ -455,7 +456,7 @@ class _TeamsPageState extends ConsumerState<TeamsPage>
         ),
         subtitle: Text(
           'Category: $category • \$$bounty'
-          '${rentalDuration != null ? ' • $rentalDuration' : ''}',
+          '${bookingDuration != null ? ' • $bookingDuration' : ''}',
         ),
         trailing: const Icon(Icons.circle, color: Colors.green, size: 12),
       ),
@@ -649,8 +650,9 @@ class CreateOfferingForm extends StatefulWidget {
     int bounty,
     String teamId,
     String listingType,
-    String? rentalDuration,
+    String? bookingDuration,
     String zipCode,
+    String conversationType,
   )
   onSaved;
 
@@ -669,7 +671,8 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
   String _zipCode = '78701';
   String _selectedTeamId = 'water';
   String _listingType = 'forSale';
-  String? _rentalDuration;
+  String? _bookingDuration;
+  String _conversationType = 'none';
 
   @override
   Widget build(BuildContext context) {
@@ -701,13 +704,13 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                     child: Text('🛒 Wanted (Buy)'),
                   ),
                   DropdownMenuItem(
-                    value: 'forRent',
-                    child: Text('🔑 For Rent'),
+                    value: 'forBook',
+                    child: Text('🔑 Book Service'),
                   ),
                 ],
                 onChanged: (v) => setState(() {
                   _listingType = v!;
-                  if (v != 'forRent') _rentalDuration = null;
+                  if (v != 'forBook') _bookingDuration = null;
                 }),
               ),
               const SizedBox(height: 16),
@@ -741,7 +744,7 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
               const SizedBox(height: 16),
               TextFormField(
                 decoration: InputDecoration(
-                  labelText: _listingType == 'forRent'
+                  labelText: _listingType == 'forBook'
                       ? 'Price (per period)'
                       : 'Price',
                 ),
@@ -757,12 +760,12 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                 onSaved: (v) => _zipCode = v ?? '78701',
               ),
 
-              // Rental duration (only when forRent)
-              if (_listingType == 'forRent') ...[
+              // Booking duration (only when forRent)
+              if (_listingType == 'forBook') ...[
                 const SizedBox(height: 16),
                 DropdownButtonFormField<String>(
-                  initialValue: _rentalDuration ?? 'daily',
-                  decoration: const InputDecoration(labelText: 'Rental Period'),
+                  initialValue: _bookingDuration ?? 'daily',
+                  decoration: const InputDecoration(labelText: 'Booking Period'),
                   items: const [
                     DropdownMenuItem(value: 'hourly', child: Text('Per Hour')),
                     DropdownMenuItem(value: 'daily', child: Text('Per Day')),
@@ -772,9 +775,21 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                       child: Text('Per Month'),
                     ),
                   ],
-                  onChanged: (v) => setState(() => _rentalDuration = v),
+                  onChanged: (v) => setState(() => _bookingDuration = v),
                 ),
               ],
+
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                initialValue: _conversationType,
+                decoration: const InputDecoration(labelText: 'Conversation Type'),
+                items: const [
+                  DropdownMenuItem(value: 'none', child: Text('None (Direct Book)')),
+                  DropdownMenuItem(value: 'public', child: Text('Public Chat')),
+                  DropdownMenuItem(value: 'team', child: Text('Team-only Chat')),
+                ],
+                onChanged: (v) => setState(() => _conversationType = v!),
+              ),
 
               const SizedBox(height: 16),
               DropdownButtonFormField<String>(
@@ -800,8 +815,8 @@ class _CreateOfferingFormState extends State<CreateOfferingForm> {
                       _bounty,
                       _selectedTeamId,
                       _listingType,
-                      _listingType == 'forRent'
-                          ? (_rentalDuration ?? 'daily')
+                      _listingType == 'forBook'
+                          ? (_bookingDuration ?? 'daily')
                           : null,
                       _zipCode,
                     );
